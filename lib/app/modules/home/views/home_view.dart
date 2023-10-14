@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_final/app/modules/bus/views/bus_view.dart';
+import 'package:flutter_final/app/modules/mytickets/views/mytickests.dart';
 import 'package:flutter_final/app/modules/profile/profile_screen.dart';
 import 'package:flutter_final/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 // import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 
 import '../controllers/home_controller.dart';
 
@@ -172,7 +172,7 @@ class HomeView extends GetView<HomeController> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                 const Text(
+                                  const Text(
                                     "ເປີດໃຊ້ດຽວນີ້ !",
                                     style: TextStyle(
                                       color: Colors.blue,
@@ -269,9 +269,7 @@ class HomeView extends GetView<HomeController> {
                                     icon: "assets/icons/trans.png",
                                   ),
                                   GestureDetector(
-                                   
                                     onTap: () {
-                                     
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -293,7 +291,6 @@ class HomeView extends GetView<HomeController> {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                              
                               ),
                               SizedBox(height: 20),
                               Row(
@@ -370,7 +367,12 @@ class HomeView extends GetView<HomeController> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Get.offAllNamed(Routes.LOGIN);
+                                  // Navigate to the "Home" screen when tapped
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Mytickests()),
+                                  );
                                 },
                                 child: ItemNav(
                                   icon: "ticket",
@@ -408,7 +410,6 @@ class HomeView extends GetView<HomeController> {
           )
         ],
       ),
-   
     );
   }
 }

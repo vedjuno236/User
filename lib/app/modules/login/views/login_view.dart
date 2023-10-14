@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final/app/modules/login/views/otp_login_view.dart';
 // import 'package:flutter_final/app/routes/app_pages.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/login_controller.dart';
@@ -22,6 +21,7 @@ class LoginView extends GetView<LoginController> {
     displayNameNoCountryCode: "LAOS",
     e164Key: "",
   );
+
   @override
   Widget build(BuildContext context) {
     phoneController.selection = TextSelection.fromPosition(
@@ -225,35 +225,7 @@ class LoginView extends GetView<LoginController> {
                 },
               ),
             ),
-            // ElevatedButton(
-            //   // onPressed: () => Get.offAllNamed(Routes.HOME),
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => OtpLoginView()),
-            //     );
-            //   },
-            //   child: Text(
-            //     "ເຂົ້າສູ່ລະບົບ",
-            //     style: TextStyle(fontSize: 16,
-            //       color: Colors.white,
-            //     ),
-            //   ),
-            //   // style: ElevatedButton.styleFrom(
-            //   //   primary: Colors.grey[300],
-            //   //   fixedSize: Size(150, 50),
-            //   // ),
-            //   style: ButtonStyle(
-            //     foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            //     backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-            //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            //        RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(25.0),
-            //        ),
-            //     ),
 
-            //   ),
-            // ),
             SizedBox(height: 20),
             Center(
               child: Text("ຫຼືເຂົ້າສູ່ລະບົບໂດຍໃຊ້"),

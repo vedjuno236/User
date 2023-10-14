@@ -16,6 +16,8 @@ dependencies:
   flutter: 
     sdk: flutter
   material_design_icons_flutter: ^7.0.7296
+  dotted_decoration: ^2.0.0
+  qr_flutter: ^4.1.0
   
 
 dev_dependencies: 

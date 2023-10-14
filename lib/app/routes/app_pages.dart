@@ -40,5 +40,9 @@ class AppPages {
       name: _Paths.Onboarding,
       page: () =>Onboarding(),
     ),
+    // GetPage(
+    //   name:_Path.Mytickets,
+    //   page:() => 
+    // )
   ];
 }
