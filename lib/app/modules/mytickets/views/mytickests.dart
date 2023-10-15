@@ -304,11 +304,15 @@ class _MytickestsState extends State<Mytickests> {
                                                         style: TextStyle(
                                                             fontSize: 15),
                                                       ),
-                                                      QrImageView(
-                                                        data: 'data',
-                                                        version:
-                                                            QrVersions.auto,
-                                                        size: 30,
+                                                      SizedBox(
+                                                        width: 200,
+                                                        height: 200,
+                                                        child: QrImageView(
+                                                          data: 'data',
+                                                          version:
+                                                              QrVersions.auto,
+                                                          size: 50,
+                                                        ),
                                                       ),
                                                       SizedBox(height: 5),
                                                       Column(
@@ -415,7 +419,7 @@ class _MytickestsState extends State<Mytickests> {
                           height: 140,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage("assets/images/images-1.png"),
+                                image: AssetImage("assets/images/img-3.png"),
                                 fit: BoxFit.cover),
                             borderRadius: BorderRadius.circular(10),
                           ),

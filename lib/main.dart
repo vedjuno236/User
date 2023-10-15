@@ -6,6 +6,7 @@ import 'app/widgets/splash.dart';
 // import 'theme/custom_theme.dart';
 
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(DevicePreview(
@@ -27,13 +28,20 @@ class MyApp extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SplashScreen();
-       
         } else {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: "Application",
             initialRoute: Routes.HOME,
             getPages: AppPages.routes,
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: [
+              const Locale('lo', 'LA'),
+              // Add other supported locales here
+            ],
           );
         }
       },

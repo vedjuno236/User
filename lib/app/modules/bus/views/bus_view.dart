@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final/app/modules/home/views/home_view.dart';
+import 'package:flutter_final/app/modules/mytickets/views/mytickests.dart';
+import 'package:flutter_final/app/modules/profile/profile_screen.dart';
 import 'package:flutter_final/app/modules/search_tickets/views/search_tickets.dart';
 import 'package:get/get.dart';
-// import 'package:mytsel/app/modules/home/views/home_view.dart';
-// import 'package:mytsel/app/modules/search_tickets/views/search_tickets.dart';
-// import 'package:mytsel/app/routes/app_pages.dart';
-
-// import '../controllers/search_controller.dart';
 
 class BusView extends StatefulWidget {
   const BusView({Key? key}) : super(key: key);
@@ -20,6 +17,7 @@ const Color pColor = Color(0xFFEC2028);
 
 class _BusViewState extends State<BusView> {
   DateTime selectedDate = DateTime.now();
+
   // final FocusNode _focus = FocusNode();
   // final FocusNode _focusNode = FocusNode();
   // @override
@@ -87,6 +85,10 @@ class _BusViewState extends State<BusView> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 3.5,
                 decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/img-2.png"),
+                    fit: BoxFit.cover,
+                  ),
                   gradient: LinearGradient(
                     colors: [
                       pColor.withOpacity(0.8),
@@ -133,7 +135,7 @@ class _BusViewState extends State<BusView> {
                           // Icon(CupertinoIcons.chevron_left, color: Colors.white),
                           Container(
                             // SingleChildScrollView
-                            margin: EdgeInsets.only(top: 50, bottom: 20),
+                            margin: EdgeInsets.only(top: 130, bottom: 20),
                             width: MediaQuery.of(context).size.width,
                             height: 250,
                             alignment: Alignment.center,
@@ -271,71 +273,20 @@ class _BusViewState extends State<BusView> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 15),
+                    // SizedBox(height: 5),
                     Container(
                       height: 500,
-                      child: ListView(
+                      child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              width: 140,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    // blurRadius: 1,
-                                    // spreadRadius: 1,
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "ໄຊຍະບູລີ",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Icon(CupertinoIcons.arrow_right),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Text(
-                                          "ຫຼວງພະບາງ",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        // SizedBox(
-                                        //   height: 20,
-                                        // ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    //  mainAxisAlignment: MainAxisAlignment.start,
-
-                                    Text(
-                                      "${selectedDate.day} -${selectedDate.month} -${selectedDate.year}",
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            padding: const EdgeInsets.all(5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("ໄຊຍະບູລີ "),
+                                Text("-- "),
+                                Text("ຫູວງພະບາງ "),
+                              ],
                             ),
                           ),
                           SizedBox(height: 20),
@@ -344,22 +295,22 @@ class _BusViewState extends State<BusView> {
                             child: Row(
                               children: [
                                 ItemTerbaru(
-                                  image: "assets/images/images-1.png",
+                                  image: "assets/images/bus-1.jpg",
                                 ),
                                 ItemTerbaru(
-                                  image: "assets/images/images-2.png",
+                                  image: "assets/images/img-5.png",
                                 ),
                                 ItemTerbaru(
-                                  image: "assets/images/images-1.png",
+                                  image: "assets/images/img-6.png",
                                 ),
                                 ItemTerbaru(
-                                  image: "assets/images/images-2.png",
+                                  image: "assets/images/img-7.png",
                                 ),
                                 ItemTerbaru(
-                                  image: "assets/images/images-1.png",
+                                  image: "assets/images/img-8.png",
                                 ),
                                 ItemTerbaru(
-                                  image: "assets/images/images-2.png",
+                                  image: "assets/images/img-9.png",
                                 ),
                               ],
                             ),
@@ -376,7 +327,9 @@ class _BusViewState extends State<BusView> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
+         
           BottomNavigationBarItem(
+            
             icon: ImageIcon(
               AssetImage("assets/icons/beranda.png"),
             ),
@@ -396,11 +349,31 @@ class _BusViewState extends State<BusView> {
             label: "ບັນຊີຂອງຂ້ອຍ",
           ),
         ],
+        onTap: (int index){
+             if(index == 0){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeView() ),
+                      );
+
+             } else if (index == 1){
+              Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Mytickests() ),
+                      );
+             } else if (index == 2){
+                 Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProfileScreen() ),
+                      );
+             }
+        },
+      
       ),
+      
     );
   }
 }
-
 
 class ItemTerbaru extends StatelessWidget {
   ItemTerbaru({
@@ -415,7 +388,7 @@ class ItemTerbaru extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(right: 10),
       width: Get.width * 0.7,
-      height: 130,
+      height: 150,
       decoration: BoxDecoration(
         color: Colors.amber,
         borderRadius: BorderRadius.circular(20),

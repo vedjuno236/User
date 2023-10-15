@@ -321,22 +321,22 @@ class HomeView extends GetView<HomeController> {
                                 child: Row(
                                   children: [
                                     ItemTerbaru(
-                                      image: "assets/images/images-1.png",
+                                      image: "assets/images/img-1.png",
                                     ),
                                     ItemTerbaru(
-                                      image: "assets/images/images-2.png",
+                                      image: "assets/images/img-2.png",
                                     ),
                                     ItemTerbaru(
-                                      image: "assets/images/images-1.png",
+                                      image: "assets/images/img-3.png",
                                     ),
                                     ItemTerbaru(
-                                      image: "assets/images/images-2.png",
+                                      image: "assets/images/img-1.png",
                                     ),
                                     ItemTerbaru(
-                                      image: "assets/images/images-1.png",
+                                      image: "assets/images/img-2.png",
                                     ),
                                     ItemTerbaru(
-                                      image: "assets/images/images-2.png",
+                                      image: "assets/images/img-3.png",
                                     ),
                                   ],
                                 ),
