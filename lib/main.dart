@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+// import 'package:intl/date_symbol_data_file.dart';
+import 'package:intl/intl.dart';
 import 'app/routes/app_pages.dart';
 import 'app/widgets/splash.dart';
 // import 'theme/custom_theme.dart';
@@ -8,7 +9,9 @@ import 'app/widgets/splash.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+void main() async {
+  Intl.defaultLocale = 'lo_LA';
+
   runApp(DevicePreview(
     builder: (context) => MyApp(),
   ));

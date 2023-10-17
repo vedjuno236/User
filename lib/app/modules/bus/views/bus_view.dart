@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_final/app/modules/home/views/home_view.dart';
 import 'package:flutter_final/app/modules/mytickets/views/mytickests.dart';
 import 'package:flutter_final/app/modules/profile/profile_screen.dart';
+// import 'package:flutter_final/app/modules/search_form/views/search_form.dart';
 import 'package:flutter_final/app/modules/search_tickets/views/search_tickets.dart';
+// import 'package:flutter_final/app/modules/search_to/views/search_to.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class BusView extends StatefulWidget {
   const BusView({Key? key}) : super(key: key);
@@ -16,31 +20,14 @@ class BusView extends StatefulWidget {
 const Color pColor = Color(0xFFEC2028);
 
 class _BusViewState extends State<BusView> {
+
   DateTime selectedDate = DateTime.now();
 
-  // final FocusNode _focus = FocusNode();
-  // final FocusNode _focusNode = FocusNode();
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _focus.addListener(_onFocusChange);
-  // }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _focus.removeListener(_onFocusChange);
-  //   _focus.dispose();
-  // }
-  // void _onFocusChange() {
-  //   Get.offAllNamed('/search_to'); // Navigate to the '/search_to' route
-  //   // Get.offAllNamed('/search_form'); // Navigate to the '/search_form' route
-  // }
-
-  // void _onFocusChange2() {
-  //   Get.offAllNamed('/search_form'); // Navigate to the '/search_to' route
-  //   // Get.offAllNamed('/search_form'); // Navigate to the '/search_form' route
-  // }
+  void _onDaySelected(DateTime day, DateTime focusedDay) {
+    setState(() {
+      selectedDate = day;
+    });
+  }
 
   final FocusNode _focus = FocusNode();
   final FocusNode _focusN = FocusNode();
@@ -71,6 +58,8 @@ class _BusViewState extends State<BusView> {
   void _onFocusChange2() {
     Get.offAllNamed('/search_form');
   }
+
+  var formatter = DateFormat.yMMMMEEEEd();
 
   @override
   Widget build(BuildContext context) {
@@ -132,124 +121,286 @@ class _BusViewState extends State<BusView> {
                               )
                             ],
                           ),
-                          // Icon(CupertinoIcons.chevron_left, color: Colors.white),
                           Container(
-                            // SingleChildScrollView
-                            margin: EdgeInsets.only(top: 130, bottom: 20),
-                            width: MediaQuery.of(context).size.width,
-                            height: 250,
                             alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            // height: MediaQuery.of(context).size.height * 0.25,
+                            // width: MediaQuery.of(context).size.width * 0.85,
+                            margin: EdgeInsets.only(top: 130, bottom: 5),
+                            width: MediaQuery.of(context).size.width,
+                            height: 270,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 6,
-                                  spreadRadius: 3,
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(14))),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(width: 10),
+                                    _iconDestination(),
+                                    SizedBox(width: 5),
+                                    _originAndDestionation(context),
+                                    SizedBox(width: 70),
+                                    _originAndDestionationIcon(),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      _onFocusChange2();
-                                    },
-                                    child: TextField(
-                                      focusNode: _focusN,
-                                      decoration: InputDecoration(
-                                        hintText: "ໄຊຍະບູລີ",
-                                        hintStyle: TextStyle(fontSize: 15),
-                                        prefixIcon: Icon(
-                                          CupertinoIcons.circle_filled,
-                                          size: 10.0,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      _onFocusChange();
-                                    },
-                                    child: TextField(
-                                      focusNode: _focus,
-                                      decoration: InputDecoration(
-                                        hintText: "ຫຼວງພະບາງ",
-                                        hintStyle: TextStyle(fontSize: 15),
-                                        prefixIcon: Icon(
-                                          CupertinoIcons.circle_filled,
-                                          size: 10.0,
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  // SizedBox(height: 40),
-                                  SizedBox(height: 30),
-                                  GestureDetector(
-                                    onTap: () async {
-                                      final DateTime? dateTime =
-                                          await showDatePicker(
-                                        context: context,
-                                        initialDate: selectedDate,
-                                        firstDate: DateTime(2000),
-                                        lastDate: DateTime(3000),
-                                      );
-                                      if (dateTime != null) {
-                                        setState(() {
-                                          selectedDate = dateTime;
-                                        });
-                                      }
-                                    },
-                                    child: Text(
-                                      "${selectedDate.day} -${selectedDate.month} -${selectedDate.year}",
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                  ),
 
-                                  SizedBox(height: 20),
-                                  Column(
+                                GestureDetector(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        // Removed extra parentheses here
+                                        return SizedBox(
+                                          height: 600,
+                                          child: Center(
+                                            child: TableCalendar(
+                                              locale: "lo_LA",
+                                              rowHeight: 43,
+                                              headerStyle: HeaderStyle(
+                                                  formatButtonVisible: false,
+                                                  titleCentered: true),
+                                              availableGestures:
+                                                  AvailableGestures.all,
+                                              selectedDayPredicate: (day) =>
+                                                  isSameDay(day, selectedDate),
+                                              focusedDay: selectedDate,
+                                              firstDay:
+                                                  DateTime.utc(2010, 10, 16),
+                                              lastDay:
+                                                  DateTime.utc(2030, 3, 14),
+                                              onDaySelected: _onDaySelected,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      SizedBox(
-                                        width:
-                                            350, // Set the width of the SizedBox
-                                        height:
-                                            50, // Set the height of the SizedBox
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Search_tickets()),
-                                            );
-                                            // Add your button click logic here
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Color(
-                                                0xFFEC2028), // Button background color
+                                      Text(
+                                        "ເລືອກເວລາເດີນທາງ",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xFFFb7b7c5)),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(
+                                            "${formatter.format(selectedDate)}",
+                                            style: TextStyle(fontSize: 20),
                                           ),
-                                          //  Color(0xFFEC2028);
-                                          child: Text(
-                                            'ກວດສອບປີ້',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white),
+                                          Icon(
+                                            Icons.calendar_month,
+                                            size: 20,
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
+                                ),
+
+                                SizedBox(),
+                                GestureDetector(
+                                  onTap: () {
+                                    // Navigate to the "Home" screen when tapped
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Search_tickets()),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 280,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: <Color>[
+                                          Colors.redAccent,
+                                          Colors.orangeAccent,
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Text(
+                                      "ກວດສອບປີ້",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+
+                                //  Padding(
+                                //    padding: const EdgeInsets.all(5.0),
+
+                                //    child: Container(
+
+                                //           width: 280,
+                                //           height: 50,
+                                //           decoration: BoxDecoration(
+                                //             gradient: LinearGradient(
+                                //               colors: <Color>[
+                                //                 Colors.redAccent,
+                                //                 Colors.orangeAccent,
+                                //               ],
+                                //             ),
+                                //             borderRadius:
+                                //                 BorderRadius.circular(5.0),
+                                //           ),
+                                //           padding: EdgeInsets.all(16.0),
+                                //           child: Text(
+                                //             "ກວດສອບປີ້",
+                                //             style: TextStyle(
+                                //                 fontSize: 15,
+                                //                 fontWeight: FontWeight.bold,
+                                //                 color: Colors.white),
+                                //             textAlign: TextAlign.center,
+                                //           ),
+                                //         ),
+                                //  ),
+                              ],
                             ),
                           ),
+
+                          // Icon(CupertinoIcons.chevron_left, color: Colors.white),
+                          // Container(
+                          //   // SingleChildScrollView
+                          //   margin: EdgeInsets.only(top: 130, bottom: 20),
+                          //   width: MediaQuery.of(context).size.width,
+                          //   height: 250,
+                          //   alignment: Alignment.center,
+                          //   decoration: BoxDecoration(
+                          //     color: Colors.white,
+                          //     borderRadius: BorderRadius.circular(10),
+                          //     boxShadow: [
+                          //       BoxShadow(
+                          //         color: Colors.black12,
+                          //         blurRadius: 6,
+                          //         spreadRadius: 3,
+                          //       ),
+                          //     ],
+                          //   ),
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.all(10.0),
+                          //     child: Column(
+                          //       // mainAxisAlignment: MainAxisAlignment.start,
+                          //       crossAxisAlignment: CrossAxisAlignment.start,
+                          //       children: [
+                          //         GestureDetector(
+                          //           onTap: () {
+                          //             _onFocusChange2();
+                          //           },
+                          //           child: TextField(
+                          //             focusNode: _focusN,
+                          //             decoration: InputDecoration(
+                          //               hintText: "ໄຊຍະບູລີ",
+                          //               hintStyle: TextStyle(fontSize: 15),
+                          //               prefixIcon: Icon(
+                          //                 CupertinoIcons.circle_filled,
+                          //                 size: 10.0,
+                          //                 color: Colors.blue,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //         GestureDetector(
+                          //           onTap: () {
+                          //             _onFocusChange();
+                          //           },
+                          //           child: TextField(
+                          //             focusNode: _focus,
+                          //             decoration: InputDecoration(
+                          //               hintText: "ຫຼວງພະບາງ",
+                          //               hintStyle: TextStyle(fontSize: 15),
+                          //               prefixIcon: Icon(
+                          //                 CupertinoIcons.circle_filled,
+                          //                 size: 10.0,
+                          //                 color: Colors.red,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //         // SizedBox(height: 40),
+                          //         SizedBox(height: 30),
+                          //         GestureDetector(
+                          //           onTap: () async {
+                          //             final DateTime? dateTime =
+                          //                 await showDatePicker(
+                          //               context: context,
+                          //               initialDate: selectedDate,
+                          //               firstDate: DateTime(2000),
+                          //               lastDate: DateTime(3000),
+                          //             );
+                          //             if (dateTime != null) {
+                          //               setState(() {
+                          //                 selectedDate = dateTime;
+                          //               });
+                          //             }
+                          //           },
+                          //           child: Row(
+                          //             children: [
+                          //               Text(
+                          //                 "${formatter.format(selectedDate)}",
+                          //                 style: TextStyle(fontSize: 20),
+                          //               ),
+                          //               Icon(
+                          //                 Icons.calendar_month,
+                          //                 size: 20,
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+
+                          //         SizedBox(height: 20),
+                          //         Column(
+                          //           children: [
+                          //             SizedBox(
+                          //               width:
+                          //                   350, // Set the width of the SizedBox
+                          //               height:
+                          //                   50, // Set the height of the SizedBox
+                          //               child: ElevatedButton(
+                          //                 onPressed: () {
+                          //                   Navigator.push(
+                          //                     context,
+                          //                     MaterialPageRoute(
+                          //                         builder: (context) =>
+                          //                             Search_tickets()),
+                          //                   );
+                          //                   // Add your button click logic here
+                          //                 },
+                          //                 style: ElevatedButton.styleFrom(
+                          //                   primary: Color(
+                          //                       0xFFEC2028), // Button background color
+                          //                 ),
+                          //                 //  Color(0xFFEC2028);
+                          //                 child: Text(
+                          //                   'ກວດສອບປີ້',
+                          //                   style: TextStyle(
+                          //                       fontSize: 20,
+                          //                       color: Colors.white),
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -327,9 +478,7 @@ class _BusViewState extends State<BusView> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-         
           BottomNavigationBarItem(
-            
             icon: ImageIcon(
               AssetImage("assets/icons/beranda.png"),
             ),
@@ -349,28 +498,25 @@ class _BusViewState extends State<BusView> {
             label: "ບັນຊີຂອງຂ້ອຍ",
           ),
         ],
-        onTap: (int index){
-             if(index == 0){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeView() ),
-                      );
-
-             } else if (index == 1){
-              Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Mytickests() ),
-                      );
-             } else if (index == 2){
-                 Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ProfileScreen() ),
-                      );
-             }
+        onTap: (int index) {
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeView()),
+            );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Mytickests()),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfileScreen()),
+            );
+          }
         },
-      
       ),
-      
     );
   }
 }
@@ -580,4 +726,583 @@ class ClipPathClass extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
+}
+
+Widget _originAndDestionationIcon() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[
+      Text("", style: TextStyle(fontSize: 25)),
+      SizedBox(height: 15),
+      Icon(Icons.swap_vert, color: Color(0xFFF00d5d8), size: 40),
+      SizedBox(height: 15),
+      Text("", style: TextStyle(fontSize: 25)),
+    ],
+  );
+}
+
+Widget _originAndDestionation(BuildContext context) {
+  var name = 0;
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[
+      Column(
+        children: [
+          GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return SizedBox(
+                    height: 600,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "ເລືອກສະຖານີຕົ້ນທາງ",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Icon(Icons.close, size: 20),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    // color: Colors.white70,
+                                    border: Border.all(color: Colors.grey)),
+                                child: Center(
+                                  child: Text(
+                                    "ໄຊຍະບູລີ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+
+                                    // color: Colors.white70,
+                                    border: Border.all(color: Colors.grey)),
+                                child: Center(
+                                  child: Text(
+                                    "ເມືອງພຽງ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    // color: Colors.white70,
+                                    border: Border.all(color: Colors.grey)),
+                                child: Center(
+                                  child: Text(
+                                    "ເມືອງປາກລາຍ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    // color: Colors.white70,
+                                    border: Border.all(color: Colors.grey)),
+                                child: Center(
+                                  child: Text(
+                                    "ໄຊຍະບູລີ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    // color: Colors.white70,
+                                    border: Border.all(color: Colors.grey)),
+                                child: Center(
+                                  child: Text(
+                                    "ໄຊຍະບູລີ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    // color: Colors.white70,
+                                    border: Border.all(color: Colors.grey)),
+                                child: Center(
+                                  child: Text(
+                                    "ໄຊຍະບູລີ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    // color: Colors.white70,
+                                    border: Border.all(color: Colors.grey)),
+                                child: Center(
+                                  child: Text(
+                                    "ໄຊຍະບູລີ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    // color: Colors.white70,
+                                    border: Border.all(color: Colors.grey)),
+                                child: Center(
+                                  child: Text(
+                                    "ໄຊຍະບູລີ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    // color: Colors.white70,
+                                    border: Border.all(color: Colors.grey)),
+                                child: Center(
+                                  child: Text(
+                                    "ໄຊຍະບູລີ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    // color: Colors.white70,
+                                    border: Border.all(color: Colors.grey)),
+                                child: Center(
+                                  child: Text(
+                                    "ໄຊຍະບູລີ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    // color: Colors.white70,
+                                    border: Border.all(color: Colors.grey)),
+                                child: Center(
+                                  child: Text(
+                                    "ໄຊຍະບູລີ",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  // setState(() {
+                                  //   naum++;
+                                  // });
+                                },
+                                child: Container(
+                                  width: 100,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(color: Colors.grey),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "$name",
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          // Additional widgets for your bottom sheet go here
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "ຈາກ \n",
+                    style: TextStyle(color: Color(0xFFFb7b7c5), fontSize: 14),
+                  ),
+                  TextSpan(
+                    text: "ຫຼວງພະບາງ",
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+      SizedBox(height: 20),
+      GestureDetector(
+        onTap: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return SizedBox(
+                height: 1000,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "ເລືອກສະຖານີປາຍທາງ",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pop(); // Use Navigator.of(context)
+                            },
+                            child: Icon(Icons.close, size: 20),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                // color: Colors.white70,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                "ໄຊຍະບູລີ",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+
+                                // color: Colors.white70,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                "ເມືອງພຽງ",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+
+                                // color: Colors.white70,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                "ເມືອງປາກລາຍ",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+
+                                // color: Colors.white70,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                "ເມືອງແກ່ນທ້າວ",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+
+                                // color: Colors.white70,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                "ເມືອງຫົງສາ",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+
+                                // color: Colors.white70,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                "ເມືອງເງີນ",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+
+                                // color: Colors.white70,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                "ເມືອງຊຽງຮ່ອນ",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+
+                                // color: Colors.white70,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                "ເມືອງຄອບ",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+
+                                // color: Colors.white70,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                "ໂພນສະຫວັນ",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+
+                                // color: Colors.white70,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                "ເມືອງນານ",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+
+                                // color: Colors.white70,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                "ເມືອງພູຄູນ",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+
+                                // color: Colors.white70,
+                                border: Border.all(color: Colors.grey)),
+                            child: Center(
+                              child: Text(
+                                "ເມືອງຊຽງເງີນ",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
+        child: Column(
+          children: <Widget>[
+            RichText(
+              text: TextSpan(children: <TextSpan>[
+                TextSpan(
+                  text: "ຮອດ \n",
+                  style: TextStyle(color: Color(0xFFFb7b7c5), fontSize: 14),
+                ),
+                TextSpan(
+                  text: "ຫຼວງນໍ້າທາ",
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+              ]),
+            ),
+          ],
+        ),
+      )
+    ],
+  );
+}
+
+Widget _iconDestination() {
+  return Container(
+    child: Column(
+      children: <Widget>[
+        Icon(Icons.bus_alert, color: Color(0xFFF00d5d8), size: 30),
+        Icon(Icons.fiber_manual_record, color: Color(0xFFF00d5d8), size: 12),
+        Icon(Icons.fiber_manual_record, color: Color(0xFFF00d5d8), size: 12),
+        Icon(Icons.fiber_manual_record, color: Color(0xFFF00d5d8), size: 12),
+        Icon(Icons.fiber_manual_record, color: Color(0xFFFf89380), size: 12),
+        Icon(Icons.fiber_manual_record, color: Color(0xFFFf89380), size: 12),
+        Icon(Icons.fiber_manual_record, color: Color(0xFFFf89380), size: 12),
+        Icon(Icons.location_on, color: Color(0xFFFf89380), size: 30),
+      ],
+    ),
+  );
 }
