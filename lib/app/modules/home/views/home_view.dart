@@ -72,6 +72,7 @@ class HomeView extends GetView<HomeController> {
                         padding: EdgeInsets.all(15),
                         margin: EdgeInsets.symmetric(horizontal: 25),
                         decoration: BoxDecoration(
+                          
                           gradient: LinearGradient(
                             colors: [
                               Color(0xFFE52D27),
