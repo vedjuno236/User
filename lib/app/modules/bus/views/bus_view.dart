@@ -75,7 +75,7 @@ class _BusViewState extends State<BusView> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 3.5,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
+                  image: const DecorationImage(
                     image: AssetImage("assets/images/img-2.png"),
                     fit: BoxFit.cover,
                   ),
@@ -87,7 +87,7 @@ class _BusViewState extends State<BusView> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20),
                   ),
@@ -98,7 +98,7 @@ class _BusViewState extends State<BusView> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -113,10 +113,10 @@ class _BusViewState extends State<BusView> {
                                         builder: (context) => HomeView()),
                                   );
                                 },
-                                child: Icon(CupertinoIcons.chevron_left,
+                                child: const Icon(CupertinoIcons.chevron_left,
                                     color: Colors.white),
                               ),
-                              Icon(
+                              const Icon(
                                 CupertinoIcons.bus,
                                 color: Colors.white,
                               )
@@ -128,7 +128,7 @@ class _BusViewState extends State<BusView> {
                             margin: EdgeInsets.only(top: 130, bottom: 5),
                             width: MediaQuery.of(context).size.width,
                             height: 270,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(14))),
@@ -171,7 +171,7 @@ class _BusViewState extends State<BusView> {
                                                                   MainAxisAlignment
                                                                       .spaceBetween,
                                                               children: [
-                                                                Text(
+                                                                const Text(
                                                                   "ເລືອກສະຖານີຕົ້ນທາງ",
                                                                   style: TextStyle(
                                                                       fontSize:
@@ -206,7 +206,9 @@ class _BusViewState extends State<BusView> {
                                                                     setState(
                                                                         () {
                                                                       _message =
-                                                                          'ໄຊຍະບູລີ';
+                                                                          'ຫຼວງພະບາງ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -221,10 +223,10 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
-                                                                        "ໄຊຍະບູລີ",
+                                                                        "ຫຼວງພະບາງ",
                                                                         style: TextStyle(
                                                                             fontSize:
                                                                                 18,
@@ -240,6 +242,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ເມືອງພຽງ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -254,7 +258,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ເມືອງພຽງ",
@@ -273,6 +277,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ເມືອງປາກລາຍ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -287,7 +293,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ເມືອງປາກລາຍ",
@@ -302,7 +308,7 @@ class _BusViewState extends State<BusView> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                                 height: 10),
                                                             Row(
                                                               mainAxisAlignment:
@@ -315,6 +321,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ເມືອງແກ່ນທ້າວ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -329,7 +337,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ເມືອງແກ່ນທ້າວ",
@@ -348,6 +356,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ເມືອງຫົງສາ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -362,7 +372,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ເມືອງຫົງສາ",
@@ -381,6 +391,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ເມືອງເງີນ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -395,7 +407,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ເມືອງເງີນ",
@@ -423,6 +435,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ເມືອງຊຽງຮ່ອນ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -437,7 +451,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ເມືອງຊຽງຮ່ອນ",
@@ -456,6 +470,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ເມືອງຄອບ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -470,7 +486,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ເມືອງຄອບ",
@@ -489,6 +505,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ໂພນສະຫວັນ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -503,7 +521,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ໂພນສະຫວັນ",
@@ -531,6 +549,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ເມືອງນານ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -545,7 +565,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ເມືອງນານ",
@@ -564,6 +584,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ເມືອງພູຄູນ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -578,7 +600,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ເມືອງພູຄູນ",
@@ -597,6 +619,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ເມືອງຊຽງເງີນ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -611,7 +635,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ເມືອງຊຽງເງີນ",
@@ -626,7 +650,7 @@ class _BusViewState extends State<BusView> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 10,
                                                             ),
                                                             Row(
@@ -640,6 +664,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ວຽງຈັນ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -654,7 +680,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ວຽງຈັນ",
@@ -673,6 +699,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ວັງວຽງ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -687,7 +715,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ວັງວຽງ",
@@ -706,6 +734,8 @@ class _BusViewState extends State<BusView> {
                                                                         () {
                                                                       _message =
                                                                           'ກິວກະຈໍາ';
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:
@@ -720,7 +750,7 @@ class _BusViewState extends State<BusView> {
                                                                             color:
                                                                                 Colors.grey)),
                                                                     child:
-                                                                        Center(
+                                                                        const Center(
                                                                       child:
                                                                           Text(
                                                                         "ກິວກະຈໍາ",
@@ -746,7 +776,7 @@ class _BusViewState extends State<BusView> {
                                               child: RichText(
                                                 text: TextSpan(
                                                   children: [
-                                                    TextSpan(
+                                                    const TextSpan(
                                                       text: "ຈາກ \n",
                                                       style: TextStyle(
                                                           color: Color(
@@ -755,7 +785,7 @@ class _BusViewState extends State<BusView> {
                                                     ),
                                                     TextSpan(
                                                       text: "$_message",
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 20,
                                                           color: Colors.black),
                                                     ),
@@ -765,7 +795,7 @@ class _BusViewState extends State<BusView> {
                                             )
                                           ],
                                         ),
-                                        SizedBox(height: 20),
+                                        const SizedBox(height: 20),
                                         GestureDetector(
                                           onTap: () {
                                             showModalBottomSheet(
@@ -784,7 +814,7 @@ class _BusViewState extends State<BusView> {
                                                               MainAxisAlignment
                                                                   .spaceBetween,
                                                           children: [
-                                                            Text(
+                                                            const Text(
                                                               "ເລືອກສະຖານີປາຍທາງ",
                                                               style: TextStyle(
                                                                   fontSize: 18,
@@ -798,13 +828,13 @@ class _BusViewState extends State<BusView> {
                                                                         context)
                                                                     .pop(); // Use Navigator.of(context)
                                                               },
-                                                              child: Icon(
+                                                              child: const Icon(
                                                                   Icons.close,
                                                                   size: 20),
                                                             ),
                                                           ],
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
                                                         Row(
@@ -817,6 +847,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ໄຊຍະບູລີ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -829,7 +861,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ໄຊຍະບູລີ",
                                                                     style: TextStyle(
@@ -846,6 +879,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ເມືອງພຽງ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -858,7 +893,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ເມືອງພຽງ",
                                                                     style: TextStyle(
@@ -875,6 +911,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ເມືອງປາກລາຍ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -887,7 +925,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ເມືອງປາກລາຍ",
                                                                     style: TextStyle(
@@ -901,7 +940,8 @@ class _BusViewState extends State<BusView> {
                                                             ),
                                                           ],
                                                         ),
-                                                        SizedBox(height: 10),
+                                                        const SizedBox(
+                                                            height: 10),
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -912,6 +952,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ເມືອງແກ່ນທ້າວ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -924,7 +966,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ເມືອງແກ່ນທ້າວ",
                                                                     style: TextStyle(
@@ -941,6 +984,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ເມືອງຫົງສາ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -953,7 +998,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ເມືອງຫົງສາ",
                                                                     style: TextStyle(
@@ -970,6 +1016,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ເມືອງເງີນ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -982,7 +1030,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ເມືອງເງີນ",
                                                                     style: TextStyle(
@@ -996,7 +1045,8 @@ class _BusViewState extends State<BusView> {
                                                             ),
                                                           ],
                                                         ),
-                                                        SizedBox(height: 10),
+                                                        const SizedBox(
+                                                            height: 10),
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -1007,6 +1057,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ເມືອງຊຽງຮ່ອນ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -1019,7 +1071,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ເມືອງຊຽງຮ່ອນ",
                                                                     style: TextStyle(
@@ -1036,6 +1089,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ເມືອງຄອບ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -1048,7 +1103,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ເມືອງຄອບ",
                                                                     style: TextStyle(
@@ -1065,6 +1121,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ໂພນສະຫວັນ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -1077,7 +1135,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ໂພນສະຫວັນ",
                                                                     style: TextStyle(
@@ -1091,7 +1150,8 @@ class _BusViewState extends State<BusView> {
                                                             ),
                                                           ],
                                                         ),
-                                                        SizedBox(height: 10),
+                                                        const SizedBox(
+                                                            height: 10),
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -1102,6 +1162,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ເມືອງນານ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -1114,7 +1176,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ເມືອງນານ",
                                                                     style: TextStyle(
@@ -1131,6 +1194,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ເມືອງພູຄູນ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -1143,7 +1208,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ເມືອງພູຄູນ",
                                                                     style: TextStyle(
@@ -1160,6 +1226,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ເມືອງຊຽງເງີນ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -1176,7 +1244,8 @@ class _BusViewState extends State<BusView> {
                                                                             201,
                                                                             188,
                                                                             188))),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ເມອງຊຽງເງີນ",
                                                                     style: TextStyle(
@@ -1190,7 +1259,7 @@ class _BusViewState extends State<BusView> {
                                                             ),
                                                           ],
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
                                                         Row(
@@ -1203,6 +1272,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ວຽງຈັນ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -1215,7 +1286,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ວຽງຈັນ",
                                                                     style: TextStyle(
@@ -1232,6 +1304,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ວັງວຽງ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -1244,7 +1318,8 @@ class _BusViewState extends State<BusView> {
                                                                     border: Border.all(
                                                                         color: Colors
                                                                             .grey)),
-                                                                child: Center(
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ວັງວຽງ",
                                                                     style: TextStyle(
@@ -1261,6 +1336,8 @@ class _BusViewState extends State<BusView> {
                                                                 setState(() {
                                                                   name =
                                                                       'ກິວກະຈໍາ';
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 });
                                                               },
                                                               child: Container(
@@ -1268,10 +1345,13 @@ class _BusViewState extends State<BusView> {
                                                                 height: 50,
                                                                 decoration: BoxDecoration(
                                                                     borderRadius:
-                                                                        BorderRadius.circular( 8),
+                                                                        BorderRadius.circular(
+                                                                            8),
                                                                     border: Border.all(
-                                                                        color: Colors.grey)),
-                                                                child: Center(
+                                                                        color: Colors
+                                                                            .grey)),
+                                                                child:
+                                                                    const Center(
                                                                   child: Text(
                                                                     "ກິວກະຈໍາ",
                                                                     style: TextStyle(
@@ -1297,7 +1377,7 @@ class _BusViewState extends State<BusView> {
                                               RichText(
                                                 text: TextSpan(
                                                     children: <TextSpan>[
-                                                      TextSpan(
+                                                      const TextSpan(
                                                         text: "ຮອດ \n",
                                                         style: TextStyle(
                                                             color: Color(
@@ -1306,7 +1386,7 @@ class _BusViewState extends State<BusView> {
                                                       ),
                                                       TextSpan(
                                                         text: "$name",
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 20,
                                                             color:
                                                                 Colors.black),
@@ -1319,9 +1399,9 @@ class _BusViewState extends State<BusView> {
                                       ],
                                     ),
 
-                                    SizedBox(width: 70),
+                                    const SizedBox(width: 70),
                                     // _originAndDestionationIcon(),
-                                    Column(
+                                    const Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       mainAxisAlignment:
@@ -1352,7 +1432,7 @@ class _BusViewState extends State<BusView> {
                                             child: TableCalendar(
                                               locale: "lo_LA",
                                               rowHeight: 43,
-                                              headerStyle: HeaderStyle(
+                                              headerStyle: const HeaderStyle(
                                                   formatButtonVisible: false,
                                                   titleCentered: true),
                                               availableGestures:
@@ -1364,7 +1444,18 @@ class _BusViewState extends State<BusView> {
                                                   DateTime.utc(2010, 10, 16),
                                               lastDay:
                                                   DateTime.utc(2030, 3, 14),
-                                              onDaySelected: _onDaySelected,
+                                              //
+                                              onDaySelected:
+                                                  (selectedDay, focusedDay) {
+                                                // Update the selectedDate when a day is selected.
+                                                setState(() {
+                                                  selectedDate = selectedDay;
+                                                });
+
+                                                // Add your logic here when a day is selected.
+                                                Navigator.pop(
+                                                    context); // Dismiss the modal when a day is selected.
+                                              },
                                             ),
                                           ),
                                         );
@@ -1374,7 +1465,7 @@ class _BusViewState extends State<BusView> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         "ເລືອກເວລາເດີນທາງ",
                                         style: TextStyle(
                                             fontSize: 15,
@@ -1388,7 +1479,7 @@ class _BusViewState extends State<BusView> {
                                             "${formatter.format(selectedDate)}",
                                             style: TextStyle(fontSize: 20),
                                           ),
-                                          Icon(
+                                          const Icon(
                                             Icons.calendar_month,
                                             size: 20,
                                           ),
@@ -1412,7 +1503,7 @@ class _BusViewState extends State<BusView> {
                                     width: 280,
                                     height: 50,
                                     decoration: BoxDecoration(
-                                      gradient: LinearGradient(
+                                      gradient: const LinearGradient(
                                         colors: <Color>[
                                           Colors.redAccent,
                                           Colors.orangeAccent,
@@ -1421,7 +1512,7 @@ class _BusViewState extends State<BusView> {
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     padding: EdgeInsets.all(16.0),
-                                    child: Text(
+                                    child: const Text(
                                       "ກວດສອບປີ້",
                                       style: TextStyle(
                                           fontSize: 15,
@@ -1437,7 +1528,7 @@ class _BusViewState extends State<BusView> {
                         ],
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -1462,7 +1553,7 @@ class _BusViewState extends State<BusView> {
                       height: 500,
                       child: Column(
                         children: [
-                          Padding(
+                          const Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

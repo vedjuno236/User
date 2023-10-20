@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset("assets/logo/logo-laos.png"),
-                Text(
+              const  Text(
                   "ບໍລິສັດ Lao Ticket",
                   style: TextStyle(fontSize: 15),
                 ),
