@@ -1,27 +1,35 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_final/app/modules/login/views/otp_login_view.dart';
+import 'package:flutter_final/app/modules/home/views/home_view.dart';
+// import 'package:flutter_final/app/modules/login/views/otp_login_view.dart';
+import 'package:flutter_verification_code/flutter_verification_code.dart';
+// import 'package:get/get.dart';
 // import 'package:flutter_final/app/routes/app_pages.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 
-import '../controllers/login_controller.dart';
+class LoginView extends StatefulWidget {
+  const LoginView({Key? key}) : super(key: key);
 
-class LoginView extends GetView<LoginController> {
-  final TextEditingController phoneController = TextEditingController();
-  Country selectedCountry = Country(
-    phoneCode: "856",
-    countryCode: "LAOS",
-    e164Sc: 0,
-    geographic: true,
-    level: 1,
-    name: "Laos",
-    example: "Laos",
-    displayName: "Laos",
-    displayNameNoCountryCode: "LAOS",
-    e164Key: "",
-  );
+  @override
+  _LoginViewState createState() => _LoginViewState();
+}
 
+final TextEditingController phoneController = TextEditingController();
+Country selectedCountry = Country(
+  phoneCode: "856",
+  countryCode: "LAOS",
+  e164Sc: 0,
+  geographic: true,
+  level: 1,
+  name: "Laos",
+  example: "Laos",
+  displayName: "Laos",
+  displayNameNoCountryCode: "LAOS",
+  e164Key: "",
+);
+
+class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     phoneController.selection = TextSelection.fromPosition(
@@ -29,12 +37,38 @@ class LoginView extends GetView<LoginController> {
         offset: phoneController.text.length,
       ),
     );
+
+// import '../controllers/login_controller.dart';
+
+// class LoginView extends GetView<LoginController> {
+//   final TextEditingController phoneController = TextEditingController();
+//   Country selectedCountry = Country(
+//     phoneCode: "856",
+//     countryCode: "LAOS",
+//     e164Sc: 0,
+//     geographic: true,
+//     level: 1,
+//     name: "Laos",
+//     example: "Laos",
+//     displayName: "Laos",
+//     displayNameNoCountryCode: "LAOS",
+//     e164Key: "",
+//   );
+
+//   @override
+//   Widget build(BuildContext context) {
+//     phoneController.selection = TextSelection.fromPosition(
+//       TextPosition(
+//         offset: phoneController.text.length,
+//       ),
+//     );
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: ListView(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
               alignment: Alignment.center,
               height: 150,
@@ -43,16 +77,16 @@ class LoginView extends GetView<LoginController> {
                 fit: BoxFit.contain,
               ),
             ),
-            SizedBox(height: 30),
-            Text(
+            const SizedBox(height: 30),
+            const Text(
               "ກະລຸນາໃສ່ດ້ວຍເບີໂທ ຂອງທ່ານ",
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 30),
-            Text(
+            const SizedBox(height: 30),
+            const Text(
               "ເບີໂທ",
               style: TextStyle(
                 fontSize: 18,
@@ -76,16 +110,16 @@ class LoginView extends GetView<LoginController> {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
-              // onChanged: (value) {
-              //   setState(() {
-              //     phoneController.text = value;
-              //   });
-              // },
+              onChanged: (value) {
+                setState(() {
+                  phoneController.text = value;
+                });
+              },
               decoration: InputDecoration(
                 hintText: "020 12345678",
                 hintStyle: TextStyle(
                   fontWeight: FontWeight.w500,
-                  fontSize: 15,
+                  fontSize: 19,
                   color: Colors.grey.shade600,
                 ),
                 enabledBorder: OutlineInputBorder(
@@ -106,13 +140,13 @@ class LoginView extends GetView<LoginController> {
                             bottomSheetHeight: 550,
                           ),
                           onSelect: (value) {
-                            // setState(() {
-                            //   selectedCountry = value;
-                            // });
+                            setState(() {
+                              selectedCountry = value;
+                            });
                           });
                     },
                     child: Text(
-                      "${selectedCountry.flagEmoji} + ${selectedCountry.phoneCode}",
+                      "${selectedCountry.flagEmoji} + ${selectedCountry.phoneCode} |",
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.black,
@@ -139,21 +173,60 @@ class LoginView extends GetView<LoginController> {
                     : null,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 5),
+            Column(
+              children: [
+                VerificationCode(
+                  length: 6,
+                  textStyle: const TextStyle(fontSize: 20, color: Colors.black),
+                  underlineColor: Colors.black,
+                  keyboardType: TextInputType.number,
+                  underlineUnfocusedColor: Colors.black26,
+                  onCompleted: (value) {},
+                  onEditing: (value) {},
+                ),
+                const SizedBox(height: 5),
+                GestureDetector(
+                  onTap: () {
+                    // Handle the tap here
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        width: 100,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.redAccent),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "ຂໍລະຫັດ OTP",
+                            style: TextStyle(fontSize: 18, color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
             Row(
               children: [
-                Obx(
-                  () => Checkbox(
-                    activeColor: Colors.red,
-                    value: controller.checkC.value,
-                    onChanged: (value) => controller.checkC.toggle(),
-                  ),
-                ),
+                // Obx(
+                //   () => Checkbox(
+                //     activeColor: Colors.red,
+                //     value: controller.checkC.value,
+                //     onChanged: (value) => controller.checkC.toggle(),
+                //   ),
+                // ),
                 Expanded(
                   child: RichText(
                     text: TextSpan(
                       text: "ຂ້ອຍຕົກລົງ,  ",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                       ),
                       children: [
@@ -163,11 +236,11 @@ class LoginView extends GetView<LoginController> {
                               print("ເຫັນດີກັບ");
                             },
                           text: "ກັບເບີໂທ",
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.red,
                           ),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: ",",
                           style: TextStyle(
                             color: Colors.black,
@@ -183,7 +256,7 @@ class LoginView extends GetView<LoginController> {
                           //   color: Colors.red,
                           // ),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: ", ແລະ ",
                           style: TextStyle(
                             color: Colors.black,
@@ -195,11 +268,11 @@ class LoginView extends GetView<LoginController> {
                               print("ຄວາມຕົວຂອງ");
                             },
                           text: "ເປັນສ່ວນ",
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.red,
                           ),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: " ຕົວຂອງຂ້ອຍ",
                           style: TextStyle(
                             color: Colors.black,
@@ -211,7 +284,7 @@ class LoginView extends GetView<LoginController> {
                 ),
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: 50,
@@ -220,17 +293,17 @@ class LoginView extends GetView<LoginController> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => OtpLoginView()),
+                    MaterialPageRoute(builder: (context) => HomeView()),
                   );
                 },
               ),
             ),
 
-            SizedBox(height: 20),
-            Center(
+            const SizedBox(height: 20),
+            const Center(
               child: Text("ຫຼືເຂົ້າສູ່ລະບົບໂດຍໃຊ້"),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -240,8 +313,8 @@ class LoginView extends GetView<LoginController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset("assets/icons/fb.png"),
-                      SizedBox(width: 7),
-                      Text(
+                      const SizedBox(width: 7),
+                      const Text(
                         "Facebook",
                         style: TextStyle(
                           fontSize: 16,
@@ -252,7 +325,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(
-                      Size(150, 50),
+                  const    Size(150, 50),
                     ),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
@@ -260,7 +333,7 @@ class LoginView extends GetView<LoginController> {
                       ),
                     ),
                     side: MaterialStateProperty.all(
-                      BorderSide(
+                      const BorderSide(
                         color: Color(0xFF3B5998),
                       ),
                     ),
@@ -272,8 +345,8 @@ class LoginView extends GetView<LoginController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset("assets/icons/google.png"),
-                      SizedBox(width: 7),
-                      Text(
+                      const SizedBox(width: 7),
+                      const Text(
                         "Google",
                         style: TextStyle(
                           fontSize: 16,
@@ -284,7 +357,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all(
-                      Size(150, 50),
+                     const Size(150, 50),
                     ),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
@@ -292,7 +365,7 @@ class LoginView extends GetView<LoginController> {
                       ),
                     ),
                     side: MaterialStateProperty.all(
-                      BorderSide(
+                      const BorderSide(
                         color: Color(0xFF1DA1F2),
                       ),
                     ),

@@ -6,9 +6,6 @@ import 'package:flutter_final/app/modules/onboarding/views/onboarding.dart';
 import 'package:flutter_final/app/modules/search_form/views/search_form.dart';
 import 'package:flutter_final/app/modules/search_to/views/search_to.dart';
 import 'package:get/get.dart';
-
-
-
 part 'app_routes.dart';
 
 class AppPages {

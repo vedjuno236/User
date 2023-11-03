@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_final/app/modules/login/views/login_view.dart';
+// import 'package:flutter_final/app/modules/login/views/otp_login_view.dart';
+// import 'package:flutter_final/app/modules/login/views/login_view.dart';
+import 'package:flutter_final/firebase_options.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'app/routes/app_pages.dart';
 import 'app/widgets/splash.dart';
-// import 'theme/custom_theme.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
 
 void main() async {
-   Intl.defaultLocale = 'lo_LA';
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  Intl.defaultLocale = 'lo_LA';
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(DevicePreview(
     builder: (context) => MyApp(),
   ));
@@ -32,8 +39,10 @@ class MyApp extends StatelessWidget {
         } else {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
+            // ChangeNotifierProvider(create: (_) => AuthProvider()),
             title: "Application",
-            initialRoute: Routes.HOME,
+            // initialRoute: Routes.LOGIN,
+            home: LoginView(),
             getPages: AppPages.routes,
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
@@ -41,7 +50,7 @@ class MyApp extends StatelessWidget {
             ],
             supportedLocales: const [
               Locale('lo', 'LA'),
-              // Locale('en','US'),
+              Locale('en'),
 
               // Add other supported locales here
             ],

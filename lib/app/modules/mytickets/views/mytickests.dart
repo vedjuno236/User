@@ -214,6 +214,7 @@ class _MytickestsState extends State<Mytickests> {
                             // ],
                           ),
                         ),
+                        
                         Container(
                           margin: EdgeInsets.only(top: 1, bottom: 5),
                           width: MediaQuery.of(context).size.width,

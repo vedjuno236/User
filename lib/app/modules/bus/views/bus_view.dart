@@ -76,7 +76,7 @@ class _BusViewState extends State<BusView> {
                 height: MediaQuery.of(context).size.height / 3.5,
                 decoration: BoxDecoration(
                   image: const DecorationImage(
-                    image: AssetImage("assets/images/img-2.png"),
+                    image: AssetImage("assets/images/img-1.png"),
                     fit: BoxFit.cover,
                   ),
                   gradient: LinearGradient(
@@ -1570,7 +1570,7 @@ class _BusViewState extends State<BusView> {
                             child: Row(
                               children: [
                                 ItemTerbaru(
-                                  image: "assets/images/bus-1.jpg",
+                                  image: "assets/images/img-6.png",
                                 ),
                                 ItemTerbaru(
                                   image: "assets/images/img-5.png",

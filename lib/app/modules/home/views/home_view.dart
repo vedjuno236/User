@@ -15,7 +15,7 @@ class HomeView extends GetView<HomeController> {
       appBar: AppBar(
         centerTitle: false,
         title: RichText(
-          text: TextSpan(
+          text: const TextSpan(
             text: "Hi, ",
             style: TextStyle(
               fontSize: 18,
@@ -71,7 +71,7 @@ class HomeView extends GetView<HomeController> {
                       child: Container(
                         padding: EdgeInsets.all(15),
                         margin: EdgeInsets.symmetric(horizontal: 25),
-                        decoration: BoxDecoration(
+                        decoration:const BoxDecoration(
                           
                           gradient: LinearGradient(
                             colors: [
@@ -96,7 +96,7 @@ class HomeView extends GetView<HomeController> {
                                       color: Color(0xFFF7B731),
                                     ),
                                     SizedBox(width: 10),
-                                    Text(
+                                   const Text(
                                       "ຄະແນນ",
                                       style: TextStyle(
                                         color: Colors.white,
@@ -116,7 +116,7 @@ class HomeView extends GetView<HomeController> {
                                       color: Color(0xFFF7B731),
                                     ),
                                     SizedBox(width: 10),
-                                    Text(
+                                   const Text(
                                       "ຍອດເງີນຂອງຂ້ອຍ",
                                       style: TextStyle(
                                         color: Colors.white,
@@ -136,7 +136,7 @@ class HomeView extends GetView<HomeController> {
                                       color: Color(0xFFF7B731),
                                     ),
                                     SizedBox(width: 10),
-                                    Text(
+                                  const  Text(
                                       "ຜູ້ຈ່າຍເງີນ",
                                       style: TextStyle(
                                         color: Colors.white,
@@ -149,11 +149,11 @@ class HomeView extends GetView<HomeController> {
                               ],
                             ),
                             SizedBox(height: 10),
-                            Divider(
+                           const Divider(
                               color: Colors.black,
                             ),
-                            SizedBox(height: 10),
-                            Row(
+                          const  SizedBox(height: 10),
+                          const  Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -173,7 +173,7 @@ class HomeView extends GetView<HomeController> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  const Text(
+                                   Text(
                                     "ເປີດໃຊ້ດຽວນີ້ !",
                                     style: TextStyle(
                                       color: Colors.blue,
@@ -186,7 +186,7 @@ class HomeView extends GetView<HomeController> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(
+                               const Text(
                                   "",
                                   style: TextStyle(
                                     color: Colors.white,
@@ -208,30 +208,8 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
                     SizedBox(height: 15),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        // children: [
-                        //   StatusCard(
-                        //     title: "Internet",
-                        //     data: "12.19",
-                        //     satuan: "GB",
-                        //   ),
-                        //   StatusCard(
-                        //     title: "Telepon",
-                        //     data: "0",
-                        //     satuan: "Min",
-                        //   ),
-                        //   StatusCard(
-                        //     title: "SMS",
-                        //     data: "23",
-                        //     satuan: "SMS",
-                        //   ),
-                        // ],
-                      ),
-                    ),
-                    SizedBox(height: 15),
+                   
+                  
                   ],
                 ),
                 Container(
@@ -249,7 +227,7 @@ class HomeView extends GetView<HomeController> {
                             padding: EdgeInsets.symmetric(horizontal: 25),
                             children: [
                               SizedBox(height: 20),
-                              Text(
+                             const Text(
                                 "ລາຍການ",
                                 style: TextStyle(
                                   fontSize: 20,
@@ -289,12 +267,12 @@ class HomeView extends GetView<HomeController> {
                                 ],
                               ),
                               SizedBox(height: 30),
-                              Row(
+                           const   Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                               ),
                               SizedBox(height: 20),
-                              Row(
+                             const Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -350,7 +328,7 @@ class HomeView extends GetView<HomeController> {
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
                           height: 80,
-                          decoration: BoxDecoration(
+                          decoration:const BoxDecoration(
                             border: Border(
                               top: BorderSide(
                                 color: Color.fromARGB(255, 128, 125, 125),
@@ -554,14 +532,14 @@ class StatusCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style:const TextStyle(
                 fontSize: 16,
               ),
             ),
             RichText(
               text: TextSpan(
                 text: data,
-                style: TextStyle(
+                style:const TextStyle(
                   fontSize: 22,
                   color: Color(0xFFEC2028),
                   fontWeight: FontWeight.bold,

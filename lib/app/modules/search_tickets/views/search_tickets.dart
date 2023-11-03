@@ -1,8 +1,8 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_final/app/modules/book_tickets/views/book_tickets.dart';
+import 'package:flutter_final/app/modules/bus/views/bus_view.dart';
 
 class Search_tickets extends StatelessWidget {
   const Search_tickets({Key? key}) : super(key: key);
@@ -11,13 +11,21 @@ class Search_tickets extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
-
-        // brightness: Brightness.light,
+      
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BusView()),
+            );
+          },
+          //  icon: Icons.arrow_back_ios_new,
+          icon: const Icon(Icons.arrow_back_ios_new),
+        ),
         backgroundColor: Color(0xFFE52D27),
-        title: Column(
+        title: const Column(
           children: [
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -39,7 +47,7 @@ class Search_tickets extends StatelessWidget {
             ),
           ],
         ),
-        bottom: PreferredSize(
+        bottom: const PreferredSize(
           preferredSize: Size.fromHeight(50),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -194,10 +202,10 @@ class TicketView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
-                    Text(
+                    const Text(
                       "ຫຼວງພະບາງ",
                       style: TextStyle(
                           fontSize: 18,
@@ -209,7 +217,7 @@ class TicketView extends StatelessWidget {
                 SizedBox(
                   height: 4,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     SizedBox(
@@ -237,7 +245,7 @@ class TicketView extends StatelessWidget {
                 SizedBox(
                   height: 16,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
@@ -257,7 +265,7 @@ class TicketView extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 12),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
@@ -293,7 +301,7 @@ class TicketView extends StatelessWidget {
                   width: 10,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(10),
                             bottomRight: Radius.circular(10)),
                         color: Colors.grey.shade200),
@@ -354,10 +362,10 @@ class TicketView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   child: Icon(CupertinoIcons.bus, color: Colors.amber),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
-                Text("200 000 ກີບ",
+                const Text("200 000 ກີບ",
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -366,31 +374,35 @@ class TicketView extends StatelessWidget {
                 // SizedBox(
                 //   height: 40,
                 //   width: 80,
-                   Padding(
-                     padding: const EdgeInsets.all(10.0),
-                     child: ElevatedButton(
-                      onPressed: () {
-                        // Add your button click logic here
-                      },
-                      child: Text(
-                        "ຊື້",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all(Colors.white),
-                        backgroundColor: MaterialStateProperty.all(Colors.red),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(color: Colors.red),
-                        )),
-                      ),
-                                     // ),
-                                   ),
-                   ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BookTickets()),
+                      ); // Add your button click logic here
+                    },
+
+                    child: const Text(
+                      "ຈອງ",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(color: Colors.red),
+                      )),
+                    ),
+                    // ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -419,7 +431,7 @@ class TicketView1 extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Text(
+                    const Text(
                       "ໄຊຍະບູລີ",
                       style: TextStyle(
                           fontSize: 18,
@@ -505,7 +517,7 @@ class TicketView1 extends StatelessWidget {
                     SizedBox(
                       width: 16,
                     ),
-                    Text(
+                    const Text(
                       "ຫຼວງພະບາງ",
                       style: TextStyle(
                           fontSize: 18,
@@ -517,7 +529,7 @@ class TicketView1 extends StatelessWidget {
                 SizedBox(
                   height: 4,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     SizedBox(
@@ -545,7 +557,7 @@ class TicketView1 extends StatelessWidget {
                 SizedBox(
                   height: 16,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
@@ -565,7 +577,7 @@ class TicketView1 extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 12),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
@@ -665,7 +677,7 @@ class TicketView1 extends StatelessWidget {
                 SizedBox(
                   width: 16,
                 ),
-                Text("200 000 ກີບ",
+                const Text("200 000 ກີບ",
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -680,31 +692,35 @@ class TicketView1 extends StatelessWidget {
                 //         color: Colors.black)
                 //         )
                 // ),
-                SizedBox(width: 100),               
-                   Padding(
-                     padding: const EdgeInsets.all(10.0),
-                     child: ElevatedButton(
-                      onPressed: () {
-                        // Add your button click logic here
-                      },
-                      child: Text(
-                        "ຊື້",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all(Colors.white),
-                        backgroundColor: MaterialStateProperty.all(Colors.red),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(color: Colors.red),
-                        )),
-                      ),
-                                     ),
-                   ),
+                SizedBox(width: 100),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Add your button click logic here
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BookTickets()),
+                      );
+                    },
+                    child: Text(
+                      "ຈອງ",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(color: Colors.red),
+                      )),
+                    ),
+                  ),
+                ),
                 // ),
               ],
             ),
