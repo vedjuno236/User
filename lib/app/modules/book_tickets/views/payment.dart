@@ -1,31 +1,57 @@
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_final/app/modules/book_tickets/views/reservation_form.dart';
+import 'package:flutter_final/app/modules/book_tickets/views/bcel_one_payment.dart';
+// import 'package:flutter_final/app/modules/book_tickets/views/reservation_form.dart';
+import 'package:flutter_final/app/modules/bus/controllers/bus_controller.dart';
+import 'package:flutter_final/app/modules/home/views/home_view.dart';
+import 'package:flutter_final/app/modules/login/controllers/login_controller.dart';
+import 'package:flutter_final/app/modules/mytickets/views/list_my_tickets.dart';
+import 'package:flutter_final/app/modules/profile/profile_screen.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
+import '../../../const/formatter.dart';
+import '../../../model/departures_model.dart';
+import '../../../model/ticket_model.dart';
 
 class Payment extends StatefulWidget {
-  const Payment({Key? key}) : super(key: key);
+  final Departures departure;
+  final Ticket ticket;
+  const Payment({Key? key, required this.departure, required this.ticket})
+      : super(key: key);
 
   @override
   _PaymentState createState() => _PaymentState();
 }
 
 class _PaymentState extends State<Payment> {
+  late LoginController loginController;
+
+  @override
+  void initState() {
+    loginController = Get.find<LoginController>();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
         centerTitle: true,
-        title: const Text('ການຊໍາລະ'),
+        title: const Text(
+          'ການຊໍາລະ',
+          style: TextStyle(color: Colors.white),
+        ),
         leading: IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ReservationForm()),
-            );
+            Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+          ),
         ),
         elevation: 0,
       ),
@@ -48,13 +74,15 @@ class _PaymentState extends State<Payment> {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            const Text(
-                              "ໄຊຍະບູລີ",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.indigo),
-                            ),
+                            GetBuilder<BusController>(builder: (_) {
+                              return Text(
+                                _.departureStation,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.indigo),
+                              );
+                            }),
                             SizedBox(
                               width: 16,
                             ),
@@ -137,13 +165,15 @@ class _PaymentState extends State<Payment> {
                             const SizedBox(
                               width: 16,
                             ),
-                            const Text(
-                              "ຫຼວງພະບາງ",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.pink),
-                            )
+                            GetBuilder<BusController>(builder: (_) {
+                              return Text(
+                                _.arrivalStation,
+                                style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.pink),
+                              );
+                            })
                           ],
                         ),
                         new Divider(color: Colors.black12),
@@ -158,20 +188,20 @@ class _PaymentState extends State<Payment> {
                               color: Color.fromARGB(255, 238, 235, 235),
                               borderRadius: BorderRadius.circular(6),
                             ),
-                            child: const Padding(
+                            child: Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'ລົດຕູ້ທໍາມະດາ',
+                                    '${widget.departure.buses.busName}',
                                     style: TextStyle(
                                         fontSize: 19,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    'ບ່ອນນັ່ງທໍາມະດາ',
+                                    '${widget.ticket.ticketName}',
                                     style: TextStyle(
                                         fontSize: 19,
                                         fontWeight: FontWeight.bold),
@@ -181,21 +211,23 @@ class _PaymentState extends State<Payment> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        const Row(
+                        // const SizedBox(
+                        //   height: 16,
+                        // ),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              "01:00 AM",
+                              DateFormat("hh:mm a", "en-US").format(
+                                  widget.departure.routes.departureTime),
                               style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "05:30 PM",
+                              DateFormat("hh:mm a", "en-US")
+                                  .format(widget.departure.routes.arrivalTime),
                               style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
@@ -204,11 +236,13 @@ class _PaymentState extends State<Payment> {
                           ],
                         ),
                         const SizedBox(height: 12),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              "1 ຊົ່ວໂມງ 10ນາທີ",
+                              formatDuration(
+                                  widget.departure.routes.departureTime,
+                                  widget.departure.routes.arrivalTime),
                               style:
                                   TextStyle(fontSize: 12, color: Colors.grey),
                             ),
@@ -293,41 +327,96 @@ class _PaymentState extends State<Payment> {
                             ),
                           ],
                         ),
-                        new Divider(
-                          color: Colors.black38,
-                        ),
-                        SizedBox(height: 5),
-                        const Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'ທ້າວ ກຸເວດ ທໍາມະວົງ',
-                                  style: TextStyle(fontSize: 19),
-                                ),
-                                Text(
-                                  '100,000 KAL',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text('ບັດປະຈໍາຕົວ '),
-                                Text('0212*****02'),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text('ລົດຕູ້ທໍາມະດາ|'),
-                                Text('ບ່ອນນັ່ງ 01'),
-                              ],
-                            ),
-                          ],
-                        ),
+                        // new Divider(
+                        //   color: Colors.black38,
+                        // ),
+                        // SizedBox(height: 5),
+                        // GetBuilder<LoginController>(builder: (_) {
+                        //   return Column(
+                        //     children: [
+                        //       Row(
+                        //         mainAxisAlignment:
+                        //             MainAxisAlignment.spaceBetween,
+                        //         children: [
+                        //           Text(
+                        //             '  ${_.passenger?.username} ',
+                        //             style: TextStyle(fontSize: 18),
+                        //           ),
+                        //           Text(
+                        //             '${oCcy.format(widget.ticket.price)} LAK',
+                        //             style: TextStyle(
+                        //                 fontSize: 20,
+                        //                 fontWeight: FontWeight.bold),
+                        //           )
+                        //         ],
+                        //       ),
+                        //       Row(
+                        //         children: [
+                        //           Text('ບັດປະຈໍາຕົວ '),
+                        //           Text(
+                        //             '${_.passenger?.idCard}',
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       Row(
+                        //         children: [
+                        //           Text('${widget.departure.buses.busName}|'),
+                        //           // Text('ບ່ອນນັ່ງ 01'),
+                        //         ],
+                        //       ),
+                        //     ],
+                        //   );
+                        // }),
+                        GetBuilder<LoginController>(builder: (_) {
+                          return Column(
+                            children: [
+                              for (var entry in _.checkedPassenger.entries)
+                                if (entry.value == true)
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Divider(),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            ' ${_.passengerList.firstWhere((element) => element.passengerId == entry.key).username} ',
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          Text(
+                                            '${oCcy.format(widget.ticket.price)} LAK',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text('ບັດປະຈໍາຕົວ '),
+                                          Text(
+                                            '${_.passengerList.firstWhere((element) => element.passengerId == entry.key).idCard}',
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                              '${widget.departure.buses.busName}|'),
+                                          // Text('ບ່ອນນັ່ງ 01'),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                            ],
+                          );
+                        }),
                       ],
                     ),
                   ),
@@ -339,7 +428,7 @@ class _PaymentState extends State<Payment> {
               child: Container(
                 margin: EdgeInsets.only(top: 1, bottom: 5),
                 width: MediaQuery.of(context).size.width,
-                height: 140,
+                height: 100,
                 decoration: DottedDecoration(
                   shape: Shape.box,
                   borderRadius: BorderRadius.circular(10),
@@ -382,7 +471,7 @@ class _PaymentState extends State<Payment> {
                     border: Border.all(color: Colors.redAccent),
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -403,7 +492,7 @@ class _PaymentState extends State<Payment> {
                                   color: Colors.black),
                             ),
                             Text(
-                              '100,000 KIP',
+                              '${oCcy.format(widget.ticket.price)} KIP x ${(loginController.checkedPassenger.length)}',
                               style: TextStyle(
                                   fontSize: 19,
                                   fontWeight: FontWeight.bold,
@@ -422,7 +511,7 @@ class _PaymentState extends State<Payment> {
                                   color: Colors.black),
                             ),
                             Text(
-                              '10,000 KIP',
+                              '${oCcy.format(widget.ticket.bookingPrice)} KIP x ${(loginController.checkedPassenger.length)}',
                               style: TextStyle(
                                   fontSize: 19,
                                   fontWeight: FontWeight.bold,
@@ -445,7 +534,7 @@ class _PaymentState extends State<Payment> {
                                   color: Colors.black),
                             ),
                             Text(
-                              '110,000 KIP',
+                              '${oCcy.format((widget.ticket.price * (loginController.checkedPassenger.length)) + (widget.ticket.bookingPrice * (loginController.checkedPassenger.length)))} KIP',
                               style: TextStyle(
                                   fontSize: 19,
                                   fontWeight: FontWeight.bold,
@@ -492,7 +581,7 @@ class _PaymentState extends State<Payment> {
                               color: Colors.black38,
                             ),
                             SizedBox(height: 5),
-                            const Row(
+                            Row(
                               children: [
                                 Text(
                                   'ຈໍານວນເງີນທີຕ້ອງຈ່າຍ:',
@@ -502,7 +591,7 @@ class _PaymentState extends State<Payment> {
                                 ),
                                 SizedBox(width: 20),
                                 Text(
-                                  '110,000 Kip',
+                                  '${oCcy.format((widget.ticket.price * (loginController.checkedPassenger.length)) + (widget.ticket.bookingPrice * (loginController.checkedPassenger.length)))} Kip',
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -513,25 +602,29 @@ class _PaymentState extends State<Payment> {
                             SizedBox(height: 5),
                             GestureDetector(
                               onTap: () {
-                                ScaffoldMessenger.of(context)
-                                    .showMaterialBanner(
-                                  MaterialBanner(
-                                    padding: const EdgeInsets.all(20),
-                                    content: Text('ການຊໍາລະສໍາເລັດ'),
-                                    leading: Icon(
-                                        Icons.notifications_active_outlined),
-                                    elevation: 5,
-                                    backgroundColor: Colors.white12,
-                                    actions: <Widget>[
-                                      TextButton(
-                                          onPressed: () {
-                                            // ScaffoldMessenger.of(context)
-                                            //     .hideCurrentMaterialBanner();
-                                          },
-                                          child: Text('ອອກ'))
-                                    ],
-                                  ),
-                                );
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => BcelPaymentPage()));
+                                // ScaffoldMessenger.of(context)
+                                //     .showMaterialBanner(
+                                //   MaterialBanner(
+                                //     padding: const EdgeInsets.all(20),
+                                //     content: Text('ການຊໍາລະສໍາເລັດ'),
+                                //     leading: Icon(
+                                //         Icons.notifications_active_outlined),
+                                //     elevation: 5,
+                                //     backgroundColor: Colors.white12,
+                                //     actions: <Widget>[
+                                //       TextButton(
+                                //           onPressed: () {
+                                //             // ScaffoldMessenger.of(context)
+                                //             //     .hideCurrentMaterialBanner();
+                                //           },
+                                //           child: Text('ອອກ'))
+                                //     ],
+                                //   ),
+                                // );
                               },
                               child: Container(
                                 width: double.infinity,
@@ -596,6 +689,47 @@ class _PaymentState extends State<Payment> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage("assets/icons/beranda.png"),
+            ),
+            label: "ໜ້າຫຼັກ",
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage("assets/icons/ticket.png"),
+            ),
+            label: "ປີ້ຂອງຂ້ອຍ",
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage("assets/icons/profile.png"),
+              color: Color(0xFF3A5A98),
+            ),
+            label: "ບັນຊີຂອງຂ້ອຍ",
+          ),
+        ],
+        onTap: (int index) {
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeView()),
+            );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ListMyTickets()),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfileScreen()),
+            );
+          }
+        },
       ),
     );
   }

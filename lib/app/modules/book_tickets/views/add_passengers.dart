@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter_final/app/modules/book_tickets/controller/book_ticket_controller.dart';
 import 'package:flutter_final/app/modules/book_tickets/views/add_a_contact.dart';
-import 'package:flutter_final/app/modules/book_tickets/views/reservation_form.dart';
+// import 'package:flutter_final/app/modules/book_tickets/views/reservation_form.dart';
+import 'package:flutter_final/app/modules/login/controllers/login_controller.dart';
+import 'package:get/get.dart';
 
 class AddPassengers extends StatefulWidget {
   const AddPassengers({Key? key}) : super(key: key);
@@ -10,10 +13,16 @@ class AddPassengers extends StatefulWidget {
   _AddPassengersState createState() => _AddPassengersState();
 }
 
-bool? _tony = false;
-bool? _ved = false;
-
 class _AddPassengersState extends State<AddPassengers> {
+  late LoginController loginController;
+  // To track checked state
+
+  @override
+  void initState() {
+    loginController = Get.find<LoginController>();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,26 +30,27 @@ class _AddPassengersState extends State<AddPassengers> {
         backgroundColor: Colors.redAccent,
         elevation: 0,
         title: Text(
-          'ເລືອກບ່ອນນັ່ງ',
-          style: TextStyle(fontSize: 18),
+          'ຜູ້ໂດຍສານ',
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ReservationForm()),
-            );
+            Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios_new),
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+          ),
         ),
         actions: [
           TextButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ReservationForm()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => ReservationForm()),
+                // );
+                Navigator.pop(context);
               },
               child: Text(
                 'ສໍາເລັດ',
@@ -63,7 +73,7 @@ class _AddPassengersState extends State<AddPassengers> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 100,
+                    height: 70,
                     width: double.infinity,
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -100,82 +110,101 @@ class _AddPassengersState extends State<AddPassengers> {
               ),
             ),
             SizedBox(height: 20),
-            Column(
-              children: [
-                CheckboxListTile(
-                  value: _tony,
-                  onChanged: (bool? newValue) {
-                    setState(() {
-                      _tony = newValue;
-                    });
-                  },
-                  activeColor: Colors.green,
-                  title: Row(
-                    children: [
-                      Text('Tony'),
-                      Text(
-                        'ຜູ້ໃຫ່ຍ',
-                        style: TextStyle(fontSize: 18, color: Colors.red),
-                      ),
-                    ],
-                  ),
-                  subtitle: Row(
-                    children: [
-                      Text('ບັດປະຈໍາຕົວ'),
-                      Text('1234567890'),
-                    ],
-                  ),
-                  secondary: Icon(
-                    Icons.edit_note_sharp,
-                    color: Colors.blue,
-                    size: 50.0,
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: new Divider(
-                color: Colors.black45,
-              ),
-            ),
-            SizedBox(height: 5),
-            CheckboxListTile(
-              value: _ved,
-              onChanged: (bool? newValue) {
-                setState(() {
-                  _ved = newValue;
-                });
-              },
-              activeColor: Colors.green,
-              title: const Row(
-                children: [
-                  Text('Tony'),
-                  Text(
-                    'ຜູ້ໃຫ່ຍ',
-                    style: TextStyle(fontSize: 18, color: Colors.red),
-                  ),
-                ],
-              ),
-              subtitle: const Row(
-                children: [
-                  Text('ບັດປະຈໍາຕົວ'),
-                  Text('1234567890'),
-                ],
-              ),
-              secondary: Icon(
-                // CupertinoIcons.edit_non,
-                Icons.edit_note_sharp,
-                color: Colors.blue,
-                size: 50.0,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: new Divider(
-                color: Colors.black45,
-              ),
-            )
+            GetBuilder<LoginController>(builder: (_) {
+              List<dynamic> listPassengerForAdd = [];
+              listPassengerForAdd.add(_.passenger!.passengerId);
+              listPassengerForAdd.addAll(_.passenger!.passengerRelation);
+              return _.passenger != null
+                  ? Column(
+                      children: [
+                        Column(
+                          children: listPassengerForAdd.map((e) {
+                            bool isChecked = _.checkedPassenger[e] ?? false;
+
+                            return Column(
+                              children: [
+                                e == "me-flutter"
+                                    ? CheckboxListTile(
+                                        value: isChecked,
+                                        onChanged: (bool? newValue) {
+                                          setState(() {
+                                            _.setCheckedPassengerRelation(
+                                                e, newValue ?? false);
+                                          });
+                                        },
+                                        activeColor: Colors.green,
+                                        title: Row(
+                                          children: [
+                                            Text('${_.passenger?.username}'),
+                                            Text(
+                                              '${_.passenger?.isAdult()}',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.red),
+                                            ),
+                                          ],
+                                        ),
+                                        subtitle: Row(
+                                          children: [
+                                            Text('ບັດປະຈໍາຕົວ'),
+                                            Text('${_.passenger?.idCard}'),
+                                          ],
+                                        ),
+                                        secondary: Icon(
+                                          Icons.edit_note_sharp,
+                                          color: Colors.blue,
+                                          size: 50.0,
+                                        ),
+                                      )
+                                    : CheckboxListTile(
+                                        value: isChecked,
+                                        onChanged: (bool? newValue) {
+                                          setState(() {
+                                            _.setCheckedPassengerRelation(
+                                                e, newValue ?? false);
+                                          });
+                                        },
+                                        activeColor: Colors.green,
+                                        title: Row(
+                                          children: [
+                                            Text(
+                                                '${_.passengerList.firstWhere((element) => element.passengerId == e).username}'),
+                                            Text(
+                                              '${_.passengerList.firstWhere((element) => element.passengerId == e).isAdult()}',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.red),
+                                            ),
+                                          ],
+                                        ),
+                                        subtitle: Row(
+                                          children: [
+                                            Text('ບັດປະຈໍາຕົວ'),
+                                            Text(
+                                                '${_.passengerList.firstWhere((element) => element.passengerId == e).idCard}'),
+                                          ],
+                                        ),
+                                        secondary: Icon(
+                                          Icons.edit_note_sharp,
+                                          color: Colors.blue,
+                                          size: 50.0,
+                                        ),
+                                      ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: new Divider(
+                                    color: Colors.black45,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    )
+                  : SizedBox();
+            })
           ],
         ),
       ),

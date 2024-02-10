@@ -1,12 +1,26 @@
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter_final/app/modules/book_tickets/controller/book_ticket_controller.dart';
 import 'package:flutter_final/app/modules/book_tickets/views/add_passengers.dart';
-import 'package:flutter_final/app/modules/book_tickets/views/book_tickets.dart';
+// import 'package:flutter_final/app/modules/book_tickets/views/book_tickets.dart';
 import 'package:flutter_final/app/modules/book_tickets/views/payment.dart';
+import 'package:flutter_final/app/modules/bus/controllers/bus_controller.dart';
+import 'package:flutter_final/app/modules/login/controllers/login_controller.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
+import '../../../const/formatter.dart';
+import '../../../model/departures_model.dart';
+import '../../../model/ticket_model.dart';
+// import '../../bus/controllers/bus_controller.dart';
 
 class ReservationForm extends StatefulWidget {
-  const ReservationForm({Key? key}) : super(key: key);
+  final Departures departure;
+  final Ticket ticket;
+  const ReservationForm(
+      {Key? key, required this.departure, required this.ticket})
+      : super(key: key);
 
   @override
   _ReservationFormState createState() => _ReservationFormState();
@@ -19,15 +33,20 @@ class _ReservationFormState extends State<ReservationForm> {
       appBar: AppBar(
         backgroundColor: Colors.red,
         centerTitle: true,
-        title: const Text('ຂຽນໃສ່ໃບຈອງປີ້'),
+        title: const Text(
+          'ຂຽນໃສ່ໃບຈອງປີ້',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         leading: IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => BookTickets()),
-            );
+            Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+          ),
         ),
         elevation: 0,
       ),
@@ -38,7 +57,7 @@ class _ReservationFormState extends State<ReservationForm> {
               padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
+                children: [
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: const BoxDecoration(
@@ -47,17 +66,19 @@ class _ReservationFormState extends State<ReservationForm> {
                             topLeft: Radius.circular(24),
                             topRight: Radius.circular(24))),
                     child: Column(
-                      children: <Widget>[
+                      children: [
                         Row(
-                          children: <Widget>[
-                            const Text(
-                              "ໄຊຍະບູລີ",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.indigo),
-                            ),
-                            SizedBox(
+                          children: [
+                            GetBuilder<BusController>(builder: (_) {
+                              return Text(
+                                _.departureStation,
+                                style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.indigo),
+                              );
+                            }),
+                            const SizedBox(
                               width: 16,
                             ),
                             Container(
@@ -76,49 +97,54 @@ class _ReservationFormState extends State<ReservationForm> {
                               ),
                             ),
                             Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Stack(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height: 24,
-                                      child: LayoutBuilder(
-                                        builder: (context, constraints) {
-                                          return Flex(
-                                            children: List.generate(
-                                                (constraints.constrainWidth() /
-                                                        6)
-                                                    .floor(),
-                                                (index) => SizedBox(
-                                                      height: 1,
-                                                      width: 3,
-                                                      child: DecoratedBox(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade300),
-                                                      ),
-                                                    )),
-                                            direction: Axis.horizontal,
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                          );
-                                        },
-                                      ),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Stack(
+                                      children: [
+                                        SizedBox(
+                                          height: 24,
+                                          child: LayoutBuilder(
+                                            builder: (context, constraints) {
+                                              return Flex(
+                                                children: List.generate(
+                                                    (constraints.constrainWidth() /
+                                                            6)
+                                                        .floor(),
+                                                    (index) => SizedBox(
+                                                          height: 1,
+                                                          width: 3,
+                                                          child: DecoratedBox(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .shade300),
+                                                          ),
+                                                        )),
+                                                direction: Axis.horizontal,
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                        Center(
+                                            child: Transform.rotate(
+                                          angle: 0,
+                                          child: Icon(
+                                            CupertinoIcons.bus,
+                                            color: Colors.indigo.shade300,
+                                            size: 24,
+                                          ),
+                                        ))
+                                      ],
                                     ),
-                                    Center(
-                                        child: Transform.rotate(
-                                      angle: 0,
-                                      child: Icon(
-                                        CupertinoIcons.bus,
-                                        color: Colors.indigo.shade300,
-                                        size: 24,
-                                      ),
-                                    ))
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                             Container(
@@ -139,13 +165,15 @@ class _ReservationFormState extends State<ReservationForm> {
                             const SizedBox(
                               width: 16,
                             ),
-                            const Text(
-                              "ຫຼວງພະບາງ",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.pink),
-                            )
+                            GetBuilder<BusController>(builder: (_) {
+                              return Text(
+                                _.arrivalStation,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.pink),
+                              );
+                            })
                           ],
                         ),
                         new Divider(color: Colors.black12),
@@ -160,20 +188,20 @@ class _ReservationFormState extends State<ReservationForm> {
                               color: Color.fromARGB(255, 238, 235, 235),
                               borderRadius: BorderRadius.circular(6),
                             ),
-                            child: const Padding(
+                            child: Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'ລົດຕູ້ທໍາມະດາ',
+                                    '${widget.departure.buses.busName}',
                                     style: TextStyle(
                                         fontSize: 19,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    'ບ່ອນນັ່ງທໍາມະດາ',
+                                    '${widget.ticket.ticketName}',
                                     style: TextStyle(
                                         fontSize: 19,
                                         fontWeight: FontWeight.bold),
@@ -186,18 +214,20 @@ class _ReservationFormState extends State<ReservationForm> {
                         const SizedBox(
                           height: 16,
                         ),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
+                          children: [
                             Text(
-                              "01:00 AM",
+                              DateFormat("hh:mm a", "en-US").format(
+                                  widget.departure.routes.departureTime),
                               style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "05:30 PM",
+                              DateFormat("hh:mm a", "en-US")
+                                  .format(widget.departure.routes.arrivalTime),
                               style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
@@ -206,11 +236,13 @@ class _ReservationFormState extends State<ReservationForm> {
                           ],
                         ),
                         const SizedBox(height: 12),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
+                          children: [
                             Text(
-                              "1 ຊົ່ວໂມງ 10ນາທີ",
+                              formatDuration(
+                                  widget.departure.routes.departureTime,
+                                  widget.departure.routes.arrivalTime),
                               style:
                                   TextStyle(fontSize: 12, color: Colors.grey),
                             ),
@@ -222,7 +254,7 @@ class _ReservationFormState extends State<ReservationForm> {
                   Container(
                     color: Colors.white,
                     child: Row(
-                      children: <Widget>[
+                      children: [
                         SizedBox(
                           height: 20,
                           width: 10,
@@ -265,7 +297,7 @@ class _ReservationFormState extends State<ReservationForm> {
                           width: 10,
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
+                                borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(10),
                                     bottomLeft: Radius.circular(10)),
                                 color: Colors.grey.shade200),
@@ -274,121 +306,166 @@ class _ReservationFormState extends State<ReservationForm> {
                       ],
                     ),
                   ),
-                  Container(
-                    padding:
-                        const EdgeInsets.only(left: 16, right: 16, bottom: 12),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(24),
-                        bottomRight: Radius.circular(24),
+                  GetBuilder<LoginController>(builder: (_) {
+                    return Container(
+                      padding: EdgeInsets.only(left: 16, right: 16, bottom: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(24),
+                          bottomRight: Radius.circular(24),
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        const Row(
-                          children: [
-                            Text(
-                              '  Tony ',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            SizedBox(width: 5),
-                            Text(
-                              '  ຜູ້ໃຫ່ຍ ',
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 5),
-                        const Row(
-                          children: [
-                            Text(
-                              'ບັດປະຈໍາຕົວ',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            SizedBox(width: 5),
-                            Text(
-                              '2456459',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Icon(Icons.delete),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              child: const Text(
-                                'ເລືອກປະເພດຜູ້ໂດຍສານ ',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AddPassengers()),
-                                );
-                              },
-                              child: const Row(
+                      child: Column(
+                        children: [
+                          // Row(
+                          //   children: [
+                          //     Text(
+                          //       '  ${_.passenger?.username} ',
+                          //       style: TextStyle(fontSize: 18),
+                          //     ),
+                          //     SizedBox(width: 5),
+                          //     Text(
+                          //       '  ${_.passenger?.isAdult()} ',
+                          //       style: TextStyle(
+                          //         fontSize: 18,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          // SizedBox(height: 5),
+                          // Row(
+                          //   children: [
+                          //     Text(
+                          //       'ບັດປະຈໍາຕົວ',
+                          //       style: TextStyle(fontSize: 18),
+                          //     ),
+                          //     SizedBox(width: 5),
+                          //     Text(
+                          //       '${_.passenger?.idCard}',
+                          //       style: TextStyle(fontSize: 18),
+                          //     ),
+                          //   ],
+                          // ),
+
+                          for (var entry in _.checkedPassenger.entries)
+                            if (entry.value)
+                              Column(
                                 children: [
-                                  Icon(
-                                    CupertinoIcons.add_circled,
-                                    color: Colors.redAccent,
-                                    size: 24,
+                                  SizedBox(
+                                    height: 5,
                                   ),
-                                  Text("ເພີ່ມຜູ້ໂດຍສານ",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.redAccent)),
+                                  Divider(),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '  ${_.passengerList.firstWhere((element) => element.passengerId == entry.key).username} ',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        '  ${_.passengerList.firstWhere((element) => element.passengerId == entry.key).isAdult()} ',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'ບັດປະຈໍາຕົວ',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        '${_.passengerList.firstWhere((element) => element.passengerId == entry.key).idCard}',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                          // const Row(
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: [
+                          //     Icon(Icons.delete),
+                          //   ],
+                          // ),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Text(
+                                  'ເລືອກປະເພດຜູ້ໂດຍສານ ',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddPassengers()),
+                                  );
+                                },
+                                child: const Row(
+                                  children: [
+                                    Icon(
+                                      CupertinoIcons.add_circled,
+                                      color: Colors.redAccent,
+                                      size: 24,
+                                    ),
+                                    Text("ເພີ່ມຜູ້ໂດຍສານ",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.redAccent)),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(10.0),
               child: Container(
                 margin: EdgeInsets.only(top: 1, bottom: 5),
                 width: MediaQuery.of(context).size.width,
-                height: 170,
+                height: 100,
                 decoration: DottedDecoration(
                   shape: Shape.box,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "ຂໍ້ມູນຮັບປີ້",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        "ສະຖານີຄິວລົດສາຍໃຕ້ ແຂວງຫຼວງພະບາງ ບ້ານນາຫຼວງ ",
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
+                      // Text(
+                      // busController.departureStation,
+                      // style:const  TextStyle(
+                      //     fontSize: 18,
+                      //     fontWeight: FontWeight.bold,
+                      //     color: Colors.white),
+                      // ),
                     ],
                   ),
                 ),
@@ -398,7 +475,11 @@ class _ReservationFormState extends State<ReservationForm> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Payment()),
+                  MaterialPageRoute(
+                      builder: (context) => Payment(
+                            departure: widget.departure,
+                            ticket: widget.ticket,
+                          )),
                 );
               },
               child: Padding(

@@ -16,7 +16,7 @@ abstract class _Paths {
   static const Search_to = '/search_to';
   static const Search_form = '/search_form';
   static const Onboarding ='/onboarding';
-
+  static const Register = '/register';
 
 
 }

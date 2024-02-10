@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_final/app/modules/home/views/home_view.dart';
+import 'package:flutter_final/app/modules/mytickets/views/list_my_tickets.dart';
 import 'package:flutter_final/app/modules/mytickets/views/mytickests.dart';
 import 'package:flutter_final/app/modules/profile/profile_screen.dart';
 // import 'package:flutter_final/app/modules/search_form/views/search_form.dart';
@@ -9,6 +12,8 @@ import 'package:flutter_final/app/modules/search_tickets/views/search_tickets.da
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import '../controllers/bus_controller.dart';
 
 class BusView extends StatefulWidget {
   const BusView({Key? key}) : super(key: key);
@@ -20,23 +25,35 @@ class BusView extends StatefulWidget {
 const Color pColor = Color(0xFFEC2028);
 
 class _BusViewState extends State<BusView> {
-  String _message = "ຫຼວງພະບາງ";
-  String name = "ໄຊຍະບູລີ";
-  DateTime selectedDate = DateTime.now();
-
-  void _onDaySelected(DateTime day, DateTime focusedDay) {
-    setState(() {
-      selectedDate = day;
-    });
-  }
+  final Stream<QuerySnapshot> _stationStream =
+      FirebaseFirestore.instance.collection('Stations').snapshots();
 
   final FocusNode _focus = FocusNode();
   final FocusNode _focusN = FocusNode();
 
+  List<String> stationList = [
+    'ກິວກະຈໍາ',
+    'ເມືອງນານ',
+    'ເມືອງເງີນ',
+    'ໂພນສະຫວັນ',
+    'ວັງວຽງ',
+    'ເມືອງແກ່ນທ້າວ',
+    'ໄຊຍະບູລີ',
+    'ເມືອງຫົງສາ',
+    'ເມືອງຊຽງເງີນ',
+    'ເມືອງພູຄູນ',
+    'ເມືອງຄອບ',
+    'ວຽງຈັນ',
+    'ເມືອງພຽງ',
+    'ເມືອງຊຽງຮ່ອນ'
+  ];
+
+  late BusController busController;
+
   @override
   void initState() {
     super.initState();
-
+    busController = Get.put(BusController());
     _focus.addListener(_onFocusChange);
     _focusN.addListener(_onFocusChange2);
   }
@@ -152,6 +169,7 @@ class _BusViewState extends State<BusView> {
                                       children: <Widget>[
                                         Column(
                                           children: [
+                                            // TextButton(onPressed: _addStations,child: Text("Add"),),
                                             GestureDetector(
                                               onTap: () {
                                                 showModalBottomSheet(
@@ -196,575 +214,69 @@ class _BusViewState extends State<BusView> {
                                                             SizedBox(
                                                               height: 10,
                                                             ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ຫຼວງພະບາງ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ຫຼວງພະບາງ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ເມືອງພຽງ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ເມືອງພຽງ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ເມືອງປາກລາຍ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ເມືອງປາກລາຍ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 10),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ເມືອງແກ່ນທ້າວ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ເມືອງແກ່ນທ້າວ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ເມືອງຫົງສາ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ເມືອງຫົງສາ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ເມືອງເງີນ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ເມືອງເງີນ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(
-                                                                height: 10),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ເມືອງຊຽງຮ່ອນ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ເມືອງຊຽງຮ່ອນ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ເມືອງຄອບ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ເມືອງຄອບ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ໂພນສະຫວັນ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ໂພນສະຫວັນ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(
-                                                                height: 10),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ເມືອງນານ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ເມືອງນານ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ເມືອງພູຄູນ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ເມືອງພູຄູນ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ເມືອງຊຽງເງີນ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ເມືອງຊຽງເງີນ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ວຽງຈັນ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ວຽງຈັນ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ວັງວຽງ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ວັງວຽງ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    setState(
-                                                                        () {
-                                                                      _message =
-                                                                          'ກິວກະຈໍາ';
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    width: 100,
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
-                                                                            color:
-                                                                                Colors.grey)),
-                                                                    child:
-                                                                        const Center(
-                                                                      child:
-                                                                          Text(
-                                                                        "ກິວກະຈໍາ",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            color:
-                                                                                Colors.black),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
+
+                                                            StreamBuilder(
+                                                                stream:
+                                                                    _stationStream,
+                                                                builder: (context,
+                                                                    AsyncSnapshot<
+                                                                            QuerySnapshot>
+                                                                        snapshot) {
+                                                                  if (snapshot
+                                                                      .hasError) {
+                                                                    return Text(
+                                                                        'Something went wrong');
+                                                                  }
+
+                                                                  if (snapshot
+                                                                          .connectionState ==
+                                                                      ConnectionState
+                                                                          .waiting) {
+                                                                    return Text(
+                                                                        "Loading");
+                                                                  }
+                                                                  final data =
+                                                                      snapshot
+                                                                          .data!
+                                                                          .docs;
+
+                                                                  return GridView
+                                                                      .builder(
+                                                                          shrinkWrap:
+                                                                              true,
+                                                                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                              crossAxisCount:
+                                                                                  3,
+                                                                              mainAxisSpacing:
+                                                                                  10,
+                                                                              crossAxisSpacing:
+                                                                                  10,
+                                                                              childAspectRatio:
+                                                                                  2),
+                                                                          itemCount: data
+                                                                              .length,
+                                                                          itemBuilder:
+                                                                              (context, index) {
+                                                                            return GestureDetector(
+                                                                              onTap: () {
+                                                                                busController.setDepartureStation(data[index].id, data[index]['name'].toString());
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              child: Container(
+                                                                                width: 100,
+                                                                                height: 50,
+                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey)),
+                                                                                child: Center(
+                                                                                  child: Text(
+                                                                                    "${data[index]['name']}",
+                                                                                    style: const TextStyle(fontSize: 18, color: Colors.black),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            );
+                                                                          });
+                                                                }),
+
                                                             // Additional widgets for your bottom sheet go here
                                                           ],
                                                         ),
@@ -773,25 +285,30 @@ class _BusViewState extends State<BusView> {
                                                   },
                                                 );
                                               },
-                                              child: RichText(
-                                                text: TextSpan(
-                                                  children: [
-                                                    const TextSpan(
-                                                      text: "ຈາກ \n",
-                                                      style: TextStyle(
-                                                          color: Color(
-                                                              0xFFFb7b7c5),
-                                                          fontSize: 14),
-                                                    ),
-                                                    TextSpan(
-                                                      text: "$_message",
-                                                      style: const TextStyle(
-                                                          fontSize: 20,
-                                                          color: Colors.black),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
+                                              child: GetBuilder<BusController>(
+                                                  builder: (context) {
+                                                return RichText(
+                                                  text: TextSpan(
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: "ຈາກ \n",
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xFFFb7b7c5),
+                                                            fontSize: 14),
+                                                      ),
+                                                      TextSpan(
+                                                        text: busController
+                                                            .departureStation,
+                                                        style: const TextStyle(
+                                                            fontSize: 20,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              }),
                                             )
                                           ],
                                         ),
@@ -837,534 +354,75 @@ class _BusViewState extends State<BusView> {
                                                         const SizedBox(
                                                           height: 10,
                                                         ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ໄຊຍະບູລີ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ໄຊຍະບູລີ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ເມືອງພຽງ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ເມືອງພຽງ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ເມືອງປາກລາຍ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ເມືອງປາກລາຍ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 10),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ເມືອງແກ່ນທ້າວ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ເມືອງແກ່ນທ້າວ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ເມືອງຫົງສາ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ເມືອງຫົງສາ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ເມືອງເງີນ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ເມືອງເງີນ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 10),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ເມືອງຊຽງຮ່ອນ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ເມືອງຊຽງຮ່ອນ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ເມືອງຄອບ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ເມືອງຄອບ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ໂພນສະຫວັນ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ໂພນສະຫວັນ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 10),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ເມືອງນານ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ເມືອງນານ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ເມືອງພູຄູນ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ເມືອງພູຄູນ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ເມືອງຊຽງເງີນ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: const Color
-                                                                            .fromARGB(
-                                                                            255,
-                                                                            201,
-                                                                            188,
-                                                                            188))),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ເມອງຊຽງເງີນ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ວຽງຈັນ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ວຽງຈັນ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ວັງວຽງ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ວັງວຽງ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  name =
-                                                                      'ກິວກະຈໍາ';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                });
-                                                              },
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey)),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Text(
-                                                                    "ກິວກະຈໍາ",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
+                                                        StreamBuilder(
+                                                            stream:
+                                                                _stationStream,
+                                                            builder: (context,
+                                                                AsyncSnapshot<
+                                                                        QuerySnapshot>
+                                                                    snapshot) {
+                                                              if (snapshot
+                                                                  .hasError) {
+                                                                return Text(
+                                                                    'Something went wrong');
+                                                              }
+
+                                                              if (snapshot
+                                                                      .connectionState ==
+                                                                  ConnectionState
+                                                                      .waiting) {
+                                                                return Text(
+                                                                    "Loading");
+                                                              }
+                                                              final data =
+                                                                  snapshot.data!
+                                                                      .docs;
+
+                                                              return GridView
+                                                                  .builder(
+                                                                      shrinkWrap:
+                                                                          true,
+                                                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                          crossAxisCount:
+                                                                              3,
+                                                                          mainAxisSpacing:
+                                                                              10,
+                                                                          crossAxisSpacing:
+                                                                              10,
+                                                                          childAspectRatio:
+                                                                              2),
+                                                                      itemCount:
+                                                                          data
+                                                                              .length,
+                                                                      itemBuilder:
+                                                                          (context,
+                                                                              index) {
+                                                                        return GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            busController.setArrivalStation(data[index].id,
+                                                                                data[index]['name'].toString());
+                                                                            Navigator.pop(context);
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            width:
+                                                                                100,
+                                                                            height:
+                                                                                50,
+                                                                            decoration:
+                                                                                BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey)),
+                                                                            child:
+                                                                                Center(
+                                                                              child: Text(
+                                                                                "${data[index]['name']}",
+                                                                                style: const TextStyle(fontSize: 18, color: Colors.black),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      });
+                                                            }),
                                                       ],
                                                     ),
                                                   ),
@@ -1374,25 +432,30 @@ class _BusViewState extends State<BusView> {
                                           },
                                           child: Column(
                                             children: <Widget>[
-                                              RichText(
-                                                text: TextSpan(
-                                                    children: <TextSpan>[
-                                                      const TextSpan(
-                                                        text: "ຮອດ \n",
-                                                        style: TextStyle(
-                                                            color: Color(
-                                                                0xFFFb7b7c5),
-                                                            fontSize: 14),
-                                                      ),
-                                                      TextSpan(
-                                                        text: "$name",
-                                                        style: const TextStyle(
-                                                            fontSize: 20,
-                                                            color:
-                                                                Colors.black),
-                                                      ),
-                                                    ]),
-                                              ),
+                                              GetBuilder<BusController>(
+                                                  builder: (context) {
+                                                return RichText(
+                                                  text: TextSpan(
+                                                      children: <TextSpan>[
+                                                        const TextSpan(
+                                                          text: "ຮອດ \n",
+                                                          style: TextStyle(
+                                                              color: Color(
+                                                                  0xFFFb7b7c5),
+                                                              fontSize: 14),
+                                                        ),
+                                                        TextSpan(
+                                                          text: busController
+                                                              .arrivalStation,
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 20,
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                      ]),
+                                                );
+                                              }),
                                             ],
                                           ),
                                         )
@@ -1429,34 +492,39 @@ class _BusViewState extends State<BusView> {
                                         return SizedBox(
                                           height: 600,
                                           child: Center(
-                                            child: TableCalendar(
-                                              locale: "lo_LA",
-                                              rowHeight: 43,
-                                              headerStyle: const HeaderStyle(
-                                                  formatButtonVisible: false,
-                                                  titleCentered: true),
-                                              availableGestures:
-                                                  AvailableGestures.all,
-                                              selectedDayPredicate: (day) =>
-                                                  isSameDay(day, selectedDate),
-                                              focusedDay: selectedDate,
-                                              firstDay:
-                                                  DateTime.utc(2010, 10, 16),
-                                              lastDay:
-                                                  DateTime.utc(2030, 3, 14),
-                                              //
-                                              onDaySelected:
-                                                  (selectedDay, focusedDay) {
-                                                // Update the selectedDate when a day is selected.
-                                                setState(() {
-                                                  selectedDate = selectedDay;
-                                                });
-
-                                                // Add your logic here when a day is selected.
-                                                Navigator.pop(
-                                                    context); // Dismiss the modal when a day is selected.
-                                              },
-                                            ),
+                                            child: GetBuilder<BusController>(
+                                                builder: (_) {
+                                              return TableCalendar(
+                                                locale: "lo_LA",
+                                                rowHeight: 43,
+                                                headerStyle: const HeaderStyle(
+                                                    formatButtonVisible: false,
+                                                    titleCentered: true),
+                                                availableGestures:
+                                                    AvailableGestures.all,
+                                                selectedDayPredicate: (day) =>
+                                                    isSameDay(
+                                                        day,
+                                                        busController
+                                                            .selectedDate),
+                                                focusedDay:
+                                                    busController.selectedDate,
+                                                firstDay:
+                                                    DateTime.utc(2010, 10, 16),
+                                                lastDay:
+                                                    DateTime.utc(2030, 3, 14),
+                                                //
+                                                onDaySelected:
+                                                    (selectedDay, focusedDay) {
+                                                  // Update the selectedDate when a day is selected.
+                                                  busController.setSelectedDate(
+                                                      selectedDay);
+                                                  // Add your logic here when a day is selected.
+                                                  Navigator.pop(
+                                                      context); // Dismiss the modal when a day is selected.
+                                                },
+                                              );
+                                            }),
                                           ),
                                         );
                                       },
@@ -1475,10 +543,13 @@ class _BusViewState extends State<BusView> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: [
-                                          Text(
-                                            "${formatter.format(selectedDate)}",
-                                            style: TextStyle(fontSize: 20),
-                                          ),
+                                          GetBuilder<BusController>(
+                                              builder: (_) {
+                                            return Text(
+                                              "${formatter.format(busController.selectedDate)}",
+                                              style: TextStyle(fontSize: 20),
+                                            );
+                                          }),
                                           const Icon(
                                             Icons.calendar_month,
                                             size: 20,
@@ -1490,7 +561,9 @@ class _BusViewState extends State<BusView> {
                                 ),
                                 SizedBox(),
                                 GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
+                                    await busController
+                                        .getAvailableBusesOnDate();
                                     // Navigate to the "Home" screen when tapped
                                     Navigator.push(
                                       context,
@@ -1553,14 +626,26 @@ class _BusViewState extends State<BusView> {
                       height: 500,
                       child: Column(
                         children: [
-                          const Padding(
-                            padding: const EdgeInsets.all(5.0),
+                          Padding(
+                            padding: EdgeInsets.all(5.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("ໄຊຍະບູລີ "),
-                                Text("-- "),
-                                Text("ຫູວງພະບາງ "),
+                                Text(
+                                  busController.departureStation,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                                Icon(CupertinoIcons.bus, color: Colors.white),
+                                Text(
+                                  busController.arrivalStation,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
                               ],
                             ),
                           ),
@@ -1631,7 +716,7 @@ class _BusViewState extends State<BusView> {
           } else if (index == 1) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Mytickests()),
+              MaterialPageRoute(builder: (context) => ListMyTickets()),
             );
           } else if (index == 2) {
             Navigator.push(

@@ -25,7 +25,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -44,37 +47,31 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBWpamrkgOfnPJ_OUBMAxPwB4gcXe2WQsU',
-    appId: '1:176999940287:web:fe7f249c3fca9c7284460a',
-    messagingSenderId: '176999940287',
-    projectId: 'flutterfinal-faffd',
-    authDomain: 'flutterfinal-faffd.firebaseapp.com',
-    storageBucket: 'flutterfinal-faffd.appspot.com',
+    apiKey: 'AIzaSyAU5FIj_jY2yN3-DyheYTjXJgfhDHmAxFE',
+    appId: '1:219421571653:web:51daa735318f750468412c',
+    messagingSenderId: '219421571653',
+    projectId: 'flutterfinal-b4857',
+    authDomain: 'flutterfinal-b4857.firebaseapp.com',
+    databaseURL: 'https://flutterfinal-b4857-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'flutterfinal-b4857.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCmdGCH2GRROd99zQyv5Bj9QHQtNYLnHzg',
-    appId: '1:176999940287:android:73b0041e7705b70984460a',
-    messagingSenderId: '176999940287',
-    projectId: 'flutterfinal-faffd',
-    storageBucket: 'flutterfinal-faffd.appspot.com',
+    apiKey: 'AIzaSyAxAPOWnWTClBHdorXB0jCpjLKffNje_Os',
+    appId: '1:219421571653:android:b51473763b4320c068412c',
+    messagingSenderId: '219421571653',
+    projectId: 'flutterfinal-b4857',
+    databaseURL: 'https://flutterfinal-b4857-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'flutterfinal-b4857.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDa3GQ4CcNIel_V1E0NV7mNWhGV2cQqMLQ',
-    appId: '1:176999940287:ios:46e8b786deb18bab84460a',
-    messagingSenderId: '176999940287',
-    projectId: 'flutterfinal-faffd',
-    storageBucket: 'flutterfinal-faffd.appspot.com',
+    apiKey: 'AIzaSyDSy9hVwl1E2S-XMv_w_iTSiGVP6PcawpA',
+    appId: '1:219421571653:ios:818e9b7bd3ce867d68412c',
+    messagingSenderId: '219421571653',
+    projectId: 'flutterfinal-b4857',
+    databaseURL: 'https://flutterfinal-b4857-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'flutterfinal-b4857.appspot.com',
     iosBundleId: 'com.example.flutterFinal',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDa3GQ4CcNIel_V1E0NV7mNWhGV2cQqMLQ',
-    appId: '1:176999940287:ios:db24a66b98b9245684460a',
-    messagingSenderId: '176999940287',
-    projectId: 'flutterfinal-faffd',
-    storageBucket: 'flutterfinal-faffd.appspot.com',
-    iosBundleId: 'com.example.flutterFinal.RunnerTests',
   );
 }

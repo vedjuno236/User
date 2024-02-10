@@ -1,40 +1,141 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter_final/app/model/passengers_model.dart';
 import 'package:flutter_final/app/modules/bus/views/bus_view.dart';
-import 'package:flutter_final/app/modules/mytickets/views/mytickests.dart';
+import 'package:flutter_final/app/modules/login/controllers/login_controller.dart';
+import 'package:flutter_final/app/modules/mytickets/views/list_my_tickets.dart';
+// import 'package:flutter_final/app/modules/mytickets/views/mytickests.dart';
 import 'package:flutter_final/app/modules/profile/profile_screen.dart';
-import 'package:flutter_final/app/routes/app_pages.dart';
+// import 'package:flutter_final/app/routes/app_pages.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
+  // final loginController = Get.put(LoginController());
+  final LoginController logineController = Get.put(LoginController());
+
+  static final String title = 'Custom & Google Fonts';
+  // HomeView(Passenger passenger);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: false,
-        title: RichText(
-          text: const TextSpan(
-            text: "Hi, ",
-            style: TextStyle(
-              fontSize: 18,
+        title: Row(
+          children: [
+            Text(
+              "Hi, ",
+              style: TextStyle(
+                fontSize: 18,
+              ),
             ),
-            children: [
-              TextSpan(
-                text: "vedjuno",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
-            ],
-          ),
+            // GetBuilder<LoginController>(
+            //   builder: (loginController) {
+            //     // try {
+            //     //   if (loginController.isLogin.value &&
+            //     //       loginController.passenger != null) {
+            //     //     print("isLogin: ${loginController.isLogin.value}");
+            //     //     print("Passenger: ${loginController.passenger?.username}");
+
+            //         Text(
+            //           '${loginController.passenger?.username ?? "Loading"}',
+            //           style: TextStyle(
+            //             fontSize: 19,
+            //             color: Colors.white,
+            //           ),
+            //         );
+            //     //   } else {
+            //     //     return CircularProgressIndicator(
+            //     //       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            //     //     );
+            //     //     // or any other loading indicator
+            //     //   }
+            //     // } catch (e) {
+            //     //   print("Error in GetBuilder: $e");
+            //     //   return Container(); // or handle the error accordingly
+            //     }
+            //   },
+            // ),
+
+            GetBuilder<LoginController>(
+              builder: (loginController) {
+                final username = loginController.passenger?.username ?? '';
+                return Text(
+                  '$username',
+                  style: TextStyle(
+                    fontSize: 19,
+                    color: Colors.white,
+                  ),
+                );
+              },
+            )
+
+            // GetBuilder<LoginController>(
+            //   builder: (loginController) {
+            //     try {
+            //       if (loginController.passenger != null) {
+            //         print("Passenger: ${loginController.passenger}");
+
+            //         return Text(
+            //           'Welcome, ${loginController.passenger!.username}!', // Fix the typo here
+            //           style: TextStyle(
+            //             fontSize: 19,
+            //             color: Colors.white,
+            //           ),
+            //         );
+            //       } else {
+            //         return Column(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             CircularProgressIndicator(),
+            //             SizedBox(height: 8),
+            //             Text(
+            //               'Loading passenger information...',
+            //               style: TextStyle(
+            //                 fontSize: 16,
+            //                 color: Colors.white,
+            //               ),
+            //             ),
+            //           ],
+            //         );
+            //       }
+            //     } catch (e) {
+            //       print("Error in GetBuilder: $e");
+            //       return Text(
+            //         'Error: ${e.toString()}',
+            //         style: TextStyle(
+            //           fontSize: 16,
+            //           color: Colors.red,
+            //         ),
+            //       );
+            //     }
+            //   },
+            // ),
+          ],
         ),
         actions: [
           GestureDetector(
             onTap: () {
-              Get.offAllNamed(Routes.LOGIN);
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('ອອກ'),
+                    )
+                  ],
+                  title: const Text('Qr code'),
+                  contentPadding: const EdgeInsets.all(20.0),
+                  content: const Text('.'),
+                ),
+              );
             },
             child: Container(
               margin: EdgeInsets.only(right: 20),
@@ -71,8 +172,7 @@ class HomeView extends GetView<HomeController> {
                       child: Container(
                         padding: EdgeInsets.all(15),
                         margin: EdgeInsets.symmetric(horizontal: 25),
-                        decoration:const BoxDecoration(
-                          
+                        decoration: const BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
                               Color(0xFFE52D27),
@@ -96,13 +196,14 @@ class HomeView extends GetView<HomeController> {
                                       color: Color(0xFFF7B731),
                                     ),
                                     SizedBox(width: 10),
-                                   const Text(
+                                    Text(
                                       "ຄະແນນ",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                      style: GoogleFonts.notoSansLao(
+                                          // Use camelCase and avoid spaces
+                                          color: Colors.blue,
+                                          fontSize: 12
+                                          // Other text style properties can be added here
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -116,7 +217,7 @@ class HomeView extends GetView<HomeController> {
                                       color: Color(0xFFF7B731),
                                     ),
                                     SizedBox(width: 10),
-                                   const Text(
+                                    const Text(
                                       "ຍອດເງີນຂອງຂ້ອຍ",
                                       style: TextStyle(
                                         color: Colors.white,
@@ -135,25 +236,16 @@ class HomeView extends GetView<HomeController> {
                                       width: 30,
                                       color: Color(0xFFF7B731),
                                     ),
-                                    SizedBox(width: 10),
-                                  const  Text(
-                                      "ຜູ້ຈ່າຍເງີນ",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ],
                             ),
                             SizedBox(height: 10),
-                           const Divider(
+                            const Divider(
                               color: Colors.black,
                             ),
-                          const  SizedBox(height: 10),
-                          const  Row(
+                            const SizedBox(height: 10),
+                            const Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -173,7 +265,7 @@ class HomeView extends GetView<HomeController> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                   Text(
+                                  Text(
                                     "ເປີດໃຊ້ດຽວນີ້ !",
                                     style: TextStyle(
                                       color: Colors.blue,
@@ -186,7 +278,7 @@ class HomeView extends GetView<HomeController> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                               const Text(
+                                const Text(
                                   "",
                                   style: TextStyle(
                                     color: Colors.white,
@@ -208,8 +300,6 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
                     SizedBox(height: 15),
-                   
-                  
                   ],
                 ),
                 Container(
@@ -227,7 +317,7 @@ class HomeView extends GetView<HomeController> {
                             padding: EdgeInsets.symmetric(horizontal: 25),
                             children: [
                               SizedBox(height: 20),
-                             const Text(
+                              const Text(
                                 "ລາຍການ",
                                 style: TextStyle(
                                   fontSize: 20,
@@ -267,22 +357,31 @@ class HomeView extends GetView<HomeController> {
                                 ],
                               ),
                               SizedBox(height: 30),
-                           const   Row(
+                              const Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                               ),
                               SizedBox(height: 20),
-                             const Row(
+                              Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
+                                  // Text(
+                                  //   "ຕົວເລືອກຖ້ຽວໂດຍສານສໍາລັບທ່ານ",
+                                  //   style: TextStyle(
+                                  //     fontSize: 18,
+                                  //     fontWeight: FontWeight.bold,
+                                  //   ),
+                                  // ),
                                   Text(
                                     "ຕົວເລືອກຖ້ຽວໂດຍສານສໍາລັບທ່ານ",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: GoogleFonts.notoSansLao(
+                                        // Use camelCase and avoid spaces
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18
+                                        // Other text style properties can be added here
+                                        ),
                                   ),
                                   Text(
                                     "ທັງໝົດ",
@@ -328,7 +427,7 @@ class HomeView extends GetView<HomeController> {
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
                           height: 80,
-                          decoration:const BoxDecoration(
+                          decoration: const BoxDecoration(
                             border: Border(
                               top: BorderSide(
                                 color: Color.fromARGB(255, 128, 125, 125),
@@ -350,7 +449,7 @@ class HomeView extends GetView<HomeController> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Mytickests()),
+                                        builder: (context) => ListMyTickets()),
                                   );
                                 },
                                 child: ItemNav(
@@ -532,14 +631,14 @@ class StatusCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style:const TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
               ),
             ),
             RichText(
               text: TextSpan(
                 text: data,
-                style:const TextStyle(
+                style: const TextStyle(
                   fontSize: 22,
                   color: Color(0xFFEC2028),
                   fontWeight: FontWeight.bold,

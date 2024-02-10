@@ -1,19 +1,26 @@
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_final/app/model/passengers_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
+  // static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   bool _isSignedIn = false;
   bool get isSignedIn => _isSignedIn;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
   String? _uid;
   String get uid => _uid!;
-  // UserModel? _userModel;
-  // UserModel get userModel => _userModel!;
-  // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  // final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  // final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+
+  Passenger? _passengers_model;
+  Passenger get passengersModel => _passengers_model!;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   AuthProvider() {
     checkSign();
@@ -26,11 +33,16 @@ class AuthProvider extends ChangeNotifier {
 
   Future setSignIn() async {
     final SharedPreferences s = await SharedPreferences.getInstance();
-    s.setBool("is_signedin", true);
+    await s.setBool("is_signedin", true);
     _isSignedIn = true;
+    _uid = uid;
     notifyListeners();
   }
 
+  // static Future<bool> isLoggedIn() async {
+  //   var user = _firebaseAuth.currentUser;
+  //   return user != null;
+  // }
   // signin
   // void signInWithPhone(BuildContext context, String phoneNumber) async {
   //   try {

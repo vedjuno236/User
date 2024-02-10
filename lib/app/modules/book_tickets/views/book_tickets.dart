@@ -1,11 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final/app/modules/book_tickets/views/reservation_form.dart';
-import 'package:flutter_final/app/modules/search_tickets/views/search_tickets.dart';
-// import 'package:flutter/services.dart';
+// import 'package:flutter_final/app/modules/search_tickets/views/search_tickets.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
+import '../../../const/formatter.dart';
+import '../../../model/departures_model.dart';
+import '../../bus/controllers/bus_controller.dart';
 
 class BookTickets extends StatefulWidget {
-  const BookTickets({Key? key}) : super(key: key);
+  final Departures? departure;
+  const BookTickets({Key? key, this.departure}) : super(key: key);
 
   @override
   _BookTicketsState createState() => _BookTicketsState();
@@ -22,16 +28,18 @@ class _BookTicketsState extends State<BookTickets> {
         // brightness: Brightness.light,
         backgroundColor: Colors.red,
         centerTitle: true,
-        title: const Text('ລາຍລະອຽດລົດ'),
+        title: const Text(
+          'ລາຍລະອຽດລົດ',
+          style: TextStyle(color: Colors.white),
+        ),
         leading: IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Search_tickets()),
-            );
+            Navigator.pop(context);
           },
-          //  icon: Icons.arrow_back_ios_new,
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+          ),
         ),
 
         elevation: 0,
@@ -44,7 +52,9 @@ class _BookTicketsState extends State<BookTickets> {
         //   return TicketView();
         // }
         children: [
-          TicketView(),
+          TicketView(
+            departure: widget.departure!,
+          ),
         ],
       ),
     );
@@ -52,6 +62,9 @@ class _BookTicketsState extends State<BookTickets> {
 }
 
 class TicketView extends StatelessWidget {
+  final Departures departure;
+  final BusController busController = Get.put(BusController());
+  TicketView({Key? key, required this.departure}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -70,9 +83,9 @@ class TicketView extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    const Text(
-                      "ໄຊຍະບູລີ",
-                      style: TextStyle(
+                    Text(
+                      busController.departureStation,
+                      style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.indigo),
@@ -156,8 +169,8 @@ class TicketView extends StatelessWidget {
                     const SizedBox(
                       width: 16,
                     ),
-                    const Text(
-                      "ຫຼວງພະບາງ",
+                    Text(
+                      busController.arrivalStation,
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -169,7 +182,7 @@ class TicketView extends StatelessWidget {
                 SizedBox(
                   height: 4,
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     SizedBox(
@@ -179,8 +192,9 @@ class TicketView extends StatelessWidget {
                           style: TextStyle(fontSize: 12, color: Colors.grey),
                         )),
                     Text(
-                      "31/10 ອັງຄານ",
-                      style: TextStyle(
+                      DateFormat("MM/dd EEEE")
+                          .format(busController.selectedDate),
+                      style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
@@ -197,19 +211,21 @@ class TicketView extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "01:00 AM",
-                      style: TextStyle(
+                      DateFormat("hh:mm a", "en-US")
+                          .format(departure.routes.departureTime),
+                      style: const TextStyle(
                           fontSize: 18,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "05:30 PM",
-                      style: TextStyle(
+                      DateFormat("hh:mm a", "en-US")
+                          .format(departure.routes.arrivalTime),
+                      style: const TextStyle(
                           fontSize: 18,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
@@ -217,14 +233,15 @@ class TicketView extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "1 ຊົ່ວໂມງ 10ນາທີ",
+                      formatDuration(departure.routes.departureTime,
+                          departure.routes.arrivalTime),
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
-                    Row(
+                    const Row(
                       children: <Widget>[
                         Text(
                           " ",
@@ -305,8 +322,8 @@ class TicketView extends StatelessWidget {
                     bottomLeft: Radius.circular(24),
                     bottomRight: Radius.circular(24))),
             child: Column(
-              children: [
-                Row(
+              children: departure.buses.tickets.map((e) {
+                return Row(
                   // mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Container(
@@ -315,119 +332,64 @@ class TicketView extends StatelessWidget {
                       //     color: Colors.amber.shade50,
                       //     borderRadius: BorderRadius.circular(20)),
                       // child: Icon(CupertinoIcons.bus, color: Colors.amber),
-                      child: const Text(
-                        'ລົດຕູ້ທໍາມະດາ',
+                      child: Text(
+                        e.ticketName,
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
                     const SizedBox(
                       width: 16,
                     ),
-                    const Text("100.000 LAK",
+                    Text("${oCcy.format(e.price)} LAK",
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                             color: Colors.redAccent)),
-                    SizedBox(width: 10),
-                    // SizedBox(
-                    //   height: 40,
-                    //   width: 80,
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ReservationForm()),
-                          ); // Add your button click logic here
-                        },
-                        child: const Text(
-                          "ຈອງ",
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                    GetBuilder<BusController>(builder: (_) {
+                      return Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              busController.setTicket(e);
+                              busController.setDeparture(departure);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ReservationForm(
+                                          departure: departure,
+                                          ticket: e,
+                                        )),
+                              ); // Add your button click logic here
+                            },
+                            child: const Text(
+                              "ຈອງ",
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                            style: ButtonStyle(
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.white),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.red),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: BorderSide(color: Colors.red),
+                              )),
+                            ),
+                            // ),
+                          ),
                         ),
-                        style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all(Colors.white),
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.red),
-                          shape:
-                              MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(color: Colors.red),
-                          )),
-                        ),
-                        // ),
-                      ),
-                    ),
+                      );
+                    }),
                   ],
-                ),
-                new Divider(color: Colors.black12),
-                Row(
-                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Container(
-                      // padding: EdgeInsets.all(8),
-                      // decoration: BoxDecoration(
-                      //     color: Colors.amber.shade50,
-                      //     borderRadius: BorderRadius.circular(20)),
-                      child: const Text(
-                        'ລົດຕູ້ VIP',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-
-                    const Text("200.000 LAK",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.redAccent)),
-                    const SizedBox(width: 30),
-                    // SizedBox(
-                    //   height: 40,
-                    //   width: 80,
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ReservationForm()),
-                          ); // Add your button click logic here
-                        },
-                        child: const Text(
-                          "ຈອງ",
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                        style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all(Colors.white),
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.red),
-                          shape:
-                              MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: const BorderSide(color: Colors.red),
-                          )),
-                        ),
-                        // ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                );
+                //new Divider(color: Colors.black12),
+              }).toList(),
             ),
           ),
         ],
