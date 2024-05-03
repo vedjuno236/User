@@ -4,18 +4,12 @@ import 'package:country_picker/country_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final/app/modules/login/Button/Button.dart';
-// import 'package:flutter_final/app/modules/home/views/home_view.dart';
 import 'package:flutter_final/app/modules/register/views/register_view.dart';
-// import 'package:flutter_final/app/modules/login/views/otp_login_view.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rive/rive.dart';
 
 import '../controllers/login_controller.dart';
-// import 'package:get/get.dart';
-// import 'package:flutter_final/app/routes/app_pages.dart';
-// import 'package:get/get.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);

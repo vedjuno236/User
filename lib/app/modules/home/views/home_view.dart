@@ -8,6 +8,7 @@ import 'package:flutter_final/app/modules/profile/profile_screen.dart';
 // import 'package:flutter_final/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 // import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../controllers/home_controller.dart';
@@ -341,8 +342,10 @@ class HomeView extends GetView<HomeController> {
                                     onTap: () {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(
-                                            builder: (context) => BusView()),
+                                        PageTransition(
+                                          type: PageTransitionType.rightToLeft,
+                                          child: BusView(),
+                                        ),
                                       );
                                     },
                                     child: ItemKategori(
@@ -426,7 +429,7 @@ class HomeView extends GetView<HomeController> {
                         // Navigation
                         Container(
                           margin: EdgeInsets.only(bottom: 10),
-                          height: 80,
+                          height: 60,
                           decoration: const BoxDecoration(
                             border: Border(
                               top: BorderSide(
@@ -465,10 +468,14 @@ class HomeView extends GetView<HomeController> {
                                 onTap: () {
                                   // Navigate to the "Home" screen when tapped
                                   Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ProfileScreen()),
-                                  );
+                                      context,
+                                      //   MaterialPageRoute(
+                                      //       builder: (context) => ProfileScreen()),
+                                      // );
+                                      PageTransition(
+                                        type: PageTransitionType.bottomToTop,
+                                        child: ProfileScreen(),
+                                      ));
                                 },
                                 child: ItemNav(
                                   icon: "profile",

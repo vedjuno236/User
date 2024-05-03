@@ -58,6 +58,8 @@ class _BcelPaymentPageState extends State<BcelPaymentPage> {
           ? 10000
           : capacityQuerySnapshot.size;
 
+      // : capacityQuerySnapshot.size+1;
+
       if (countCapacity + (loginController.checkedPassenger.length) >
           busController.departure!.buses.capacity) {
         Get.showSnackbar(const GetSnackBar(

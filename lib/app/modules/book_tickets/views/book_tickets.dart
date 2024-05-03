@@ -4,6 +4,7 @@ import 'package:flutter_final/app/modules/book_tickets/views/reservation_form.da
 // import 'package:flutter_final/app/modules/search_tickets/views/search_tickets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../const/formatter.dart';
 import '../../../model/departures_model.dart';
@@ -355,13 +356,18 @@ class TicketView extends StatelessWidget {
                               busController.setDeparture(departure);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: Builder(
                                     builder: (context) => ReservationForm(
-                                          departure: departure,
-                                          ticket: e,
-                                        )),
-                              ); // Add your button click logic here
+                                      departure: departure,
+                                      ticket: e,
+                                    ),
+                                  ),
+                                ),
+                              );
                             },
+
                             child: const Text(
                               "ຈອງ",
                               textAlign: TextAlign.end,

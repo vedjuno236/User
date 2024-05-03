@@ -15,6 +15,7 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  int _value = 1;
   late DateTime datetime;
   late RegisterController registerController;
 
@@ -45,6 +46,7 @@ class _RegisterViewState extends State<RegisterView> {
           registerController.emailController.text,
           registerController.phoneNumberController.text,
           registerController.idCardController.text,
+          // registerController.genderController,
           registerController.dobDateTime,
           registerController.profileImage,
           registerController.imageFile,
@@ -98,7 +100,7 @@ class _RegisterViewState extends State<RegisterView> {
             boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
-                offset: const Offset(
+                offset: Offset(
                   5.0,
                   5.0,
                 ),
@@ -107,7 +109,7 @@ class _RegisterViewState extends State<RegisterView> {
               ), //BoxShadow
               BoxShadow(
                 color: Colors.white,
-                offset: const Offset(0.0, 0.0),
+                offset: Offset(0.0, 0.0),
                 blurRadius: 0.0,
                 spreadRadius: 0.0,
               ), //BoxShadow
@@ -158,13 +160,6 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                     ],
                   ),
-                  // TextFormField(
-                  //   controller: registerController.nameController,
-                  //   decoration: const InputDecoration(
-                  //       hintText: 'ກະລຸນາປ້ອນຊື່',
-                  //       hintStyle: TextStyle(
-                  //           fontSize: 20, fontWeight: FontWeight.w500)),
-                  // ),
                   TextFormField(
                     controller: registerController.nameController,
                     decoration: InputDecoration(
@@ -188,7 +183,6 @@ class _RegisterViewState extends State<RegisterView> {
                       fillColor: Colors.blue[50],
                     ),
                   ),
-
                   SizedBox(height: 5),
                   const Row(
                     children: [
@@ -202,7 +196,6 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                     ],
                   ),
-
                   TextFormField(
                     controller: registerController.surnameController,
                     decoration: InputDecoration(
@@ -302,7 +295,6 @@ class _RegisterViewState extends State<RegisterView> {
                       fillColor: Colors.blue[50],
                     ),
                   ),
-
                   SizedBox(height: 5),
                   const Row(
                     children: [
@@ -464,6 +456,62 @@ class _RegisterViewState extends State<RegisterView> {
                       fillColor: Colors.blue[50],
                     ),
                   ),
+                  Row(
+                    children: [
+                      const Row(
+                        children: [
+                          Text(
+                            'ເພດ ',
+                            style: TextStyle(fontSize: 19),
+                          ),
+                          Text(
+                            "*",
+                            style: TextStyle(fontSize: 20, color: Colors.red),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio(
+                            value: 1,
+                            groupValue: _value,
+                            onChanged: (value) {
+                              setState(() {
+                                _value = value as int;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text(
+                            "ຊາຍ",
+                            style: TextStyle(fontSize: 15),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio(
+                            value: 2,
+                            groupValue: _value,
+                            onChanged: (value) {
+                              setState(() {
+                                _value = value as int;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text(
+                            "ຍີງ",
+                            style: TextStyle(fontSize: 15),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 10),
                   GestureDetector(
                     onTap: () async {
@@ -525,7 +573,6 @@ class _RegisterViewState extends State<RegisterView> {
                             ),
                           ),
                   ),
-
                   const SizedBox(
                     height: 10,
                   ),

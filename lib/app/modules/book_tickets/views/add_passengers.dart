@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_final/app/modules/book_tickets/controller/book_ticket_controller.dart';
 import 'package:flutter_final/app/modules/book_tickets/views/add_a_contact.dart';
-// import 'package:flutter_final/app/modules/book_tickets/views/reservation_form.dart';
 import 'package:flutter_final/app/modules/login/controllers/login_controller.dart';
 import 'package:get/get.dart';
+import 'package:page_transition/page_transition.dart';
 
 class AddPassengers extends StatefulWidget {
   const AddPassengers({Key? key}) : super(key: key);
@@ -65,9 +64,16 @@ class _AddPassengersState extends State<AddPassengers> {
               onTap: () {
                 // Add your onTap logic here
                 // For example, navigate to a new screen or perform an action
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => AddAContact()),
+                // );
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddAContact()),
+                  PageTransition(
+                    type: PageTransitionType.rightToLeft,
+                    child: AddAContact(),
+                  ),
                 );
               },
               child: Column(
@@ -150,10 +156,10 @@ class _AddPassengersState extends State<AddPassengers> {
                                             Text('${_.passenger?.idCard}'),
                                           ],
                                         ),
-                                        secondary: Icon(
-                                          Icons.edit_note_sharp,
+                                        secondary: const Icon(
+                                          Icons.edit,
                                           color: Colors.blue,
-                                          size: 50.0,
+                                          size: 20.0,
                                         ),
                                       )
                                     : CheckboxListTile(
@@ -184,14 +190,14 @@ class _AddPassengersState extends State<AddPassengers> {
                                                 '${_.passengerList.firstWhere((element) => element.passengerId == e).idCard}'),
                                           ],
                                         ),
-                                        secondary: Icon(
-                                          Icons.edit_note_sharp,
+                                        secondary: const Icon(
+                                          Icons.edit,
                                           color: Colors.blue,
-                                          size: 50.0,
+                                          size: 20.0,
                                         ),
                                       ),
                                 Padding(
-                                  padding: const EdgeInsets.all(10.0),
+                                  padding: EdgeInsets.all(10.0),
                                   child: new Divider(
                                     color: Colors.black45,
                                   ),

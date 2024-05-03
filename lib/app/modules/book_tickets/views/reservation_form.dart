@@ -1,19 +1,16 @@
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_final/app/modules/book_tickets/controller/book_ticket_controller.dart';
 import 'package:flutter_final/app/modules/book_tickets/views/add_passengers.dart';
-// import 'package:flutter_final/app/modules/book_tickets/views/book_tickets.dart';
 import 'package:flutter_final/app/modules/book_tickets/views/payment.dart';
 import 'package:flutter_final/app/modules/bus/controllers/bus_controller.dart';
 import 'package:flutter_final/app/modules/login/controllers/login_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
+import 'package:page_transition/page_transition.dart';
 import '../../../const/formatter.dart';
 import '../../../model/departures_model.dart';
 import '../../../model/ticket_model.dart';
-// import '../../bus/controllers/bus_controller.dart';
 
 class ReservationForm extends StatefulWidget {
   final Departures departure;
@@ -408,10 +405,17 @@ class _ReservationFormState extends State<ReservationForm> {
                               ),
                               GestureDetector(
                                 onTap: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => AddPassengers()),
+                                  // );
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AddPassengers()),
+                                    PageTransition(
+                                      type: PageTransitionType.rightToLeft,
+                                      child: AddPassengers(),
+                                    ),
                                   );
                                 },
                                 child: const Row(
@@ -475,12 +479,24 @@ class _ReservationFormState extends State<ReservationForm> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  PageTransition(
+                    type: PageTransitionType.rightToLeft,
+                    child: Builder(
                       builder: (context) => Payment(
-                            departure: widget.departure,
-                            ticket: widget.ticket,
-                          )),
+                        departure: widget.departure,
+                        ticket: widget.ticket,
+                      ),
+                    ),
+                  ),
                 );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => Payment(
+                //             departure: widget.departure,
+                //             ticket: widget.ticket,
+                //           )),
+                // );
               },
               child: Padding(
                 padding: const EdgeInsets.all(10.0),

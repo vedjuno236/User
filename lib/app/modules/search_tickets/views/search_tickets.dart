@@ -5,6 +5,7 @@ import 'package:flutter_final/app/modules/book_tickets/views/book_tickets.dart';
 import 'package:flutter_final/app/modules/bus/views/bus_view.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../const/formatter.dart';
 import '../../../model/departures_model.dart';
@@ -22,7 +23,11 @@ class Search_tickets extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => BusView()),
+              //
+              PageTransition(
+                type: PageTransitionType.leftToRight,
+                child: BusView(),
+              ),
             );
           },
           //  icon: Icons.arrow_back_ios_new,
@@ -400,11 +405,14 @@ class TicketView extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => BookTickets(
-                                    departure: departure,
-                                  )),
-                        ); // Add your button click logic here
+                          PageTransition(
+                            type: PageTransitionType.rightToLeft,
+                            child: Builder(
+                              builder: (context) =>
+                                  BookTickets(departure: departure),
+                            ),
+                          ),
+                        );
                       },
 
                       child: const Text(

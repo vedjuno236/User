@@ -8,12 +8,14 @@ class Passenger {
   DateTime dob;
   String email;
   String phoneNumber;
+  // String gender;
   List<dynamic> passengerRelation;
 
   Passenger({
     required this.passengerId,
     required this.username,
     required this.userId,
+    // required this.gender,
     required this.idCard,
     required this.dob,
     required this.email,
@@ -31,6 +33,7 @@ class Passenger {
       idCard: data['id_card'].toString(),
       dob: data['dob'].toDate(),
       email: data['email'],
+      // gender: data['gender'],
       passengerRelation: data['passenger_relation'].toList(),
       phoneNumber: data['phone_number'].toString(),
     );

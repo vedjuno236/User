@@ -16,7 +16,6 @@ class LoginController extends GetxController {
   Timer? _timer;
   int remainingSeconds = 1;
   final time = 'ຂໍລະຫັດ OTP'.obs;
-  // final RxBool tapOnTextField = false.obs;
   bool isRunning = false;
   bool isTapOnTextField = false;
   RxString isLogin = "login_page".obs;

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,6 +21,7 @@ class AddAContact extends StatefulWidget {
 }
 
 class _AddAContactState extends State<AddAContact> {
+  int _value = 1;
   late DateTime datetime;
   late BookTicketController bookTicketController;
   late LoginController loginController;
@@ -307,87 +307,6 @@ class _AddAContactState extends State<AddAContact> {
                     ),
                   ),
 
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     showCupertinoModalPopup(
-                  //         context: context,
-                  //         builder: (context) {
-                  //           return Container(
-                  //             height: MediaQuery.of(context).size.height * 0.4,
-                  //             color: Colors.white,
-                  //             child: Column(
-                  //               crossAxisAlignment: CrossAxisAlignment.end,
-                  //               children: [
-                  //                 TextButton(
-                  //                   onPressed: () {
-                  //                     Navigator.pop(context);
-                  //                   },
-                  //                   child: Text('ຢືນຢັນ'),
-                  //                 ),
-                  //                 Expanded(
-                  //                   child: CupertinoDatePicker(
-                  //                     initialDateTime: datetime,
-                  //                     mode: CupertinoDatePickerMode.date,
-                  //                     minimumDate: DateTime(2000),
-                  //                     maximumDate: DateTime.now().add(
-                  //                       const Duration(days: 2 * 365),
-                  //                     ),
-                  //                     onDateTimeChanged: (date) {
-                  //                       setState(() {
-                  //                         datetime = date;
-                  //                       });
-                  //                     },
-                  //                   ),
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           );
-                  //         });
-                  //   },
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Row(
-                  //         children: [
-                  //           Text(
-                  //             'ວັນເດືອນປີເກີດ ',
-                  //             style: TextStyle(fontSize: 19),
-                  //           ),
-                  //           Text(
-                  //             "*",
-                  //             style: TextStyle(fontSize: 20, color: Colors.red),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       TextFormField(
-                  //         controller: bookTicketController.dobController,
-                  //         decoration: InputDecoration(
-                  //           enabledBorder: OutlineInputBorder(
-                  //             borderSide: BorderSide(color: Colors.transparent),
-                  //             borderRadius: BorderRadius.circular(5.5),
-                  //           ),
-                  //           focusedBorder: OutlineInputBorder(
-                  //             borderSide: BorderSide(color: Colors.transparent),
-                  //             borderRadius: BorderRadius.circular(5.5),
-                  //           ),
-                  //           prefixIcon:
-                  //               Icon(Icons.data_array, color: Colors.blue),
-                  //           hintText: datetime
-                  //               .toIso8601String()
-                  //               .split('T')[0], // Extract the date part
-                  //           hintStyle: GoogleFonts.notoSansLao(
-                  //             // Use camelCase and avoid spaces
-                  //             color: Colors.blue,
-                  //             // fontSize: 12
-                  //             // Other text style properties can be added here
-                  //           ),
-                  //           filled: true,
-                  //           fillColor: Colors.blue[50],
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                   SizedBox(height: 5),
                   const Row(
                     children: [
@@ -547,6 +466,63 @@ class _AddAContactState extends State<AddAContact> {
                       fillColor: Colors.blue[50],
                     ),
                   ),
+                  Row(
+                    children: [
+                      const Row(
+                        children: [
+                          Text(
+                            'ເພດ ',
+                            style: TextStyle(fontSize: 19),
+                          ),
+                          Text(
+                            "*",
+                            style: TextStyle(fontSize: 20, color: Colors.red),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio(
+                            value: 1,
+                            groupValue: _value,
+                            onChanged: (value) {
+                              setState(() {
+                                _value = value as int;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text(
+                            "ຊາຍ",
+                            style: TextStyle(fontSize: 15),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio(
+                            value: 2,
+                            groupValue: _value,
+                            onChanged: (value) {
+                              setState(() {
+                                _value = value as int;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text(
+                            "ຍີງ",
+                            style: TextStyle(fontSize: 15),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+
                   const SizedBox(height: 10),
 
                   GestureDetector(

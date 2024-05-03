@@ -10,7 +10,9 @@ import 'package:flutter_final/app/modules/profile/profile_screen.dart';
 import 'package:flutter_final/app/modules/search_tickets/views/search_tickets.dart';
 // import 'package:flutter_final/app/modules/search_to/views/search_to.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../controllers/bus_controller.dart';
@@ -126,8 +128,10 @@ class _BusViewState extends State<BusView> {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomeView()),
+                                    PageTransition(
+                                      type: PageTransitionType.leftToRight,
+                                      child: HomeView(),
+                                    ),
                                   );
                                 },
                                 child: const Icon(CupertinoIcons.chevron_left,
@@ -189,14 +193,16 @@ class _BusViewState extends State<BusView> {
                                                                   MainAxisAlignment
                                                                       .spaceBetween,
                                                               children: [
-                                                                const Text(
+                                                                Text(
                                                                   "ເລືອກສະຖານີຕົ້ນທາງ",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
+                                                                  style: GoogleFonts
+                                                                      .notoSansLao(
+                                                                    fontSize:
+                                                                        19,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    // Other text style properties can be added here
+                                                                  ),
                                                                 ),
                                                                 GestureDetector(
                                                                   onTap: () {
@@ -269,7 +275,12 @@ class _BusViewState extends State<BusView> {
                                                                                 child: Center(
                                                                                   child: Text(
                                                                                     "${data[index]['name']}",
-                                                                                    style: const TextStyle(fontSize: 18, color: Colors.black),
+                                                                                    style: GoogleFonts.notoSansLao(
+                                                                                      fontWeight: FontWeight.bold,
+                                                                                      fontSize: 19,
+                                                                                      color: Colors.black,
+                                                                                      // Other text style properties can be added here
+                                                                                    ),
                                                                                   ),
                                                                                 ),
                                                                               ),
@@ -290,20 +301,24 @@ class _BusViewState extends State<BusView> {
                                                 return RichText(
                                                   text: TextSpan(
                                                     children: [
-                                                      const TextSpan(
+                                                      TextSpan(
                                                         text: "ຈາກ \n",
-                                                        style: TextStyle(
-                                                            color: Color(
-                                                                0xFFFb7b7c5),
-                                                            fontSize: 14),
+                                                        style: GoogleFonts
+                                                            .notoSansLao(
+                                                          fontSize: 15,
+                                                          color: Colors.black,
+                                                          // Other text style properties can be added here
+                                                        ),
                                                       ),
                                                       TextSpan(
                                                         text: busController
                                                             .departureStation,
-                                                        style: const TextStyle(
-                                                            fontSize: 20,
-                                                            color:
-                                                                Colors.black),
+                                                        style: GoogleFonts
+                                                            .notoSansLao(
+                                                          fontSize: 19,
+                                                          color: Colors.black,
+                                                          // Other text style properties can be added here
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -331,13 +346,15 @@ class _BusViewState extends State<BusView> {
                                                               MainAxisAlignment
                                                                   .spaceBetween,
                                                           children: [
-                                                            const Text(
+                                                            Text(
                                                               "ເລືອກສະຖານີປາຍທາງ",
-                                                              style: TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
+                                                              style: GoogleFonts
+                                                                  .notoSansLao(
+                                                                fontSize: 19,
+                                                                color: Colors
+                                                                    .black,
+                                                                // Other text style properties can be added here
+                                                              ),
                                                             ),
                                                             GestureDetector(
                                                               onTap: () {
@@ -416,7 +433,12 @@ class _BusViewState extends State<BusView> {
                                                                                 Center(
                                                                               child: Text(
                                                                                 "${data[index]['name']}",
-                                                                                style: const TextStyle(fontSize: 18, color: Colors.black),
+                                                                                style: GoogleFonts.notoSansLao(
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  fontSize: 19,
+                                                                                  color: Colors.black,
+                                                                                  // Other text style properties can be added here
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -437,21 +459,26 @@ class _BusViewState extends State<BusView> {
                                                 return RichText(
                                                   text: TextSpan(
                                                       children: <TextSpan>[
-                                                        const TextSpan(
+                                                        TextSpan(
                                                           text: "ຮອດ \n",
-                                                          style: TextStyle(
-                                                              color: Color(
-                                                                  0xFFFb7b7c5),
-                                                              fontSize: 14),
+                                                          style: GoogleFonts
+                                                              .notoSansLao(
+                                                            fontSize: 15,
+                                                            color: Colors.black,
+                                                            // Other text style properties can be added here
+                                                          ),
                                                         ),
                                                         TextSpan(
                                                           text: busController
                                                               .arrivalStation,
-                                                          style:
-                                                              const TextStyle(
-                                                                  fontSize: 20,
+                                                          style: GoogleFonts
+                                                              .notoSansLao(
+                                                                  fontSize: 19,
                                                                   color: Colors
-                                                                      .black),
+                                                                      .black
+
+                                                                  // Other text style properties can be added here
+                                                                  ),
                                                         ),
                                                       ]),
                                                 );
@@ -531,13 +558,16 @@ class _BusViewState extends State<BusView> {
                                     );
                                   },
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      const Text(
+                                      Text(
                                         "ເລືອກເວລາເດີນທາງ",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Color(0xFFFb7b7c5)),
+                                        style: GoogleFonts.notoSansLao(
+                                          fontSize: 15,
+                                          color: Colors.black,
+                                          // Other text style properties can be added here
+                                        ),
                                       ),
                                       Row(
                                         mainAxisAlignment:
@@ -547,7 +577,11 @@ class _BusViewState extends State<BusView> {
                                               builder: (_) {
                                             return Text(
                                               "${formatter.format(busController.selectedDate)}",
-                                              style: TextStyle(fontSize: 20),
+                                              style: GoogleFonts.notoSansLao(
+                                                fontSize: 19,
+                                                color: Colors.black,
+                                                // Other text style properties can be added here
+                                              ),
                                             );
                                           }),
                                           const Icon(
@@ -567,9 +601,10 @@ class _BusViewState extends State<BusView> {
                                     // Navigate to the "Home" screen when tapped
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Search_tickets()),
+                                      PageTransition(
+                                        type: PageTransitionType.rightToLeft,
+                                        child: Search_tickets(),
+                                      ),
                                     );
                                   },
                                   child: Container(
@@ -601,26 +636,33 @@ class _BusViewState extends State<BusView> {
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: const EdgeInsets.all(10.0),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text(
                             "ຄົ້ນຫາລ້າສຸດຂອງທ່ານ",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w500),
+                            style: GoogleFonts.notoSansLao(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 19,
+                              color: Colors.black,
+                              // Other text style properties can be added here
+                            ),
                           ),
                           Text(
                             "ລົບທັງໝົດ",
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.blue),
+                            style: GoogleFonts.notoSansLao(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 19,
+                              color: Colors.black,
+                              // Other text style properties can be added here
+                            ),
                           ),
                         ],
                       ),
                     ),
+
                     // SizedBox(height: 5),
                     Container(
                       height: 500,

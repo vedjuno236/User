@@ -39,7 +39,7 @@ class _OtpLoginViewState extends State<OtpLoginView> {
                   //   color: Colors.purple.shade50,
                   // ),
                   child: Image.asset(
-                    "assets/logo/logo-laos.png",
+                    "assets/logo/laos-ticket.png",
                   ),
                 ),
                 const SizedBox(height: 20),

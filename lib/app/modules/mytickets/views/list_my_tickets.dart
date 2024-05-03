@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_final/app/modules/mytickets/controllers/my_tickets_controller.dart';
 import 'package:flutter_final/app/modules/mytickets/views/mytickests.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
 import '../../../const/formatter.dart';
 import '../../../model/booking_model.dart';
 
@@ -68,6 +68,47 @@ class _ListMyTicketsState extends State<ListMyTickets> {
                 );
         },
       ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: ImageIcon(
+      //         AssetImage("assets/icons/beranda.png"),
+      //       ),
+      //       label: "ໜ້າຫຼັກ",
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: ImageIcon(
+      //         AssetImage("assets/icons/ticket.png"),
+      //       ),
+      //       label: "ປີ້ຂອງຂ້ອຍ",
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: ImageIcon(
+      //         AssetImage("assets/icons/profile.png"),
+      //         color: Color(0xFF3A5A98),
+      //       ),
+      //       label: "ບັນຊີຂອງຂ້ອຍ",
+      //     ),
+      //   ],
+      //   onTap: (int index) {
+      //     if (index == 0) {
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (context) => HomeView()),
+      //       );
+      //     } else if (index == 1) {
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (context) => ListMyTickets()),
+      //       );
+      //     } else if (index == 2) {
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (context) => ProfileScreen()),
+      //       );
+      //     }
+      //   },
+      // ),
     );
   }
 }
