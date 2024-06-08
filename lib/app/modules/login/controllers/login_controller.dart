@@ -31,6 +31,7 @@ class LoginController extends GetxController {
   Map<String, bool> checkedPassenger = {};
   void setCheckedPassengerRelation(String key, bool value) {
     checkedPassenger[key] = value;
+    print("check length pass relation:${checkedPassenger.length}");
     update();
   }
 
@@ -109,7 +110,7 @@ class LoginController extends GetxController {
     if (phoneC.text.length == 10) {
       try {
         await auth.verifyPhoneNumber(
-          timeout: const Duration(seconds: 60),
+          timeout: const Duration(seconds: 90),
           phoneNumber: phoneCode.isEmpty
               ? '+856${phoneC.text}'
               : '$phoneCode${phoneC.text}',
@@ -293,4 +294,32 @@ class LoginController extends GetxController {
 //       return null;
 //     }
 //   }
+
+
+
+
+
+
+
+void updatePassengerDetails({
+    required String name,
+    required DateTime dob,
+    required String email,
+    required String idCard,
+  }) {
+    // Update the passenger details here
+    if (passenger != null) {
+      passenger = passenger!.copyWith(
+        username: name,
+        dob: dob,
+        email: email,
+        idCard: idCard,
+      );
+      update(); 
+    }
+  }
+
+
+
+
 }

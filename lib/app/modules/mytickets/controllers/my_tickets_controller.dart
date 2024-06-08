@@ -5,7 +5,6 @@ import 'package:flutter_final/app/model/departures_model.dart';
 import 'package:flutter_final/app/model/passengers_model.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../model/bus_type_model.dart';
 import '../../../model/buses_model.dart';
 import '../../../model/routes_model.dart';
@@ -28,11 +27,9 @@ class MyTicketsController extends GetxController {
   RxList<BookingModel> bookingList = <BookingModel>[].obs;
   RxBool isLoading = false.obs;
   RxBool isCheckQR = false.obs;
-
   void updateBookingList(
       BookingModel bookingModel, String targetBookingId, String status) {
     // Example: Update the values of the BookingModel with bookingId '1'
-
     BookingModel updatedBooking = BookingModel(
         bookingId: bookingModel.bookingId,
         departures: bookingModel.departures,
@@ -41,17 +38,15 @@ class MyTicketsController extends GetxController {
         status: status,
         ticket: bookingModel.ticket,
         bookDate: bookingModel.bookDate,
+        time: bookingModel.time,
         passenger: bookingModel.passenger);
-
     // Find the index of the item with the matching bookingId
     int index = bookingList
         .indexWhere((booking) => booking.bookingId == targetBookingId);
-
     // Update the item if found
     if (index != -1) {
       bookingList[index] = updatedBooking;
     }
-
     update();
   }
 
@@ -68,6 +63,7 @@ class MyTicketsController extends GetxController {
   Future<void> getMyListTicket() async {
     bookingList.clear();
     setLoading(true);
+
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -142,6 +138,7 @@ class MyTicketsController extends GetxController {
             busName: busSnapshot["name"],
             busType: BusType.fromSnapshot(busTypeDoc),
             capacity: busSnapshot["capacity"],
+            carnamber: busSnapshot["carnamber"],
             capacityVIP: busSnapshot["capacity_vip"],
             tickets: ticketList);
 
@@ -169,6 +166,10 @@ class MyTicketsController extends GetxController {
           status: element["status"],
           ticket: ticket,
           bookDate: element["book_date"].toDate(),
+
+          //
+          time: element["time"].toDate(),
+          //
           passenger: passenger,
         ));
       }

@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_final/app/modules/book_tickets/views/add_a_contact.dart';
-// import 'package:flutter_final/app/modules/book_tickets/views/add_passengers.dart';
+import 'package:flutter_final/app/api/notification_api.dart';
 import 'package:flutter_final/app/modules/check_auth/views/check_auth_view.dart';
 import 'package:flutter_final/app/modules/login/controllers/login_controller.dart';
-import 'package:flutter_final/app/modules/login/views/login_view.dart';
 import 'package:flutter_final/app/widgets/splash.dart';
-// import 'package:flutter_final/app/modules/mytickets/controllers/my_tickets_controller.dart';
-// import 'package:flutter_final/app/modules/login/views/login_view.dart';
 import 'package:flutter_final/firebase_options.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'app/routes/app_pages.dart';
-
-// import 'package:device_preview/device_preview.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
 
+  WidgetsFlutterBinding.ensureInitialized();
+//
+  await initialization();
+
+//
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // await FirebaseApi().initNotification();
   Intl.defaultLocale = 'lo_LA';
+//
 
+//
   runApp(MyApp());
 }
 
@@ -84,8 +84,6 @@ class _MyAppState extends State<MyApp> {
             supportedLocales: const [
               Locale('lo', 'LA'),
               Locale('en'),
-
-              // Add other supported locales here
             ],
           );
         }
@@ -93,11 +91,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-
-
-
-
 
 // void initializeFirebaseAppCheck() {
 //   FirebaseAppCheck.instance

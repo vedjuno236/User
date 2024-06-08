@@ -53,4 +53,27 @@ class Passenger {
     // Check if the passenger is at least 15 years old
     return age >= 18 ? "ຜູ້ໃຫຍ່" : "ເດັກນ້ອຍ";
   }
+
+
+   Passenger copyWith({
+    String? passengerId,
+    String? username,
+    String? userId,
+    String? idCard,
+    DateTime? dob,
+    String? email,
+    String? phoneNumber,
+    List<dynamic>? passengerRelation,
+  }) {
+    return Passenger(
+      passengerId: passengerId ?? this.passengerId,
+      username: username ?? this.username,
+      userId: userId ?? this.userId,
+      idCard: idCard ?? this.idCard,
+      dob: dob ?? this.dob,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      passengerRelation: passengerRelation ?? this.passengerRelation,
+    );
+  }
 }

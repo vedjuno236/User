@@ -4,11 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_final/app/modules/home/views/home_view.dart';
 import 'package:flutter_final/app/modules/mytickets/views/list_my_tickets.dart';
-import 'package:flutter_final/app/modules/mytickets/views/mytickests.dart';
-import 'package:flutter_final/app/modules/profile/profile_screen.dart';
-// import 'package:flutter_final/app/modules/search_form/views/search_form.dart';
+import 'package:flutter_final/app/modules/profile/views/profile_screen.dart';
 import 'package:flutter_final/app/modules/search_tickets/views/search_tickets.dart';
-// import 'package:flutter_final/app/modules/search_to/views/search_to.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -27,8 +24,8 @@ class BusView extends StatefulWidget {
 const Color pColor = Color(0xFFEC2028);
 
 class _BusViewState extends State<BusView> {
-  final Stream<QuerySnapshot> _stationStream =
-      FirebaseFirestore.instance.collection('Stations').snapshots();
+  // final Stream<QuerySnapshot> _stationStream =
+  //     FirebaseFirestore.instance.collection('Stations').snapshots();
 
   final FocusNode _focus = FocusNode();
   final FocusNode _focusN = FocusNode();
@@ -51,6 +48,9 @@ class _BusViewState extends State<BusView> {
   ];
 
   late BusController busController;
+
+  var searchName = "";
+  var search = "";
 
   @override
   void initState() {
@@ -161,9 +161,9 @@ class _BusViewState extends State<BusView> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    SizedBox(width: 10),
+                                    const SizedBox(width: 10),
                                     _iconDestination(),
-                                    SizedBox(width: 5),
+                                    const SizedBox(width: 5),
 
                                     Column(
                                       crossAxisAlignment:
@@ -173,123 +173,165 @@ class _BusViewState extends State<BusView> {
                                       children: <Widget>[
                                         Column(
                                           children: [
-                                            // TextButton(onPressed: _addStations,child: Text("Add"),),
                                             GestureDetector(
                                               onTap: () {
                                                 showModalBottomSheet(
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {
-                                                    return SizedBox(
-                                                      height: 600,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(10.0),
-                                                        child: Column(
-                                                          children: [
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Text(
-                                                                  "ເລືອກສະຖານີຕົ້ນທາງ",
-                                                                  style: GoogleFonts
-                                                                      .notoSansLao(
-                                                                    fontSize:
-                                                                        19,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    // Other text style properties can be added here
-                                                                  ),
+                                                    return SingleChildScrollView(
+                                                      child: SizedBox(
+                                                        height: 600,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10.0),
+                                                          child: Column(
+                                                            children: [
+                                                              SingleChildScrollView(
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Column(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Text(
+                                                                          "ເລືອກສະຖານີ",
+                                                                          style:
+                                                                              GoogleFonts.notoSansLao(
+                                                                            fontSize:
+                                                                                17,
+                                                                            color:
+                                                                                Colors.black,
+                                                                            // Other text style properties can be added here
+                                                                          ),
+                                                                        ),
+                                                                        const SizedBox(
+                                                                          height:
+                                                                              5,
+                                                                        ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              40,
+                                                                          width:
+                                                                              365,
+                                                                          child:
+                                                                              TextField(
+                                                                            style:
+                                                                                GoogleFonts.notoSansLao(
+                                                                              color: Colors.black,
+                                                                              fontSize: 17,
+                                                                              letterSpacing: 0.5,
+                                                                            ),
+                                                                            decoration:
+                                                                                InputDecoration(
+                                                                              filled: true,
+                                                                              fillColor: Colors.white70,
+                                                                              border: OutlineInputBorder(
+                                                                                borderRadius: BorderRadius.circular(8),
+                                                                                borderSide: BorderSide.none,
+                                                                              ),
+                                                                              hintText: "ຄົ້ນຫາສະຖານີ",
+                                                                              hintStyle: GoogleFonts.notoSansLao(color: Color.fromARGB(255, 168, 157, 157), fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0.5, decorationThickness: 6),
+                                                                              prefixIcon: const Icon(Icons.search),
+                                                                              prefixIconColor: Colors.black,
+                                                                            ),
+                                                                            // onChanged:
+                                                                            //     searchStations,
+                                                                            onChanged:
+                                                                                (value) {
+                                                                              setState(() {
+                                                                                searchName = value;
+                                                                              });
+                                                                            },
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop();
-                                                                  },
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .close,
-                                                                      size: 20),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(
-                                                              height: 10,
-                                                            ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 15,
+                                                              ),
 
-                                                            StreamBuilder(
-                                                                stream:
-                                                                    _stationStream,
-                                                                builder: (context,
-                                                                    AsyncSnapshot<
-                                                                            QuerySnapshot>
-                                                                        snapshot) {
-                                                                  if (snapshot
-                                                                      .hasError) {
-                                                                    return Text(
-                                                                        'Something went wrong');
-                                                                  }
+                                                              StreamBuilder<
+                                                                      QuerySnapshot>(
+                                                                  // stream:
+                                                                  //     _stationStream,
+                                                                  stream: FirebaseFirestore
+                                                                      .instance
+                                                                      .collection(
+                                                                          'Stations')
+                                                                      .orderBy(
+                                                                          'name')
+                                                                      .startAt([
+                                                                    searchName
+                                                                  ]).endAt([
+                                                                    searchName +
+                                                                        "\uf8ff"
+                                                                  ]).snapshots(),
+                                                                  builder: (context,
+                                                                      AsyncSnapshot<
+                                                                              QuerySnapshot>
+                                                                          snapshot) {
+                                                                    if (snapshot
+                                                                        .hasError) {
+                                                                      return Text(
+                                                                          'Something went wrong');
+                                                                    }
 
-                                                                  if (snapshot
-                                                                          .connectionState ==
-                                                                      ConnectionState
-                                                                          .waiting) {
-                                                                    return Text(
-                                                                        "Loading");
-                                                                  }
-                                                                  final data =
-                                                                      snapshot
-                                                                          .data!
-                                                                          .docs;
+                                                                    if (snapshot
+                                                                            .connectionState ==
+                                                                        ConnectionState
+                                                                            .waiting) {
+                                                                      return Text(
+                                                                          "Loading");
+                                                                    }
+                                                                    final data =
+                                                                        snapshot
+                                                                            .data!
+                                                                            .docs;
 
-                                                                  return GridView
-                                                                      .builder(
-                                                                          shrinkWrap:
-                                                                              true,
-                                                                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                              crossAxisCount:
-                                                                                  3,
-                                                                              mainAxisSpacing:
-                                                                                  10,
-                                                                              crossAxisSpacing:
-                                                                                  10,
-                                                                              childAspectRatio:
-                                                                                  2),
-                                                                          itemCount: data
-                                                                              .length,
-                                                                          itemBuilder:
-                                                                              (context, index) {
-                                                                            return GestureDetector(
-                                                                              onTap: () {
-                                                                                busController.setDepartureStation(data[index].id, data[index]['name'].toString());
-                                                                                Navigator.pop(context);
-                                                                              },
-                                                                              child: Container(
-                                                                                width: 100,
-                                                                                height: 50,
-                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey)),
-                                                                                child: Center(
-                                                                                  child: Text(
-                                                                                    "${data[index]['name']}",
-                                                                                    style: GoogleFonts.notoSansLao(
-                                                                                      fontWeight: FontWeight.bold,
-                                                                                      fontSize: 19,
-                                                                                      color: Colors.black,
-                                                                                      // Other text style properties can be added here
-                                                                                    ),
+                                                                    return GridView.builder(
+                                                                        shrinkWrap: true,
+                                                                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisSpacing: 10, crossAxisSpacing: 10, childAspectRatio: 2),
+                                                                        itemCount: data.length,
+                                                                        itemBuilder: (context, index) {
+                                                                          return GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              busController.setDepartureStation(data[index].id, data[index]['name'].toString());
+                                                                              Navigator.pop(context);
+                                                                            },
+                                                                            child:
+                                                                                Container(
+                                                                              width: 100,
+                                                                              height: 50,
+                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey)),
+                                                                              child: Center(
+                                                                                child: Text(
+                                                                                  "${data[index]['name']}",
+                                                                                  style: GoogleFonts.notoSansLao(
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                    fontSize: 19,
+                                                                                    color: Colors.black,
+                                                                                    // Other text style properties can be added here
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            );
-                                                                          });
-                                                                }),
+                                                                            ),
+                                                                          );
+                                                                        });
+                                                                  }),
 
-                                                            // Additional widgets for your bottom sheet go here
-                                                          ],
+                                                              // Additional widgets for your bottom sheet go here
+                                                            ],
+                                                          ),
                                                         ),
                                                       ),
                                                     );
@@ -333,119 +375,186 @@ class _BusViewState extends State<BusView> {
                                             showModalBottomSheet(
                                               context: context,
                                               builder: (BuildContext context) {
-                                                return SizedBox(
-                                                  height: 1000,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            10.0),
-                                                    child: Column(
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              "ເລືອກສະຖານີປາຍທາງ",
-                                                              style: GoogleFonts
-                                                                  .notoSansLao(
-                                                                fontSize: 19,
-                                                                color: Colors
-                                                                    .black,
-                                                                // Other text style properties can be added here
-                                                              ),
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop(); // Use Navigator.of(context)
-                                                              },
-                                                              child: const Icon(
-                                                                  Icons.close,
-                                                                  size: 20),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        StreamBuilder(
-                                                            stream:
-                                                                _stationStream,
-                                                            builder: (context,
-                                                                AsyncSnapshot<
-                                                                        QuerySnapshot>
-                                                                    snapshot) {
-                                                              if (snapshot
-                                                                  .hasError) {
-                                                                return Text(
-                                                                    'Something went wrong');
-                                                              }
-
-                                                              if (snapshot
-                                                                      .connectionState ==
-                                                                  ConnectionState
-                                                                      .waiting) {
-                                                                return Text(
-                                                                    "Loading");
-                                                              }
-                                                              final data =
-                                                                  snapshot.data!
-                                                                      .docs;
-
-                                                              return GridView
-                                                                  .builder(
-                                                                      shrinkWrap:
-                                                                          true,
-                                                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                          crossAxisCount:
-                                                                              3,
-                                                                          mainAxisSpacing:
-                                                                              10,
-                                                                          crossAxisSpacing:
-                                                                              10,
-                                                                          childAspectRatio:
-                                                                              2),
-                                                                      itemCount:
-                                                                          data
-                                                                              .length,
-                                                                      itemBuilder:
-                                                                          (context,
-                                                                              index) {
-                                                                        return GestureDetector(
-                                                                          onTap:
+                                                return SingleChildScrollView(
+                                                  child: SizedBox(
+                                                    height: 600,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10.0),
+                                                      child: Column(
+                                                        children: [
+                                                          SingleChildScrollView(
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      "ເລືອກສະຖານີ",
+                                                                      style: GoogleFonts
+                                                                          .notoSansLao(
+                                                                        fontSize:
+                                                                            17,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        // Other text style properties can be added here
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height: 5,
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          40,
+                                                                      width:
+                                                                          365,
+                                                                      child:
+                                                                          TextField(
+                                                                        style: GoogleFonts
+                                                                            .notoSansLao(
+                                                                          color:
+                                                                              Colors.black,
+                                                                          fontSize:
+                                                                              20,
+                                                                          fontWeight:
+                                                                              FontWeight.w400,
+                                                                          letterSpacing:
+                                                                              0.5,
+                                                                        ),
+                                                                        decoration:
+                                                                            InputDecoration(
+                                                                          filled:
+                                                                              true,
+                                                                          fillColor:
+                                                                              Colors.white,
+                                                                          border:
+                                                                              OutlineInputBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(8),
+                                                                            borderSide:
+                                                                                BorderSide.none,
+                                                                          ),
+                                                                          hintText:
+                                                                              "ຄົ້ນຫາສະຖານີ",
+                                                                          hintStyle: GoogleFonts.notoSansLao(
+                                                                              color: Color.fromARGB(255, 168, 157, 157),
+                                                                              fontSize: 15,
+                                                                              fontWeight: FontWeight.w400,
+                                                                              letterSpacing: 0.5,
+                                                                              decorationThickness: 6),
+                                                                          prefixIcon:
+                                                                              const Icon(Icons.search),
+                                                                          prefixIconColor:
+                                                                              Colors.black,
+                                                                        ),
+                                                                        onChanged:
+                                                                            (value) {
+                                                                          setState(
                                                                               () {
-                                                                            busController.setArrivalStation(data[index].id,
-                                                                                data[index]['name'].toString());
-                                                                            Navigator.pop(context);
-                                                                          },
-                                                                          child:
-                                                                              Container(
-                                                                            width:
-                                                                                100,
-                                                                            height:
-                                                                                50,
-                                                                            decoration:
-                                                                                BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey)),
+                                                                            search =
+                                                                                value;
+                                                                          });
+                                                                        },
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          StreamBuilder(
+                                                              // stream:
+                                                              //     _stationStream,
+                                                              stream: FirebaseFirestore
+                                                                  .instance
+                                                                  .collection(
+                                                                      'Stations')
+                                                                  .orderBy(
+                                                                      'name')
+                                                                  .startAt([
+                                                                search
+                                                              ]).endAt([
+                                                                search +
+                                                                    "\uf8ff"
+                                                              ]).snapshots(),
+                                                              builder: (context,
+                                                                  AsyncSnapshot<
+                                                                          QuerySnapshot>
+                                                                      snapshot) {
+                                                                if (snapshot
+                                                                    .hasError) {
+                                                                  return Text(
+                                                                      'Something went wrong');
+                                                                }
+
+                                                                if (snapshot
+                                                                        .connectionState ==
+                                                                    ConnectionState
+                                                                        .waiting) {
+                                                                  return Text(
+                                                                      "Loading");
+                                                                }
+                                                                final data =
+                                                                    snapshot
+                                                                        .data!
+                                                                        .docs;
+
+                                                                return GridView
+                                                                    .builder(
+                                                                        shrinkWrap:
+                                                                            true,
+                                                                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                            crossAxisCount:
+                                                                                3,
+                                                                            mainAxisSpacing:
+                                                                                10,
+                                                                            crossAxisSpacing:
+                                                                                10,
+                                                                            childAspectRatio:
+                                                                                2),
+                                                                        itemCount:
+                                                                            data
+                                                                                .length,
+                                                                        itemBuilder:
+                                                                            (context,
+                                                                                index) {
+                                                                          return GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              busController.setArrivalStation(data[index].id, data[index]['name'].toString());
+                                                                              Navigator.pop(context);
+                                                                            },
                                                                             child:
-                                                                                Center(
-                                                                              child: Text(
-                                                                                "${data[index]['name']}",
-                                                                                style: GoogleFonts.notoSansLao(
-                                                                                  fontWeight: FontWeight.bold,
-                                                                                  fontSize: 19,
-                                                                                  color: Colors.black,
-                                                                                  // Other text style properties can be added here
+                                                                                Container(
+                                                                              width: 100,
+                                                                              height: 50,
+                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey)),
+                                                                              child: Center(
+                                                                                child: Text(
+                                                                                  "${data[index]['name']}",
+                                                                                  style: GoogleFonts.notoSansLao(
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                    fontSize: 19,
+                                                                                    color: Colors.black,
+                                                                                    // Other text style properties can be added here
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          ),
-                                                                        );
-                                                                      });
-                                                            }),
-                                                      ],
+                                                                          );
+                                                                        });
+                                                              }),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 );
@@ -520,38 +629,47 @@ class _BusViewState extends State<BusView> {
                                           height: 600,
                                           child: Center(
                                             child: GetBuilder<BusController>(
-                                                builder: (_) {
-                                              return TableCalendar(
-                                                locale: "lo_LA",
-                                                rowHeight: 43,
-                                                headerStyle: const HeaderStyle(
+                                              builder: (_) {
+                                                DateTime today = DateTime.now();
+                                                DateTime lastDate = today.add(
+                                                    const Duration(
+                                                        days:
+                                                            1)); // Five days from today
+
+                                                return TableCalendar(
+                                                  locale: "lo_LA",
+                                                  rowHeight: 43,
+                                                  headerStyle:
+                                                      const HeaderStyle(
                                                     formatButtonVisible: false,
-                                                    titleCentered: true),
-                                                availableGestures:
-                                                    AvailableGestures.all,
-                                                selectedDayPredicate: (day) =>
-                                                    isSameDay(
-                                                        day,
-                                                        busController
-                                                            .selectedDate),
-                                                focusedDay:
-                                                    busController.selectedDate,
-                                                firstDay:
-                                                    DateTime.utc(2010, 10, 16),
-                                                lastDay:
-                                                    DateTime.utc(2030, 3, 14),
-                                                //
-                                                onDaySelected:
-                                                    (selectedDay, focusedDay) {
-                                                  // Update the selectedDate when a day is selected.
-                                                  busController.setSelectedDate(
-                                                      selectedDay);
-                                                  // Add your logic here when a day is selected.
-                                                  Navigator.pop(
-                                                      context); // Dismiss the modal when a day is selected.
-                                                },
-                                              );
-                                            }),
+                                                    titleCentered: true,
+                                                  ),
+                                                  availableGestures:
+                                                      AvailableGestures.all,
+                                                  selectedDayPredicate: (day) {
+                                                    // Allow selection only for dates within the five-day range starting from today
+                                                    return !day
+                                                            .isBefore(today) &&
+                                                        !day.isAfter(lastDate);
+                                                  },
+                                                  focusedDay: today,
+                                                  firstDay:
+                                                      today, // Start from today
+                                                  lastDay:
+                                                      lastDate, // End five days from today
+                                                  onDaySelected: (selectedDay,
+                                                      focusedDay) {
+                                                    // Update the selectedDate when a day is selected.
+                                                    busController
+                                                        .setSelectedDate(
+                                                            selectedDay);
+                                                    // Add your logic here when a day is selected.
+                                                    Navigator.pop(
+                                                        context); // Dismiss the modal when a day is selected.
+                                                  },
+                                                );
+                                              },
+                                            ),
                                           ),
                                         );
                                       },
@@ -918,7 +1036,7 @@ class StatusCard extends StatelessWidget {
             RichText(
               text: TextSpan(
                 text: data,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 22,
                   color: Color(0xFFEC2028),
                   fontWeight: FontWeight.bold,
@@ -926,7 +1044,7 @@ class StatusCard extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: " $satuan",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Color(0xFF747D8C),
                     ),
@@ -981,7 +1099,7 @@ class ClipPathClass extends CustomClipper<Path> {
 
 Widget _iconDestination() {
   return Container(
-    child: Column(
+    child: const Column(
       children: <Widget>[
         Icon(Icons.bus_alert, color: Color(0xFFF00d5d8), size: 30),
         Icon(Icons.fiber_manual_record, color: Color(0xFFF00d5d8), size: 12),

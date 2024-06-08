@@ -2,13 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final/app/model/booking_model.dart';
+import 'package:flutter_final/app/modules/home/views/home_view.dart';
 import 'package:flutter_final/app/modules/mytickets/controllers/my_tickets_controller.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:flutter_final/app/modules/mytickets/views/list_my_tickets.dart';
+import 'package:flutter_final/app/modules/profile/views/profile_screen.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-
 import '../../../const/formatter.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class Mytickests extends StatefulWidget {
   final BookingModel bookingModel;
@@ -23,6 +27,41 @@ const Color oColor = Colors.orangeAccent;
 
 class _MytickestsState extends State<Mytickests> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  String qrData = '';
+  @override
+  void initState() {
+    super.initState();
+    fetchDataFromFirestore();
+  }
+
+  void fetchDataFromFirestore() async {
+    QuerySnapshot snapshot =
+        await FirebaseFirestore.instance.collection('Payment').get();
+
+    if (snapshot.docs.isNotEmpty) {
+      QueryDocumentSnapshot firstDocument = snapshot.docs.first;
+      Map<String, dynamic>? data =
+          firstDocument.data() as Map<String, dynamic>?;
+
+      if (data != null) {
+        String paymentId = firstDocument.id;
+        setState(() {
+          qrData = ' $paymentId';
+        });
+      } else {
+        setState(() {
+          qrData = '';
+        });
+      }
+    } else {
+      setState(() {
+        qrData = '';
+      });
+    }
+    print('qrData: $qrData');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +105,7 @@ class _MytickestsState extends State<Mytickests> {
                                 onTap: () {
                                   Navigator.pop(context);
                                 },
-                                child: Icon(CupertinoIcons.chevron_left,
+                                child: const Icon(CupertinoIcons.chevron_left,
                                     color: Colors.white),
                               ),
                               const Text(
@@ -81,40 +120,57 @@ class _MytickestsState extends State<Mytickests> {
                               ),
                             ],
                           ),
-                          GetBuilder<MyTicketsController>(
-                            builder: (_) {
-                              // Check if bookingList is not empty
-                              if (_.bookingList.isNotEmpty) {
-                                var booking = _.bookingList
-                                    .first; // Access the first booking
-                                return Column(
-                                  children: [
-                                    Text(
-                                      'ໝາຍເລກສັ່ງຊື້ ${booking.bookingId}',
-                                      style: const TextStyle(
-                                          fontSize: 15, color: Colors.white),
-                                    ),
-                                    // Display other information about the booking as needed
-                                  ],
-                                );
-                              } else {
-                                // Handle the case when bookingList is empty
-                                return Text(
-                                  'No bookings available',
+                          const SizedBox(height: 10),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                const TextSpan(
+                                  text: 'ໝາຍເລກສັ່ງຊື້ :',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ' ${widget.bookingModel.bookingId}\n',
                                   style: const TextStyle(
-                                      fontSize: 15, color: Colors.white),
-                                );
-                              }
-                            },
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const TextSpan(
+                                  text: 'ເວລາສັ່ງຊື້ :',
+                                  style: TextStyle(
+                                      fontSize: 17, color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text:
+                                      '${DateFormat('dd-MM-yyyy ').format(widget.bookingModel.bookDate)}:  ',
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '${DateFormat(
+                                    "hh:mm:ss",
+                                  ).format(widget.bookingModel.time)}', // Use getlaosTime() to get the time in Laos timezone
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           Container(
                             // SingleChildScrollView
-                            margin: EdgeInsets.only(top: 50, bottom: 20),
+                            margin: const EdgeInsets.only(top: 50, bottom: 20),
                             width: MediaQuery.of(context).size.width,
                             height: 200,
 
                             decoration: BoxDecoration(
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 colors: <Color>[
                                   Colors.white,
                                   Colors.white,
@@ -133,7 +189,7 @@ class _MytickestsState extends State<Mytickests> {
                                       Text(
                                         DateFormat("MM/dd EEEE").format(
                                             widget.bookingModel.bookDate),
-                                        style: TextStyle(fontSize: 15),
+                                        style: const TextStyle(fontSize: 15),
                                       ),
                                       Text(
                                         formatDuration(
@@ -141,7 +197,7 @@ class _MytickestsState extends State<Mytickests> {
                                                 .routes.departureTime,
                                             widget.bookingModel.departures
                                                 .routes.arrivalTime),
-                                        style: TextStyle(fontSize: 15),
+                                        style: const TextStyle(fontSize: 15),
                                       ),
                                     ],
                                   ),
@@ -163,7 +219,8 @@ class _MytickestsState extends State<Mytickests> {
                                           Text(
                                             widget.bookingModel.departures.buses
                                                 .busName,
-                                            style: TextStyle(fontSize: 15),
+                                            style:
+                                                const TextStyle(fontSize: 15),
                                           ),
                                           // Icon(Icons.arrow_back_sharp),
                                           SizedBox(
@@ -179,13 +236,13 @@ class _MytickestsState extends State<Mytickests> {
                                         DateFormat("hh:mm a", "en-US").format(
                                             widget.bookingModel.departures
                                                 .routes.arrivalTime),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -193,156 +250,74 @@ class _MytickestsState extends State<Mytickests> {
                                       Text(
                                         widget.bookingModel.departures.routes
                                             .departureStation.stationName,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         widget.bookingModel.departures.routes
                                             .arrivalStation.stationName,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 10),
-                                  // GetBuilder<MyTicketsController>(builder: (_) {
-                                  //   return _.isCheckQR.isTrue ||
-                                  //           widget.bookingModel.status ==
-                                  //               "cancel" ||
-                                  //           widget.bookingModel.status ==
-                                  //               "checked"
-                                  //       ? SizedBox()
-                                  //       : Row(
-                                  //           mainAxisAlignment:
-                                  //               MainAxisAlignment.end,
-                                  //           children: [
-                                  //             GestureDetector(
-                                  //               onTap: () async {
-                                  //                 await _firestore
-                                  //                     .collection("Booking")
-                                  //                     .doc(widget.bookingModel
-                                  //                         .bookingId)
-                                  //                     .update(
-                                  //                         {"status": "cancel"});
-                                  //                 _.updateBookingList(
-                                  //                     widget.bookingModel,
-                                  //                     widget.bookingModel
-                                  //                         .bookingId,
-                                  //                     "cancel");
-                                  //               },
-                                  //               child: Container(
-                                  //                 width: 150,
-                                  //                 height: 50,
-                                  //                 decoration: BoxDecoration(
-                                  //                   gradient: LinearGradient(
-                                  //                     colors: <Color>[
-                                  //                       Colors.redAccent,
-                                  //                       Colors.orangeAccent,
-                                  //                     ],
-                                  //                   ),
-                                  //                   borderRadius:
-                                  //                       BorderRadius.circular(
-                                  //                           5.0),
-                                  //                 ),
-                                  //                 padding: EdgeInsets.all(16.0),
-                                  //                 child: const Text(
-                                  //                   "ຍົກເລີກປີ້",
-                                  //                   style: TextStyle(
-                                  //                       fontSize: 15,
-                                  //                       fontWeight:
-                                  //                           FontWeight.bold,
-                                  //                       color: Colors.white),
-                                  //                   textAlign: TextAlign.center,
-                                  //                 ),
-                                  //               ),
-                                  //             ),
-                                  //           ],
-                                  //         );
-                                  // }),
+                                  const SizedBox(height: 10),
 
-                                  // GetBuilder<MyTicketsController>(builder: (_) {
-                                  //   return _.isCheckQR.isTrue ||
-                                  //           widget.bookingModel.status ==
-                                  //               "cancel" ||
-                                  //           widget.bookingModel.status ==
-                                  //               "checked"
-                                  //       ? SizedBox()
-                                  //       : Row(
-                                  //           mainAxisAlignment:
-                                  //               MainAxisAlignment.end,
-                                  //           children: [
-                                  //             GestureDetector(
-                                  //               onTap: () async {
-                                  //                 await showDialog(
-                                  //                   context: context,
-                                  //                   builder: (context) =>
-                                  //                       AlertDialog(
-                                  //                     actions: [
-                                  //                       TextButton(
-                                  //                         onPressed: () {
-                                  //                           Navigator.of(
-                                  //                                   context)
-                                  //                               .pop();
-                                  //                         },
-                                  //                         child: Text('ອອກ'),
+                                  // GetBuilder<MyTicketsController>(
+                                  //   builder: (_) {
+                                  //     return _.isCheckQR.isTrue ||
+                                  //             widget.bookingModel.status ==
+                                  //                 "cancel" ||
+                                  //             widget.bookingModel.status ==
+                                  //                 "checked"
+                                  //         ? SizedBox()
+                                  //         : Row(
+                                  //             mainAxisAlignment:
+                                  //                 MainAxisAlignment.end,
+                                  //             children: [
+                                  //               GestureDetector(
+                                  //                 onTap: () {
+                                  //                   AwesomeDialog(
+                                  //                     context: context,
+                                  //                     animType: AnimType.scale,
+                                  //                     dialogType:
+                                  //                         DialogType.info,
+                                  //                     body: Center(
+                                  //                       child: Text(
+                                  //                         'ທ່ານຕ້ອງການຍົກເລີກປີ້ແມ່ນບໍ່.',
+                                  //                         style: GoogleFonts
+                                  //                             .notoSansLao(
+                                  //                                 fontSize: 15),
                                   //                       ),
+                                  //                     ),
+                                  //                     btnCancelOnPress: () {},
+                                  //                     btnOkOnPress: () async {
+                                  //                       await _firestore
+                                  //                           .collection(
+                                  //                               "Booking")
+                                  //                           .doc(widget
+                                  //                               .bookingModel
+                                  //                               .bookingId)
+                                  //                           .update({
+                                  //                         "status": "cancel"
+                                  //                       });
+                                  //                       _.updateBookingList(
+                                  //                           widget.bookingModel,
+                                  //                           widget.bookingModel
+                                  //                               .bookingId,
+                                  //                           "cancel");
+                                  //                       Navigator.of(context)
+                                  //                           .pop();
+                                  //                     },
+                                  //                   )..show();
 
-                                  //                       Text('ຕົກລົງ')
-                                  //                     ],
-                                  //                     contentPadding:
-                                  //                         EdgeInsets.all(20.0),
-                                  //                     content: Text(
-                                  //                         'ທ່ານຕ້ອງການຍົກເລີກປີ້ແມ່ນບໍ່'),
-                                  //                   ),
-                                  //                 );
-                                  //                 // await _firestore
-                                  //                 //     .collection("Booking")
-                                  //                 //     .doc(widget.bookingModel
-                                  //                 //         .bookingId)
-                                  //                 //     .update(
-                                  //                 //         {"status": "cancel"});
-                                  //                 // _.updateBookingList(
-                                  //                 //     widget.bookingModel,
-                                  //                 //     widget.bookingModel
-                                  //                 //         .bookingId,
-                                  //                 //     "cancel");
-                                  //               },
-                                  //               child: Container(
-                                  //                 width: 150,
-                                  //                 height: 50,
-                                  //                 decoration: BoxDecoration(
-                                  //                   gradient: LinearGradient(
-                                  //                     colors: <Color>[
-                                  //                       Colors.redAccent,
-                                  //                       Colors.orangeAccent,
-                                  //                     ],
-                                  //                   ),
-                                  //                   borderRadius:
-                                  //                       BorderRadius.circular(
-                                  //                           5.0),
-                                  //                 ),
-                                  //                 padding: EdgeInsets.all(16.0),
-                                  //                 child: const Text(
-                                  //                   "ຍົກເລີກປີ້",
-                                  //                   style: TextStyle(
-                                  //                     fontSize: 15,
-                                  //                     fontWeight:
-                                  //                         FontWeight.bold,
-                                  //                     color: Colors.white,
-                                  //                   ),
-                                  //                   textAlign: TextAlign.center,
-                                  //                 ),
-                                  //               ),
-                                  //             ),
-                                  //           ],
-                                  //         );
-                                  // }),
-
-                                  GetBuilder<MyTicketsController>(
-                                    builder: (_) {
-                                      return _.isCheckQR.isTrue ||
+                                  Obx(
+                                    () {
+                                      final myController =
+                                          Get.find<MyTicketsController>();
+                                      return myController.isCheckQR.isTrue ||
                                               widget.bookingModel.status ==
                                                   "cancel" ||
                                               widget.bookingModel.status ==
@@ -354,20 +329,21 @@ class _MytickestsState extends State<Mytickests> {
                                               children: [
                                                 GestureDetector(
                                                   onTap: () {
-                                                    Get.defaultDialog(
-                                                      title:
-                                                          "ທ່ານຕ້ອງການຍົກເລີກປີ້ແມ່ນບໍ່",
-                                                      titleStyle:
-                                                          const TextStyle(
-                                                              fontSize: 15,
-                                                              color: Colors
-                                                                  .redAccent),
-                                                      content: Container(),
-                                                      textConfirm: "ຕົກລົງ",
-                                                      textCancel: "ອອກ",
-                                                      confirmTextColor:
-                                                          Colors.white,
-                                                      onConfirm: () async {
+                                                    AwesomeDialog(
+                                                      context: context,
+                                                      animType: AnimType.scale,
+                                                      dialogType:
+                                                          DialogType.info,
+                                                      body: Center(
+                                                        child: Text(
+                                                          'ທ່ານຕ້ອງການຍົກເລີກປີ້ແມ່ນບໍ່.',
+                                                          style: GoogleFonts
+                                                              .notoSansLao(
+                                                                  fontSize: 15),
+                                                        ),
+                                                      ),
+                                                      btnCancelOnPress: () {},
+                                                      btnOkOnPress: () async {
                                                         await _firestore
                                                             .collection(
                                                                 "Booking")
@@ -377,25 +353,24 @@ class _MytickestsState extends State<Mytickests> {
                                                             .update({
                                                           "status": "cancel"
                                                         });
-                                                        _.updateBookingList(
-                                                            widget.bookingModel,
-                                                            widget.bookingModel
-                                                                .bookingId,
-                                                            "cancel");
+                                                        myController
+                                                            .updateBookingList(
+                                                          widget.bookingModel,
+                                                          widget.bookingModel
+                                                              .bookingId,
+                                                          "cancel",
+                                                        );
                                                         Navigator.of(context)
                                                             .pop();
                                                       },
-                                                      onCancel: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                    );
+                                                    ).show();
                                                   },
                                                   child: Container(
                                                     width: 150,
                                                     height: 50,
                                                     decoration: BoxDecoration(
-                                                      gradient: LinearGradient(
+                                                      gradient:
+                                                          const LinearGradient(
                                                         colors: <Color>[
                                                           Colors.redAccent,
                                                           Colors.orangeAccent,
@@ -406,7 +381,8 @@ class _MytickestsState extends State<Mytickests> {
                                                               5.0),
                                                     ),
                                                     padding:
-                                                        EdgeInsets.all(16.0),
+                                                        const EdgeInsets.all(
+                                                            16.0),
                                                     child: const Text(
                                                       "ຍົກເລີກປີ້",
                                                       style: TextStyle(
@@ -430,10 +406,10 @@ class _MytickestsState extends State<Mytickests> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 1, bottom: 5),
+                            margin: const EdgeInsets.only(top: 1, bottom: 5),
                             width: MediaQuery.of(context).size.width,
                             height: 150,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 colors: <Color>[
                                   Colors.orangeAccent,
@@ -457,29 +433,42 @@ class _MytickestsState extends State<Mytickests> {
                                     children: [
                                       Text(
                                         widget.bookingModel.passenger.username,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
                                             color: Colors.white),
                                       ),
                                       Text(
                                         "${oCcy.format(widget.bookingModel.ticket.price)} KIP",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20,
                                             color: Colors.white),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 20),
+                                  const SizedBox(height: 20),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      Text(
-                                        "${widget.bookingModel.departures.buses.busName} | ບ່ອນນັ່ງ ${widget.bookingModel.seat}",
-                                        style: const TextStyle(
-                                            fontSize: 15, color: Colors.white),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${widget.bookingModel.departures.buses.busName} | ບ່ອນນັ່ງ ${widget.bookingModel.seat}",
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.white),
+                                          ),
+                                          Text(
+                                            "ທະບຽນລົດ ${widget.bookingModel.departures.buses.carnamber} ",
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.white),
+                                          ),
+                                        ],
                                       ),
                                       Row(
                                         mainAxisAlignment:
@@ -502,25 +491,42 @@ class _MytickestsState extends State<Mytickests> {
                                                                     context)
                                                                 .pop();
                                                           },
-                                                          child: const Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
+                                                          child: Column(
                                                             children: [
-                                                              Icon(Icons.close),
-                                                              Text("QR code"),
+                                                              const Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Icon(Icons
+                                                                      .close),
+                                                                  Text(
+                                                                    "QR code",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          17,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              Text(
+                                                                widget.bookingModel.bookingId,
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 17,
+                                                                ),
+                                                              ),
                                                             ],
                                                           ),
                                                         ),
-                                                        SizedBox(height: 5),
-                                                        Text(
-                                                          "ທ່ານສາມາດໃຊ້ QR ນີ້ເຂົ້າໄປສະຖານີ ເພື່ອຂື້ນລົດ ຫຼື ໄປທີປ່ອງຂາຍປີ້ເພື່ອແລກເອົາປີ້ເຈ້ຍໄດ້ ກະລຸນາຮັກສາລະຫັດ QR ຂອງທ່ານໃຫ້ດີ",
-                                                          style: TextStyle(
-                                                              fontSize: 15),
-                                                        ),
-                                                        GetBuilder<
-                                                                MyTicketsController>(
-                                                            builder: (_) {
+                                                        const SizedBox(
+                                                            height: 5),
+                                                        Obx(() {
+                                                          final myController =
+                                                              Get.find<
+                                                                  MyTicketsController>();
+
                                                           return SizedBox(
                                                             width: 200,
                                                             height: 200,
@@ -529,16 +535,19 @@ class _MytickestsState extends State<Mytickests> {
                                                                   Alignment
                                                                       .center,
                                                               children: [
-                                                                // QrImageView
                                                                 QrImageView(
-                                                                  data:
-                                                                      "www.google.com", // Replace with your QR code data
+                                                                  data: widget.bookingModel.bookingId,
+                                                                  version:
+                                                                      QrVersions
+                                                                          .auto,
                                                                   size: 250,
                                                                 ),
-                                                                _.isCheckQR.isTrue ||
+
+                                                                myController.isCheckQR
+                                                                            .isTrue ||
                                                                         widget.bookingModel.status ==
                                                                             "checked"
-                                                                    ? Icon(
+                                                                    ? const Icon(
                                                                         Icons
                                                                             .check,
                                                                         size:
@@ -551,31 +560,152 @@ class _MytickestsState extends State<Mytickests> {
                                                             ),
                                                           );
                                                         }),
-                                                        SizedBox(height: 5),
+                                                        const SizedBox(
+                                                            height: 5),
                                                         Column(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
                                                           children: [
+                                                            Row(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceAround,
+                                                              children: [
+                                                                Text(
+                                                                  widget
+                                                                      .bookingModel
+                                                                      .departures
+                                                                      .routes
+                                                                      .departureStation
+                                                                      .stationName,
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 20,
+                                                                  child: Image
+                                                                      .asset(
+                                                                          "assets/icons/icon_left.png"),
+                                                                ),
+                                                                Text(
+                                                                  widget
+                                                                      .bookingModel
+                                                                      .departures
+                                                                      .routes
+                                                                      .arrivalStation
+                                                                      .stationName,
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                const Text(
+                                                                  "ເວລາອອກເດີນທາງ  :",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          13,
+                                                                      color: Colors
+                                                                          .black),
+                                                                ),
+                                                                Text(
+                                                                  DateFormat(
+                                                                          "EEEE/dd/MM/yyyy")
+                                                                      .format(widget
+                                                                          .bookingModel
+                                                                          .bookDate),
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          13,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color: Colors
+                                                                          .black),
+                                                                ),
+                                                              ],
+                                                            ),
                                                             Text(
                                                               "ຊື່ ແລະ ນາມສະກຸນ: ${widget.bookingModel.passenger.username}",
-                                                              style: TextStyle(
-                                                                  fontSize: 15),
+                                                              style:
+                                                                  const TextStyle(
+                                                                      fontSize:
+                                                                          15),
                                                             ),
                                                             Text(
                                                               "ບັດປະຈໍາຕົວ: ${widget.bookingModel.passenger.idCard}",
-                                                              style: TextStyle(
-                                                                  fontSize: 15),
+                                                              style:
+                                                                  const TextStyle(
+                                                                      fontSize:
+                                                                          15),
                                                             ),
                                                             Text(
                                                               "${widget.bookingModel.departures.buses.busName} | ບ່ອນນັ່ງ ${widget.bookingModel.seat}",
-                                                              style: TextStyle(
-                                                                  fontSize: 15),
+                                                              style:
+                                                                  const TextStyle(
+                                                                      fontSize:
+                                                                          15),
                                                             ),
-                                                            GetBuilder<
-                                                                    MyTicketsController>(
-                                                                builder: (_) {
-                                                              return _.isCheckQR
+                                                            Text(
+                                                              ' ${widget.bookingModel.bookingId}',
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 15,
+                                                              ),
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                Text(
+                                                                  DateFormat(
+                                                                    "hh:mm:ss  :",
+                                                                  ).format(widget
+                                                                      .bookingModel
+                                                                      .time),
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontSize:
+                                                                        15, // Adjust the font size as needed
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                    width: 5),
+                                                                Text(
+                                                                  DateFormat(
+                                                                          "dd/MM/yyyy")
+                                                                      .format(widget
+                                                                          .bookingModel
+                                                                          .time),
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      color: Colors
+                                                                          .black),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Obx(() {
+                                                              final myController =
+                                                                  Get.find<
+                                                                      MyTicketsController>();
+
+                                                              return myController
+                                                                          .isCheckQR
                                                                           .isTrue ||
                                                                       widget.bookingModel
                                                                               .status ==
@@ -592,8 +722,8 @@ class _MytickestsState extends State<Mytickests> {
                                                                           ElevatedButton(
                                                                         onPressed:
                                                                             () async {
-                                                                          _.setCheckQR(
-                                                                              true);
+                                                                          myController
+                                                                              .setCheckQR(true);
                                                                           await _firestore
                                                                               .collection(
                                                                                   "Booking")
@@ -603,7 +733,7 @@ class _MytickestsState extends State<Mytickests> {
                                                                             "status":
                                                                                 "checked"
                                                                           });
-                                                                          _.updateBookingList(
+                                                                          myController.updateBookingList(
                                                                               widget.bookingModel,
                                                                               widget.bookingModel.bookingId,
                                                                               "checked");
@@ -623,7 +753,7 @@ class _MytickestsState extends State<Mytickests> {
                                                                         ),
                                                                       ),
                                                                     );
-                                                            }),
+                                                            })
                                                           ],
                                                         ),
                                                       ],
@@ -632,9 +762,7 @@ class _MytickestsState extends State<Mytickests> {
                                                 );
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                  primary: Colors
-                                                      .redAccent // Button background color
-                                                  ),
+                                                  primary: Colors.redAccent),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -646,7 +774,7 @@ class _MytickestsState extends State<Mytickests> {
                                                       "assets/icons/qrticket.png",
                                                     ),
                                                   ),
-                                                  Text(
+                                                  const Text(
                                                     "QR code",
                                                     style: TextStyle(
                                                         fontSize: 15,
@@ -654,8 +782,6 @@ class _MytickestsState extends State<Mytickests> {
                                                             FontWeight.bold,
                                                         color: Colors.white),
                                                   ),
-                                                  Icon(CupertinoIcons
-                                                      .arrow_right)
                                                 ],
                                               ),
                                             ),
@@ -668,17 +794,17 @@ class _MytickestsState extends State<Mytickests> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Container(
-                            margin: EdgeInsets.only(top: 1, bottom: 5),
+                            margin: const EdgeInsets.only(top: 1, bottom: 5),
                             width: MediaQuery.of(context).size.width,
                             height: 170,
                             decoration: DottedDecoration(
                               shape: Shape.box,
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
+                            child: const Padding(
+                              padding: EdgeInsets.all(10.0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -705,11 +831,11 @@ class _MytickestsState extends State<Mytickests> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 1, bottom: 5),
+                            margin: const EdgeInsets.only(top: 1, bottom: 5),
                             width: MediaQuery.of(context).size.width,
                             height: 140,
                             decoration: BoxDecoration(
-                              image: DecorationImage(
+                              image: const DecorationImage(
                                   image: AssetImage("assets/images/img-3.png"),
                                   fit: BoxFit.cover),
                               borderRadius: BorderRadius.circular(10),
@@ -724,6 +850,48 @@ class _MytickestsState extends State<Mytickests> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage("assets/icons/beranda.png"),
+            ),
+            label: "ໜ້າຫຼັກ",
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage("assets/icons/ticket.png"),
+              color: Colors.redAccent,
+            ),
+            label: "ປີ້ຂອງຂ້ອຍ",
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage("assets/icons/profile.png"),
+              color: Color(0xFF3A5A98),
+            ),
+            label: "ບັນຊີຂອງຂ້ອຍ",
+          ),
+        ],
+        onTap: (int index) {
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeView()),
+            );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ListMyTickets()),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfileScreen()),
+            );
+          }
+        },
       ),
     );
   }

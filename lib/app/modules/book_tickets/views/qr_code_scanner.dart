@@ -20,7 +20,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR Code Scanner Example'),
+        title:const Text('QR Code Scanner Example'),
       ),
       body: Stack(
         alignment: Alignment.center,

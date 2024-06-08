@@ -3,7 +3,7 @@ import 'package:flutter_final/app/model/passengers_model.dart';
 import 'package:flutter_final/app/model/ticket_model.dart';
 
 
-class BookingModel{
+class BookingModel {
   final String bookingId;
   final Departures departures;
   final DateTime expiredTime;
@@ -11,8 +11,23 @@ class BookingModel{
   final String status;
   final Ticket ticket;
   final DateTime bookDate;
-  final Passenger passenger;
-
-  BookingModel( {required this.bookingId,required this.departures, required this.expiredTime, required this.seat, required this.status, required this.ticket, required this.bookDate, required this.passenger});
+  final DateTime time;
+  final Passenger passenger; 
+  BookingModel({
+    required this.bookingId,
+    required this.departures,
+    required this.expiredTime,
+    required this.seat,
+    required this.status,
+    required this.ticket,
+    required this.bookDate,
+    required this.time,
+    required this.passenger,
+  });
+  DateTime getlaosTime() {
+    DateTime localTime = time.toLocal();
+    DateTime laosTime = localTime.add(Duration(hours: 7));
+    return laosTime;
+  }
 
 }

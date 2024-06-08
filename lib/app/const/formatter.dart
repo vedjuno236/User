@@ -1,12 +1,10 @@
 import 'package:intl/intl.dart';
 
-String formatDuration(DateTime departureTime , DateTime arrivalTime) {
-
+String formatDuration(DateTime departureTime, DateTime arrivalTime) {
   DateFormat timeFormat = DateFormat('HH:mm:ss');
 
-  String departureTimeStr = timeFormat.format(departureTime) ;
+  String departureTimeStr = timeFormat.format(departureTime);
   String arrivalTimeStr = timeFormat.format(arrivalTime);
-
 
   DateTime departureTimeParse = timeFormat.parse(departureTimeStr);
   DateTime arrivalTimeParse = timeFormat.parse(arrivalTimeStr);
@@ -26,7 +24,9 @@ String formatDuration(DateTime departureTime , DateTime arrivalTime) {
     }
     formattedDuration += '$minutes ${minutes == 1 ? 'ນາທີ' : 'ນາທີ'}';
   }
+//
 
+  //
   return formattedDuration;
 }
 

@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_final/app/modules/book_tickets/views/book_tickets.dart';
 import 'package:flutter_final/app/modules/bus/views/bus_view.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -15,6 +16,7 @@ class Search_tickets extends StatelessWidget {
   Search_tickets({Key? key}) : super(key: key);
 
   final BusController busController = Get.put(BusController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +67,7 @@ class Search_tickets extends StatelessWidget {
             children: [
               Icon(CupertinoIcons.chevron_left, color: Colors.white),
               // SizedBox(width: 2),
-              Text(
+              const Text(
                 "ມື້ກ່ອນ",
                 style: TextStyle(
                     color: Colors.white,
@@ -74,14 +76,14 @@ class Search_tickets extends StatelessWidget {
               ),
               Text(
                 DateFormat("MM/dd EEEE").format(busController.selectedDate),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 15,
                 ),
               ),
 
-              Text(
+              const Text(
                 "ມື້ຕໍ່ໄປ",
                 style: TextStyle(
                     color: Colors.white,
@@ -97,23 +99,45 @@ class Search_tickets extends StatelessWidget {
 
         elevation: 0,
       ),
-      backgroundColor: Colors.grey.shade200,
-      body: ListView(
-        children: busController.searchAvailableBusesList.map((element) {
-          return TicketView(
-            departure: element,
-          );
-        }).toList(),
-      ),
+      backgroundColor: Colors.grey.shade100,
+      body: busController.searchAvailableBusesList.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 150,
+                    height: 150,
+                    child: Image.asset('assets/Backgrounds/ticket.png'),
+                  ),
+                  Text(
+                    'ບໍ່ມີປີ້',
+                    style: GoogleFonts.notoSansLao(
+                      fontSize: 20,
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : ListView(
+              children: busController.searchAvailableBusesList.map((element) {
+                return TicketView(
+                  departure: element,
+                  busController: busController,
+                );
+              }).toList(),
+            ),
     );
   }
 }
 
 class TicketView extends StatelessWidget {
   final Departures departure;
-  final BusController busController = Get.put(BusController());
+  final BusController busController;
 
-  TicketView({Key? key, required this.departure}) : super(key: key);
+  TicketView({Key? key, required this.departure, required this.busController})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -234,30 +258,58 @@ class TicketView extends StatelessWidget {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    const SizedBox(
-                        width: 100,
-                        child: Text(
-                          "",
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        )),
-                    Text(
-                      departure.buses.busName,
-                      style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          departure.buses.busName,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Column(
+                          children: departure.buses.tickets.map((e) {
+                            return Row(
+                              children: <Widget>[
+                                Text(
+                                  e.ticketName,
+                                  style: const TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                        width: 100,
-                        child: Text(
-                          "",
-                          textAlign: TextAlign.end,
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        )),
+                    Row(
+                      children: [
+                        const Text(
+                          'ທະບຽນລົດ',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          departure.buses.carnamber,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Row(
@@ -266,7 +318,7 @@ class TicketView extends StatelessWidget {
                     Text(
                       DateFormat("hh:mm a", "en-US")
                           .format(departure.routes.departureTime),
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 18,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
@@ -274,7 +326,7 @@ class TicketView extends StatelessWidget {
                     Text(
                       DateFormat("hh:mm a", "en-US")
                           .format(departure.routes.arrivalTime),
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 18,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
@@ -290,21 +342,8 @@ class TicketView extends StatelessWidget {
                           departure.routes.arrivalTime),
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          " ",
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                        Text(
-                          "",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
+                     
+                   
                   ],
                 ),
               ],
@@ -354,7 +393,7 @@ class TicketView extends StatelessWidget {
                   width: 10,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(10),
                             bottomLeft: Radius.circular(10)),
                         color: Colors.grey.shade200),
@@ -364,8 +403,8 @@ class TicketView extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(left: 16, right: 16, bottom: 12),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(24),
@@ -374,11 +413,11 @@ class TicketView extends StatelessWidget {
               // mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                       color: Colors.amber.shade50,
                       borderRadius: BorderRadius.circular(20)),
-                  child: Icon(CupertinoIcons.bus, color: Colors.amber),
+                  child: const Icon(CupertinoIcons.bus, color: Colors.amber),
                 ),
                 const SizedBox(
                   width: 16,
@@ -386,18 +425,46 @@ class TicketView extends StatelessWidget {
                 const SizedBox(
                   width: 5,
                 ),
-                Text(
-                  'ເລີ່ມຕົ້ນ',
-                  style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          'ເລີ່ມຕົ້ນ',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                        Text(
+                          "${oCcy.format(departure.buses.tickets.first.price)} ກີບ",
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.red),
+                        ),
+                      ],
+                    ),
+                 
+
+                    FutureBuilder<bool>(
+                      future: bookingTicket(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else {
+                          if (snapshot.hasError || !snapshot.hasData) {
+                            return Text("Error: ${snapshot.error}");
+                          } else {
+                            return Text(snapshot.data! ? 'ມີຫຼາຍ' : 'ມີໜ້ອຍ');
+                          }
+                        }
+                      },
+                    ),
+                  ],
                 ),
-                Text("${oCcy.format(departure.buses.tickets.first.price)} ກີບ",
-                    style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.red)),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -427,10 +494,12 @@ class TicketView extends StatelessWidget {
                         foregroundColor:
                             MaterialStateProperty.all(Colors.white),
                         backgroundColor: MaterialStateProperty.all(Colors.red),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(color: Colors.red),
-                        )),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: const BorderSide(color: Colors.red),
+                          ),
+                        ),
                       ),
                       // ),
                     ),
@@ -442,5 +511,44 @@ class TicketView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<bool> bookingTicket() async {
+    try {
+      DateTime startDate = DateTime(busController.selectedDate.year,
+          busController.selectedDate.month, busController.selectedDate.day);
+      DateTime endDate = startDate.add(const Duration(days: 1));
+      QuerySnapshot capacityQuerySnapshot = await FirebaseFirestore.instance
+          .collection('Booking')
+          .where('departure_id', isEqualTo: departure.departureId)
+          .where('book_date', isGreaterThanOrEqualTo: startDate)
+          .where('book_date', isLessThan: endDate)
+          .where("ticket_id", isEqualTo: busController.ticket?.ticketId)
+          .get();
+          
+      print('some{$departure.buses.capacity}');
+      print('somevip{$departure.buses.capacityvip}');
+
+      int totalCapacity = departure.buses.capacity;
+      int totalCapacityVIP = departure.buses.capacityVIP;
+
+      int countCapacity = totalCapacity - capacityQuerySnapshot.size;
+      int countCapacityVIP = totalCapacityVIP - capacityQuerySnapshot.size;
+
+      bool isCapacityLow = countCapacity >= 5 || countCapacityVIP >= 5;
+
+      String message = displayMessage(isCapacityLow);
+      print('message{$message}');
+      return isCapacityLow;
+    } catch (e) {
+      debugPrint("Booking Ticket Failed!!! :$e");
+      return false;
+    }
+  }
+
+  String displayMessage(bool isCapacityLow) {
+    String message = isCapacityLow ? 'ມີຫຼາຍ' : 'ມີໜ້ອຍ';
+    print('message{$message}');
+    return message;
   }
 }

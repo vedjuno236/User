@@ -6,21 +6,18 @@ class Ticket {
   int price;
   int bookingPrice;
 
+  Ticket(
+      {required this.ticketId,
+      required this.ticketName,
+      required this.price,
+      required this.bookingPrice});
 
-  Ticket({
-    required this.ticketId,
-    required this.ticketName,
-    required this.price,
-    required this.bookingPrice
-  });
-
-  // Factory method to create a User instance from a DocumentSnapshot
   factory Ticket.fromSnapshot(DocumentSnapshot snapshot) {
     var data = snapshot.data() as Map<String, dynamic>;
     return Ticket(
       ticketId: snapshot.id,
       ticketName: data['name'],
-      price: data['price'],
+       price: data['price'],
         bookingPrice:data['booking_price']
     );
   }

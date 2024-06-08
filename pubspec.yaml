@@ -38,26 +38,34 @@ dependencies:
   rive: ^0.12.3
   lottie: ^3.0.0
   page_transition: ^2.1.0
+  overlay_support: ^2.1.0
+  flutter_local_notifications: ^16.3.2
+  flutter_launcher_icons: ^0.13.1
+  awesome_snackbar_content: ^0.1.3
+  another_carousel_pro: ^1.0.2
+  awesome_dialog: ^3.2.0
+  quickalert: ^1.0.2
  
-  # firebase_app_check: ^0.2.1+8
+
 
 
 dev_dependencies: 
   flutter_lints: ^1.0.0
   flutter_test: 
     sdk: flutter
-  flutter_launcher_icons: ^0.13.1
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/logo.png"
+  image_path: "assets/logo_ticket.png"
+  # adaptiv_icon_backgroung: "#ffffff"
+  # adaptive_icon_foregound: "assets/ticket.png"
 flutter: 
   uses-material-design: true
   assets:
     - assets/logo/
     - assets/icons/
     - assets/images/
-    - assets/Backgrounds/Spline.png
+    - assets/Backgrounds/ticket.png
     - assets/RiveAssets/shapes.riv
 
 

@@ -1,15 +1,12 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_final/app/model/passengers_model.dart';
 import 'package:flutter_final/app/modules/bus/views/bus_view.dart';
 import 'package:flutter_final/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter_final/app/modules/mytickets/views/list_my_tickets.dart';
-// import 'package:flutter_final/app/modules/mytickets/views/mytickests.dart';
-import 'package:flutter_final/app/modules/profile/profile_screen.dart';
-// import 'package:flutter_final/app/routes/app_pages.dart';
+import 'package:flutter_final/app/modules/profile/views/profile_screen.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
-// import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -28,116 +25,48 @@ class HomeView extends GetView<HomeController> {
         centerTitle: false,
         title: Row(
           children: [
-            Text(
+            const Text(
               "Hi, ",
               style: TextStyle(
                 fontSize: 18,
               ),
             ),
-            // GetBuilder<LoginController>(
-            //   builder: (loginController) {
-            //     // try {
-            //     //   if (loginController.isLogin.value &&
-            //     //       loginController.passenger != null) {
-            //     //     print("isLogin: ${loginController.isLogin.value}");
-            //     //     print("Passenger: ${loginController.passenger?.username}");
-
-            //         Text(
-            //           '${loginController.passenger?.username ?? "Loading"}',
-            //           style: TextStyle(
-            //             fontSize: 19,
-            //             color: Colors.white,
-            //           ),
-            //         );
-            //     //   } else {
-            //     //     return CircularProgressIndicator(
-            //     //       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-            //     //     );
-            //     //     // or any other loading indicator
-            //     //   }
-            //     // } catch (e) {
-            //     //   print("Error in GetBuilder: $e");
-            //     //   return Container(); // or handle the error accordingly
-            //     }
-            //   },
-            // ),
-
             GetBuilder<LoginController>(
               builder: (loginController) {
                 final username = loginController.passenger?.username ?? '';
                 return Text(
                   '$username',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 19,
                     color: Colors.white,
                   ),
                 );
               },
             )
-
-            // GetBuilder<LoginController>(
-            //   builder: (loginController) {
-            //     try {
-            //       if (loginController.passenger != null) {
-            //         print("Passenger: ${loginController.passenger}");
-
-            //         return Text(
-            //           'Welcome, ${loginController.passenger!.username}!', // Fix the typo here
-            //           style: TextStyle(
-            //             fontSize: 19,
-            //             color: Colors.white,
-            //           ),
-            //         );
-            //       } else {
-            //         return Column(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: [
-            //             CircularProgressIndicator(),
-            //             SizedBox(height: 8),
-            //             Text(
-            //               'Loading passenger information...',
-            //               style: TextStyle(
-            //                 fontSize: 16,
-            //                 color: Colors.white,
-            //               ),
-            //             ),
-            //           ],
-            //         );
-            //       }
-            //     } catch (e) {
-            //       print("Error in GetBuilder: $e");
-            //       return Text(
-            //         'Error: ${e.toString()}',
-            //         style: TextStyle(
-            //           fontSize: 16,
-            //           color: Colors.red,
-            //         ),
-            //       );
-            //     }
-            //   },
-            // ),
           ],
         ),
         actions: [
-          GestureDetector(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('ອອກ'),
-                    )
-                  ],
-                  title: const Text('Qr code'),
-                  contentPadding: const EdgeInsets.all(20.0),
-                  content: const Text('.'),
-                ),
-              );
+GestureDetector(
+  onTap: () {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
             },
+            child:const  Text('ອອກ',style: TextStyle(fontSize: 20),selectionColor: Colors.redAccent,),
+          )
+        ],
+        contentPadding: const EdgeInsets.all(5.0),
+        content: Container(
+          padding: EdgeInsets.all(5.0),
+          child:Image.asset('assets/images/bclone.png')
+        ),
+      ),
+    );
+  },
             child: Container(
               margin: EdgeInsets.only(right: 20),
               width: 30,
@@ -318,25 +247,87 @@ class HomeView extends GetView<HomeController> {
                             padding: EdgeInsets.symmetric(horizontal: 25),
                             children: [
                               SizedBox(height: 20),
-                              const Text(
+                              Text(
                                 "ລາຍການ",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: GoogleFonts.notoSansLao(
+                                    // Use camelCase and avoid spaces
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18
+                                    // Other text style properties can be added here
+                                    ),
                               ),
                               SizedBox(height: 20),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  ItemKategori(
-                                    title: "ເຄື່ອງບີນ",
-                                    icon: "assets/icons/roaming.png",
+                                  GestureDetector(
+                                    onTap: () {
+                                      AwesomeDialog(
+                                              context: context,
+                                              dialogType: DialogType.error,
+                                              animType: AnimType.bottomSlide,
+                                              showCloseIcon: true,
+                                              title: "ຂໍອະໄພ",
+                                              titleTextStyle:
+                                                  GoogleFonts.notoSansLao(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15),
+                                              desc:
+                                                  "ກໍາລັງພັດທະນາຈະເປີດໃຫ້ໄວໆນີ້",
+                                              descTextStyle:
+                                                  GoogleFonts.notoSansLao(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15),
+                                              btnOkOnPress: () {})
+                                          .show();
+                                    },
+                                    child: ItemKategori(
+                                      title: "ເຄື່ອງບີນ",
+                                      icon: "assets/icons/roaming.png",
+                                      style: GoogleFonts.notoSansLao(
+                                          // Use camelCase and avoid spaces
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15
+                                          // Other text style properties can be added here
+                                          ),
+                                    ),
                                   ),
-                                  ItemKategori(
-                                    title: "ລົດໄຟ",
-                                    icon: "assets/icons/trans.png",
+                                  GestureDetector(
+                                    onTap: () {
+                                      AwesomeDialog(
+                                              context: context,
+                                              dialogType: DialogType.error,
+                                              animType: AnimType.bottomSlide,
+                                              showCloseIcon: true,
+                                              title: "ຂໍອະໄພ",
+                                              titleTextStyle:
+                                                  GoogleFonts.notoSansLao(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15),
+                                              desc:
+                                                  "ກໍາລັງພັດທະນາຈະເປີດໃຫ້ໄວໆນີ້",
+                                              descTextStyle:
+                                                  GoogleFonts.notoSansLao(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15),
+                                              btnOkOnPress: () {})
+                                          .show();
+                                    },
+                                    child: ItemKategori(
+                                      title: "ລົດໄຟ",
+                                      icon: "assets/icons/trans.png",
+                                      style: GoogleFonts.notoSansLao(
+                                          // Use camelCase and avoid spaces
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15
+                                          // Other text style properties can be added here
+                                          ),
+                                    ),
                                   ),
                                   GestureDetector(
                                     onTap: () {
@@ -344,27 +335,63 @@ class HomeView extends GetView<HomeController> {
                                         context,
                                         PageTransition(
                                           type: PageTransitionType.rightToLeft,
-                                          child: BusView(),
+                                          child: const BusView(),
                                         ),
                                       );
                                     },
                                     child: ItemKategori(
                                       title: "ລົດເມ",
                                       icon: "assets/icons/bus.png",
+                                      style: GoogleFonts.notoSansLao(
+                                          // Use camelCase and avoid spaces
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15
+                                          // Other text style properties can be added here
+                                          ),
                                     ),
                                   ),
-                                  ItemKategori(
-                                    title: "ລົດທ່ອງທ່ຽວ",
-                                    icon: "assets/icons/electric.png",
+                                  GestureDetector(
+                                    onTap: () {
+                                      AwesomeDialog(
+                                              context: context,
+                                              dialogType: DialogType.error,
+                                              animType: AnimType.bottomSlide,
+                                              showCloseIcon: true,
+                                              title: "ຂໍອະໄພ",
+                                              titleTextStyle:
+                                                  GoogleFonts.notoSansLao(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15),
+                                              desc:
+                                                  "ກໍາລັງພັດທະນາຈະເປີດໃຫ້ໄວໆນີ້",
+                                              descTextStyle:
+                                                  GoogleFonts.notoSansLao(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15),
+                                              btnOkOnPress: () {})
+                                          .show();
+                                    },
+                                    child: ItemKategori(
+                                      title: "ລົດທ່ອງທ່ຽວ",
+                                      icon: "assets/icons/electric.png",
+                                      style: GoogleFonts.notoSansLao(
+                                          // Use camelCase and avoid spaces
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15
+                                          // Other text style properties can be added here
+                                          ),
+                                    ),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 30),
+                              const SizedBox(height: 30),
                               const Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment:
@@ -386,7 +413,7 @@ class HomeView extends GetView<HomeController> {
                                         // Other text style properties can be added here
                                         ),
                                   ),
-                                  Text(
+                                 const  Text(
                                     "ທັງໝົດ",
                                     style: TextStyle(
                                       fontSize: 16,
@@ -497,6 +524,9 @@ class HomeView extends GetView<HomeController> {
       ),
     );
   }
+
+
+
 }
 
 class ItemTerbaru extends StatelessWidget {
@@ -523,6 +553,7 @@ class ItemTerbaru extends StatelessWidget {
       ),
     );
   }
+  
 }
 
 class ItemKategori extends StatelessWidget {
@@ -530,10 +561,12 @@ class ItemKategori extends StatelessWidget {
     Key? key,
     required this.title,
     required this.icon,
+    required this.style,
   }) : super(key: key);
 
   final String title;
   final String icon;
+  final TextStyle style;
 
   @override
   Widget build(BuildContext context) {

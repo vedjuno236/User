@@ -205,7 +205,6 @@ class RegisterController extends GetxController {
         "id_card": int.tryParse(idCard),
         "passenger_relation": [],
         "email": email,
-        // "gender":gender,
         "profile_image_url": profileImageUrl
       });
 
@@ -225,4 +224,5 @@ class RegisterController extends GetxController {
       return false;
     }
   }
+  
 }

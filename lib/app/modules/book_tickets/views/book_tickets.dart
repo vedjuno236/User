@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_final/app/modules/book_tickets/views/reservation_form.dart';
-// import 'package:flutter_final/app/modules/search_tickets/views/search_tickets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
-
 import '../../../const/formatter.dart';
 import '../../../model/departures_model.dart';
 import '../../bus/controllers/bus_controller.dart';
@@ -23,10 +21,6 @@ class _BookTicketsState extends State<BookTickets> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // systemOverlayStyle:
-        // SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
-
-        // brightness: Brightness.light,
         backgroundColor: Colors.red,
         centerTitle: true,
         title: const Text(
@@ -42,16 +36,10 @@ class _BookTicketsState extends State<BookTickets> {
             color: Colors.white,
           ),
         ),
-
         elevation: 0,
       ),
       backgroundColor: Colors.grey.shade200,
       body: ListView(
-        // itemCount: 10,
-        // padding: EdgeInsets.only(top: 8, bottom: 8),
-        // itemBuilder: (context, index) {
-        //   return TicketView();
-        // }
         children: [
           TicketView(
             departure: widget.departure!,
@@ -66,10 +54,11 @@ class TicketView extends StatelessWidget {
   final Departures departure;
   final BusController busController = Get.put(BusController());
   TicketView({Key? key, required this.departure}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -91,7 +80,7 @@ class TicketView extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.indigo),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
                     Container(
@@ -172,7 +161,7 @@ class TicketView extends StatelessWidget {
                     ),
                     Text(
                       busController.arrivalStation,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.pink),
@@ -180,13 +169,13 @@ class TicketView extends StatelessWidget {
                   ],
                 ),
                 new Divider(color: Colors.black12),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    SizedBox(
+                    const SizedBox(
                         width: 100,
                         child: Text(
                           "",
@@ -200,7 +189,7 @@ class TicketView extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                    SizedBox(
+                    const SizedBox(
                         width: 100,
                         child: Text(
                           "",
@@ -240,7 +229,7 @@ class TicketView extends StatelessWidget {
                     Text(
                       formatDuration(departure.routes.departureTime,
                           departure.routes.arrivalTime),
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                     const Row(
                       children: <Widget>[
@@ -325,27 +314,37 @@ class TicketView extends StatelessWidget {
             child: Column(
               children: departure.buses.tickets.map((e) {
                 return Row(
-                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Container(
-                      // padding: EdgeInsets.all(8),
-                      // decoration: BoxDecoration(
-                      //     color: Colors.amber.shade50,
-                      //     borderRadius: BorderRadius.circular(20)),
-                      // child: Icon(CupertinoIcons.bus, color: Colors.amber),
                       child: Text(
                         e.ticketName,
-                        style: TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
                     const SizedBox(
                       width: 16,
                     ),
-                    Text("${oCcy.format(e.price)} LAK",
-                        style: TextStyle(
-                            fontSize: 20,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${oCcy.format(e.price)} K",
+                          style: const TextStyle(
+                            fontSize: 18,
                             fontWeight: FontWeight.w500,
-                            color: Colors.redAccent)),
+                            color: Colors.black,
+                          ),
+                        ),
+                        // Text(
+                        //   this.deaprture != null &&
+                        //           this.departure!.buses.countCapacity <= 5
+                        //       ? 'ມີໜ້ອຍ'
+                        //       : 'ມີຫຼາຍ',
+                        //   style: const TextStyle(color: Colors.redAccent),
+                        // ),
+                      ],
+                    ),
+                    const SizedBox(width: 5),
                     GetBuilder<BusController>(builder: (_) {
                       return Expanded(
                         child: Padding(
@@ -384,7 +383,7 @@ class TicketView extends StatelessWidget {
                               shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                side: BorderSide(color: Colors.red),
+                                side: const BorderSide(color: Colors.red),
                               )),
                             ),
                             // ),

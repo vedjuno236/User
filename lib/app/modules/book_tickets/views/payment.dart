@@ -6,7 +6,7 @@ import 'package:flutter_final/app/modules/bus/controllers/bus_controller.dart';
 import 'package:flutter_final/app/modules/home/views/home_view.dart';
 import 'package:flutter_final/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter_final/app/modules/mytickets/views/list_my_tickets.dart';
-import 'package:flutter_final/app/modules/profile/profile_screen.dart';
+import 'package:flutter_final/app/modules/profile/views/profile_screen.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -76,7 +76,7 @@ class _PaymentState extends State<Payment> {
                             GetBuilder<BusController>(builder: (_) {
                               return Text(
                                 _.departureStation,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.indigo),
@@ -176,7 +176,7 @@ class _PaymentState extends State<Payment> {
                           ],
                         ),
                         new Divider(color: Colors.black12),
-                        SizedBox(
+                        const SizedBox(
                           height: 4,
                         ),
                         SizedBox(
@@ -195,13 +195,13 @@ class _PaymentState extends State<Payment> {
                                 children: [
                                   Text(
                                     '${widget.departure.buses.busName}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 19,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     '${widget.ticket.ticketName}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 19,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -219,7 +219,7 @@ class _PaymentState extends State<Payment> {
                             Text(
                               DateFormat("hh:mm a", "en-US").format(
                                   widget.departure.routes.departureTime),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
@@ -227,7 +227,7 @@ class _PaymentState extends State<Payment> {
                             Text(
                               DateFormat("hh:mm a", "en-US")
                                   .format(widget.departure.routes.arrivalTime),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
@@ -319,7 +319,7 @@ class _PaymentState extends State<Payment> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                              child: Text(
+                              child: const Text(
                                 'ຜູ້ໂດຍສານ ',
                                 style: TextStyle(fontSize: 18),
                               ),
@@ -373,11 +373,11 @@ class _PaymentState extends State<Payment> {
                                 if (entry.value == true)
                                   Column(
                                     children: [
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Divider(),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Row(
@@ -386,11 +386,12 @@ class _PaymentState extends State<Payment> {
                                         children: [
                                           Text(
                                             ' ${_.passengerList.firstWhere((element) => element.passengerId == entry.key).username} ',
-                                            style: TextStyle(fontSize: 18),
+                                            style:
+                                                const TextStyle(fontSize: 18),
                                           ),
                                           Text(
                                             '${oCcy.format(widget.ticket.price)} LAK',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           )
@@ -398,7 +399,7 @@ class _PaymentState extends State<Payment> {
                                       ),
                                       Row(
                                         children: [
-                                          Text('ບັດປະຈໍາຕົວ '),
+                                          const Text('ບັດປະຈໍາຕົວ '),
                                           Text(
                                             '${_.passengerList.firstWhere((element) => element.passengerId == entry.key).idCard}',
                                           ),
@@ -407,7 +408,11 @@ class _PaymentState extends State<Payment> {
                                       Row(
                                         children: [
                                           Text(
-                                              '${widget.departure.buses.busName}|'),
+                                            '${widget.departure.buses.busName} | ທະບຽນລົດ ${widget.departure.buses.carnamber}',
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.redAccent),
+                                          ),
                                           // Text('ບ່ອນນັ່ງ 01'),
                                         ],
                                       ),
@@ -475,7 +480,7 @@ class _PaymentState extends State<Payment> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'ພາຍຫຼັງຈອງປີ້ສໍາເລັດແລ້ວ ປ່ຽນປີ້ ຍົກເລີກປີ໊ ແມ່ນຈະບໍ່ສົ່ງຄ່າຄືນ',
                           style: TextStyle(fontSize: 15, color: Colors.orange),
                         ),
@@ -483,7 +488,7 @@ class _PaymentState extends State<Payment> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'ລາຄາປີ້',
                               style: TextStyle(
                                   fontSize: 19,
@@ -492,7 +497,7 @@ class _PaymentState extends State<Payment> {
                             ),
                             Text(
                               '${oCcy.format(widget.ticket.price)} KIP x ${(loginController.checkedPassenger.length)}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 19,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
@@ -502,7 +507,7 @@ class _PaymentState extends State<Payment> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'ລາຄາຈອງປີ້',
                               style: TextStyle(
                                   fontSize: 19,
@@ -511,21 +516,21 @@ class _PaymentState extends State<Payment> {
                             ),
                             Text(
                               '${oCcy.format(widget.ticket.bookingPrice)} KIP x ${(loginController.checkedPassenger.length)}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 19,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             ),
                           ],
                         ),
-                        Divider(
+                        const Divider(
                           // Add this Divider widget
                           color: Colors.black38,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'ຈໍານວນເງີນລວມ',
                               style: TextStyle(
                                   fontSize: 19,
@@ -534,7 +539,7 @@ class _PaymentState extends State<Payment> {
                             ),
                             Text(
                               '${oCcy.format((widget.ticket.price * (loginController.checkedPassenger.length)) + (widget.ticket.bookingPrice * (loginController.checkedPassenger.length)))} KIP',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 19,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
@@ -582,7 +587,7 @@ class _PaymentState extends State<Payment> {
                             SizedBox(height: 5),
                             Row(
                               children: [
-                                Text(
+                                const Text(
                                   'ຈໍານວນເງີນທີຕ້ອງຈ່າຍ:',
                                   style: TextStyle(
                                       fontSize: 20,
@@ -591,7 +596,7 @@ class _PaymentState extends State<Payment> {
                                 SizedBox(width: 20),
                                 Text(
                                   '${oCcy.format((widget.ticket.price * (loginController.checkedPassenger.length)) + (widget.ticket.bookingPrice * (loginController.checkedPassenger.length)))} Kip',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.amber),

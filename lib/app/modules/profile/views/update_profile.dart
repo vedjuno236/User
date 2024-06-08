@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_final/app/modules/profile/profile_screen.dart';
+import 'package:flutter_final/app/modules/profile/views/profile_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UpdateProfile extends StatefulWidget {

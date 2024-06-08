@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_final/app/modules/home/views/home_view.dart';
 import 'package:flutter_final/app/modules/mytickets/controllers/my_tickets_controller.dart';
 import 'package:flutter_final/app/modules/mytickets/views/mytickests.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../const/formatter.dart';
 import '../../../model/booking_model.dart';
@@ -34,14 +37,20 @@ class _ListMyTicketsState extends State<ListMyTickets> {
         title: const Text(
           'ປີ້ຂອງຂ້ອຍ',
           style: TextStyle(
-            color: Colors.white, // Change 'Colors.red' to your desired color
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.leftToRight,
+                child: HomeView(),
+              ),
+            );
           },
           icon: const Icon(
             Icons.arrow_back_ios_new,
@@ -51,23 +60,35 @@ class _ListMyTicketsState extends State<ListMyTickets> {
         elevation: 0,
       ),
       backgroundColor: Colors.grey.shade200,
+
       body: GetBuilder<MyTicketsController>(
         builder: (_) {
           return _.isLoading.isTrue
-              ? const Center(
+              ? Center(
                   child: CircularProgressIndicator(),
                 )
-              : ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: _.bookingList.length,
-                  itemBuilder: (context, index) {
-                    return TicketView(
-                      bookingModel: _.bookingList[index],
+              : _.bookingList.isNotEmpty
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: _.bookingList.length,
+                      itemBuilder: (context, index) {
+                        return TicketView(
+                          bookingModel: _.bookingList[index],
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text(
+                        "ບໍ່ມີປີ້",
+                        style: GoogleFonts.notoSansLao(
+                            // fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.redAccent),
+                      ),
                     );
-                  },
-                );
         },
       ),
+
       // bottomNavigationBar: BottomNavigationBar(
       //   items: const <BottomNavigationBarItem>[
       //     BottomNavigationBarItem(
@@ -249,29 +270,52 @@ class TicketView extends StatelessWidget {
                   const SizedBox(
                     height: 4,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      const SizedBox(
-                          width: 100,
-                          child: Text(
-                            "",
-                            style: TextStyle(fontSize: 12, color: Colors.grey),
-                          )),
-                      Text(
-                        DateFormat("MM/dd EEEE").format(bookingModel.bookDate),
-                        style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children:<Widget> [
+                          const SizedBox(
+                              width: 100,
+                              child: Text(
+                                "ເວລາເດີນທາງ",
+                                style:
+                                    TextStyle(fontSize: 13, color: Colors.grey),
+                              )),
+                          Text(
+                            DateFormat("EEEE/dd/MM/yyyy")
+                                .format(bookingModel.bookDate),
+                            style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                          width: 100,
-                          child: Text(
-                            "",
-                            textAlign: TextAlign.end,
-                            style: TextStyle(fontSize: 12, color: Colors.grey),
-                          )),
+                      const SizedBox(height: 15),
+                      Row(
+                        children:<Widget> [
+                          const SizedBox(
+                              width: 100,
+                              child: Text(
+                                "ເວລາສັ່ງຊື້",
+                                style:
+                                    TextStyle(fontSize: 13, color: Colors.grey),
+                              )),
+                          Text(DateFormat(
+                            "hh:mm:ss",
+                          ).format(bookingModel.time)),
+
+                          const SizedBox(width: 5),
+                          Text(
+                            DateFormat("dd/MM/yyyy").format(bookingModel.time),
+                            style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -300,29 +344,22 @@ class TicketView extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Text(
+                      //   formatDuration(
+                      //       bookingModel.departures.routes.departureTime,
+                      //       bookingModel.departures.routes.arrivalTime),
+                      //   style:
+                      //       const TextStyle(fontSize: 12, color: Colors.grey),
+                      // ),
+
                       Text(
-                        formatDuration(
-                            bookingModel.departures.routes.departureTime,
-                            bookingModel.departures.routes.arrivalTime),
-                        style:
-                            const TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                      const Row(
-                        children: <Widget>[
-                          Text(
-                            " ",
-                            style: TextStyle(fontSize: 12, color: Colors.grey),
-                          ),
-                          Text(
-                            "",
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                        ],
+                        bookingModel.passenger.username,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: Colors.redAccent),
                       ),
                     ],
                   ),
@@ -404,7 +441,7 @@ class TicketView extends StatelessWidget {
                         width: 16,
                       ),
                       Text("${oCcy.format(bookingModel.ticket.price)} LAK",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                               color: Colors.redAccent)),

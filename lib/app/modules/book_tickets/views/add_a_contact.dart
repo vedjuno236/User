@@ -22,6 +22,9 @@ class AddAContact extends StatefulWidget {
 
 class _AddAContactState extends State<AddAContact> {
   int _value = 1;
+  DateTime seletedatetime = DateTime.now();
+  TextEditingController _dateController = TextEditingController();
+
   late DateTime datetime;
   late BookTicketController bookTicketController;
   late LoginController loginController;
@@ -135,7 +138,7 @@ class _AddAContactState extends State<AddAContact> {
             boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
-                offset: const Offset(
+                offset: Offset(
                   5.0,
                   5.0,
                 ),
@@ -144,7 +147,7 @@ class _AddAContactState extends State<AddAContact> {
               ), //BoxShadow
               BoxShadow(
                 color: Colors.white,
-                offset: const Offset(0.0, 0.0),
+                offset: Offset(0.0, 0.0),
                 blurRadius: 0.0,
                 spreadRadius: 0.0,
               ), //BoxShadow
@@ -158,11 +161,13 @@ class _AddAContactState extends State<AddAContact> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                   Row(
                     children: [
                       Text(
                         'ຊື່ ',
-                        style: TextStyle(fontSize: 19),
+                        style: GoogleFonts.notoSansLao(
+                            fontSize: 19,
+                          ),
                       ),
                       Text(
                         "*",
@@ -172,35 +177,42 @@ class _AddAContactState extends State<AddAContact> {
                   ),
                   TextFormField(
                     controller: bookTicketController.nameController,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                        decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 207, 207, 207)),
+                          borderRadius: BorderRadius.circular(8.5),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 207, 207, 207)),
+                          borderRadius: BorderRadius.circular(8.5),
+                        ),
+                        prefixIcon:
+                            const Icon(Icons.person, color: Colors.black12),
+                        hintText: "ກະລຸນາປ້ອນຊື່",
+                        hintStyle: GoogleFonts.notoSansLao(
+                          color: Colors.black12,
+                        ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
-                      ),
-                      prefixIcon: Icon(Icons.person, color: Colors.blue),
-                      hintText: "ກະລຸນາປ້ອນຊື່",
-                      hintStyle: GoogleFonts.notoSansLao(
-                        // Use camelCase and avoid spaces
-                        color: Colors.blue,
-                        // fontSize: 12
-                        // Other text style properties can be added here
-                      ),
-                      filled: true,
-                      fillColor: Colors.blue[50],
-                    ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'ກະລຸນາປ້ອນຊື່ກ່ອນ';
+                        }
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
                   SizedBox(height: 5),
-                  const Row(
+                 Row(
                     children: [
                       Text(
                         'ນາມສະກຸນ ',
-                        style: TextStyle(fontSize: 19),
+                         style: GoogleFonts.notoSansLao(
+                            fontSize: 19,
+                          ),
                       ),
-                      Text(
+                     const  Text(
                         "*",
                         style: TextStyle(fontSize: 20, color: Colors.red),
                       ),
@@ -208,35 +220,40 @@ class _AddAContactState extends State<AddAContact> {
                   ),
                   TextFormField(
                     controller: bookTicketController.surnameController,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                          decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 207, 207, 207)),
+                          borderRadius: BorderRadius.circular(8.5),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 207, 207, 207)),
+                          borderRadius: BorderRadius.circular(8.5),
+                        ),
+                        prefixIcon: Icon(Icons.person, color: Colors.black12),
+                        hintText: "ກະລຸນາປ້ອນນາມສະກຸນ",
+                        hintStyle: GoogleFonts.notoSansLao(
+                          color: Colors.black12,
+                        ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
-                      ),
-                      prefixIcon: Icon(Icons.person, color: Colors.blue),
-                      hintText: "ກະລຸນາປ້ອນນາມສະກຸນ",
-                      // hintStyle: TextStyle(color: Colors.blue),
-                      hintStyle: GoogleFonts.notoSansLao(
-                        // Use camelCase and avoid spaces
-                        color: Colors.blue,
-                        // fontSize: 12
-                        // Other text style properties can be added here
-                      ),
-                      filled: true,
-                      fillColor: Colors.blue[50],
-                    ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'ກະລຸນາປ້ອນນາມສະກຸນ';
+                        }
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
                   SizedBox(height: 5),
 
-                  const Row(
+                   Row(
                     children: [
                       Text(
                         'ວັນເດືອນປີເກີດ ',
-                        style: TextStyle(fontSize: 19),
+                           style: GoogleFonts.notoSansLao(
+                            fontSize: 19,
+                          ),
                       ),
                       Text(
                         "*",
@@ -244,66 +261,107 @@ class _AddAContactState extends State<AddAContact> {
                       ),
                     ],
                   ),
+
+                  // TextField(
+                  //   readOnly: true, // Set to true to enable onTap functionality
+                  //   onTap: () {
+                  //     // Action to perform when the TextField is tapped
+                  //     showCupertinoModalPopup(
+                  //       context: context,
+                  //       builder: (context) {
+                  //         return Container(
+                  //           height: MediaQuery.of(context).size.height * 0.4,
+                  //           color: Colors.white,
+                  //           child: Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.end,
+                  //             children: [
+                  //               TextButton(
+                  //                 onPressed: () {
+                  //                   Navigator.pop(context);
+                  //                 },
+                  //                 child: Text('ຢືນຢັນ'),
+                  //               ),
+                  //               Expanded(
+                  //                 child: CupertinoDatePicker(
+                  //                   initialDateTime: datetime,
+                  //                   mode: CupertinoDatePickerMode.date,
+                  //                   minimumDate: DateTime(2000),
+                  //                   maximumDate: DateTime.now().add(
+                  //                     const Duration(days: 2 * 365),
+                  //                   ),
+                  //                   onDateTimeChanged: (date) {
+                  //                     setState(() {
+                  //                       datetime = date;
+                  //                       // registerController.setDobDateTime(date);
+                  //                     });
+                  //                   },
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         );
+                  //       },
+                  //     );
+                  //   },
+                  //   controller: bookTicketController.dobController,
+                  //   decoration: InputDecoration(
+                  //     enabledBorder: OutlineInputBorder(
+                  //       borderSide: BorderSide(color: Colors.transparent),
+                  //       borderRadius: BorderRadius.circular(5.5),
+                  //     ),
+                  //     focusedBorder: OutlineInputBorder(
+                  //       borderSide: BorderSide(color: Colors.transparent),
+                  //       borderRadius: BorderRadius.circular(5.5),
+                  //     ),
+                  //     prefixIcon: Icon(Icons.data_array, color: Colors.blue),
+                  //     hintText: datetime
+                  //         .toIso8601String()
+                  //         .split('T')[0], // Extract the date part
+                  //     hintStyle: GoogleFonts.notoSansLao(
+                  //       color: Colors.blue,
+                  //     ),
+                  //     filled: true,
+                  //     fillColor: Colors.blue[50],
+                  //   ),
+                  // ),
+
                   TextField(
-                    readOnly: true, // Set to true to enable onTap functionality
-                    onTap: () {
-                      // Action to perform when the TextField is tapped
-                      showCupertinoModalPopup(
+                    readOnly: true,
+                    onTap: () async {
+                      final DateTime? selectedDate = await showDatePicker(
                         context: context,
-                        builder: (context) {
-                          return Container(
-                            height: MediaQuery.of(context).size.height * 0.4,
-                            color: Colors.white,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text('ຢືນຢັນ'),
-                                ),
-                                Expanded(
-                                  child: CupertinoDatePicker(
-                                    initialDateTime: datetime,
-                                    mode: CupertinoDatePickerMode.date,
-                                    minimumDate: DateTime(2000),
-                                    maximumDate: DateTime.now().add(
-                                      const Duration(days: 2 * 365),
-                                    ),
-                                    onDateTimeChanged: (date) {
-                                      setState(() {
-                                        datetime = date;
-                                        // registerController.setDobDateTime(date);
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                        initialDate: seletedatetime ?? DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(3000),
                       );
+                      if (selectedDate != null) {
+                        setState(() {
+                          seletedatetime = selectedDate;
+                          // bookTicketController.setDobDateTime(
+                          //     seletedatetime); // Assuming this function sets the date in the controller
+                        });
+                      }
                     },
                     controller: bookTicketController.dobController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 207, 207, 207)),
+                        borderRadius: BorderRadius.circular(8.5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 207, 207, 207)),
+                        borderRadius: BorderRadius.circular(8.5),
                       ),
-                      prefixIcon: Icon(Icons.data_array, color: Colors.blue),
-                      hintText: datetime
-                          .toIso8601String()
-                          .split('T')[0], // Extract the date part
+                      prefixIcon: const Icon(Icons.data_array,
+                          color: Color.fromARGB(31, 199, 160, 160)),
+                      hintText: seletedatetime != null
+                          ? "${seletedatetime!.day.toString().padLeft(2, '0')}/${seletedatetime!.month.toString().padLeft(2, '0')}/${seletedatetime!.year}"
+                          : '', // Format the date
                       hintStyle: GoogleFonts.notoSansLao(
-                        color: Colors.blue,
+                        color: Colors.grey.shade600,
                       ),
-                      filled: true,
-                      fillColor: Colors.blue[50],
                     ),
                   ),
 
@@ -324,32 +382,40 @@ class _AddAContactState extends State<AddAContact> {
                     controller: bookTicketController.emailController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 207, 207, 207)),
+                        borderRadius: BorderRadius.circular(8.5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 207, 207, 207)),
+                        borderRadius: BorderRadius.circular(8.5),
                       ),
-                      prefixIcon: Icon(Icons.email, color: Colors.blue),
+                      prefixIcon: Icon(Icons.email, color: Colors.black12),
                       hintText: "ກະລຸນາປ້ອນອີເມວ",
-                      // hintStyle: TextStyle(color: Colors.blue),
                       hintStyle: GoogleFonts.notoSansLao(
-                        // Use camelCase and avoid spaces
-                        color: Colors.blue,
-                        // fontSize: 12
-                        // Other text style properties can be added here
+                        color: Colors.grey.shade600,
                       ),
-                      filled: true,
-                      fillColor: Colors.blue[50],
                     ),
+                    validator: (value) {
+                      if (value!.isEmpty ||
+                          !RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
+                              .hasMatch(value)) {
+                        return "ປ້ອນອີເມວກ່ອນ";
+                      } else {
+                        return null;
+                      }
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
                   SizedBox(height: 5),
-                  const Row(
+                  Row(
                     children: [
                       Text(
                         'ເບີໂທຕິດຕໍ່ ',
-                        style: TextStyle(fontSize: 19),
+                        style: GoogleFonts.notoSansLao(
+                          fontSize: 19,
+                        ),
                       ),
                       Text(
                         "*",
@@ -430,13 +496,15 @@ class _AddAContactState extends State<AddAContact> {
                     ),
                   ),
                   const SizedBox(height: 5),
-                  const Row(
+                  Row(
                     children: [
                       Text(
                         'ປະເພດເອກະສານຢັງຢືນ ',
-                        style: TextStyle(fontSize: 19),
+                        style: GoogleFonts.notoSansLao(
+                          fontSize: 19,
+                        ),
                       ),
-                      Text(
+                      const Text(
                         "*",
                         style: TextStyle(fontSize: 20, color: Colors.red),
                       ),
@@ -446,35 +514,43 @@ class _AddAContactState extends State<AddAContact> {
                     controller: bookTicketController.idCardController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 207, 207, 207)),
+                        borderRadius: BorderRadius.circular(8.5),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(5.5),
+                        borderSide: const BorderSide(
+                            color: Color.fromARGB(255, 207, 207, 207)),
+                        borderRadius: BorderRadius.circular(8.5),
                       ),
-                      prefixIcon: Icon(Icons.usb_rounded, color: Colors.blue),
+                      prefixIcon:
+                          const Icon(Icons.usb_rounded, color: Colors.black12),
                       hintText: "ID ບັດປະຈໍາຕົວ",
-                      // hintStyle: TextStyle(color: Colors.blue),
                       hintStyle: GoogleFonts.notoSansLao(
-                        // Use camelCase and avoid spaces
-                        color: Colors.blue,
-                        // fontSize: 12
-                        // Other text style properties can be added here
+                        color: Colors.black12,
                       ),
-                      filled: true,
-                      fillColor: Colors.blue[50],
                     ),
+                    validator: (value) {
+                      if (value!.isEmpty ||
+                          !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                        return " ຫ້າມປ້ອນຕົວອັກສອນ";
+                      } else {
+                        return null;
+                      }
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
                   Row(
                     children: [
-                      const Row(
+                      Row(
                         children: [
                           Text(
                             'ເພດ ',
-                            style: TextStyle(fontSize: 19),
+                            style: GoogleFonts.notoSansLao(
+                              fontSize: 19,
+                            ),
                           ),
-                          Text(
+                          const Text(
                             "*",
                             style: TextStyle(fontSize: 20, color: Colors.red),
                           ),
@@ -491,10 +567,10 @@ class _AddAContactState extends State<AddAContact> {
                               });
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10.0,
                           ),
-                          Text(
+                          const Text(
                             "ຊາຍ",
                             style: TextStyle(fontSize: 15),
                           )
@@ -511,10 +587,10 @@ class _AddAContactState extends State<AddAContact> {
                               });
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10.0,
                           ),
-                          Text(
+                          const Text(
                             "ຍີງ",
                             style: TextStyle(fontSize: 15),
                           )
@@ -527,7 +603,8 @@ class _AddAContactState extends State<AddAContact> {
 
                   GestureDetector(
                     onTap: () async {
-                      getImage(source: ImageSource.camera);
+                      // getImage(source: ImageSource.camera);
+                      showfileImagePickerOption(context);
                     },
                     child: bookTicketController.imageFile == null
                         ? Container(
@@ -547,7 +624,8 @@ class _AddAContactState extends State<AddAContact> {
                                 Image.asset('assets/images/id-card.png'),
                                 GestureDetector(
                                   onTap: () async {
-                                    getImage(source: ImageSource.camera);
+                                    // getImage(source: ImageSource.camera);
+                                    showfileImagePickerOption(context);
                                   },
                                   child: const Text(
                                     'ກົດເພື່ອອັບໂຫລດຮູບພາບເອກະສານ',
@@ -576,7 +654,10 @@ class _AddAContactState extends State<AddAContact> {
                             ),
                             child: GestureDetector(
                               onTap: () async {
-                                getImage(source: ImageSource.camera);
+                                // getImage(source: ImageSource.camera);
+                                //
+                                showfileImagePickerOption(context);
+                                //
                               },
                               child: const Text(
                                 '',
@@ -680,4 +761,97 @@ class _AddAContactState extends State<AddAContact> {
       });
     }
   }
+
+  //
+  Future _pickfileImageFromGallery() async {
+    final returnImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (returnImage == null) return;
+    setState(() {
+      if (returnImage?.path != null) {
+        setState(() {
+          bookTicketController.imageFile = File(returnImage!.path);
+        });
+      }
+    });
+    Navigator.of(context).pop();
+  }
+
+//Camerafile
+  Future _pickfileImageFromCamera() async {
+    final returnImage =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (returnImage?.path != null) {
+      setState(() {
+        bookTicketController.imageFile = File(returnImage!.path);
+      });
+    }
+    Navigator.of(context).pop();
+  }
+  //
+
+  void showfileImagePickerOption(BuildContext context) {
+    showModalBottomSheet(
+        backgroundColor: Colors.white,
+        context: context,
+        builder: (builder) {
+          return Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 4.5,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        _pickfileImageFromGallery();
+                      },
+                      child: SizedBox(
+                        child: Column(
+                          children: [
+                            const Icon(
+                              Icons.image,
+                              size: 50,
+                              color: Colors.redAccent,
+                            ),
+                            Text(
+                              "ເລືອກຈາກອະລາບໍ້າ",
+                              style: GoogleFonts.notoSansLao(fontSize: 17),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        _pickfileImageFromCamera();
+                      },
+                      child: SizedBox(
+                        child: Column(
+                          children: [
+                            const Icon(
+                              Icons.camera_alt,
+                              color: Colors.redAccent,
+                              size: 50,
+                            ),
+                            Text(
+                              "ກ້ອງຖ່າຍຮູບ",
+                              style: GoogleFonts.notoSansLao(fontSize: 17),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+  //
 }

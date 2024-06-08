@@ -69,7 +69,6 @@ class _LoginViewState extends State<LoginView> {
                 fontWeight: FontWeight.bold,
                 color: Colors.black, // Place the color property correctly
                 fontSize: 20,
-                // Other text style properties can be added here
               ),
             ),
             const SizedBox(height: 30),
@@ -238,7 +237,7 @@ class _LoginViewState extends State<LoginView> {
                           ),
                         ),
                         const TextSpan(
-                          text: ",",
+                          text: "",
                           style: TextStyle(
                             color: Colors.black,
                           ),
@@ -254,7 +253,7 @@ class _LoginViewState extends State<LoginView> {
                           // ),
                         ),
                         TextSpan(
-                          text: ", ແລະ ",
+                          text: " ແລະ ",
                           style: GoogleFonts.notoSansLao(
                             fontWeight: FontWeight.bold,
                             color: Colors

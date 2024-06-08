@@ -11,10 +11,6 @@ class ImageController extends GetxController {
           .doc(documentId)
           .get();
 
-      // print("doc image url:${documentSnapshot['name']}");
-
-      // print("id card image:${documentSnapshot['id_card_image_url']}");
-
       print("doc image url:${documentSnapshot['profile_image_url']}");
       if (documentSnapshot.exists) {
         imageUrl.value = documentSnapshot['profile_image_url'];
