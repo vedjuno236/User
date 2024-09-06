@@ -46,6 +46,8 @@ dependencies:
   another_carousel_pro: ^1.0.2
   awesome_dialog: ^3.2.0
   quickalert: ^1.0.2
+  animated_text_kit: ^4.2.2
+  marquee: ^2.2.3
  
 
 

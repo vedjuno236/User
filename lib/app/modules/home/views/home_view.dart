@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_final/Trainbooking/app/modules/train.dart';
 import 'package:flutter_final/app/modules/bus/views/bus_view.dart';
 import 'package:flutter_final/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter_final/app/modules/mytickets/views/list_my_tickets.dart';
@@ -297,26 +298,13 @@ GestureDetector(
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      AwesomeDialog(
-                                              context: context,
-                                              dialogType: DialogType.error,
-                                              animType: AnimType.bottomSlide,
-                                              showCloseIcon: true,
-                                              title: "ຂໍອະໄພ",
-                                              titleTextStyle:
-                                                  GoogleFonts.notoSansLao(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15),
-                                              desc:
-                                                  "ກໍາລັງພັດທະນາຈະເປີດໃຫ້ໄວໆນີ້",
-                                              descTextStyle:
-                                                  GoogleFonts.notoSansLao(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15),
-                                              btnOkOnPress: () {})
-                                          .show();
+                                        Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          type: PageTransitionType.rightToLeft,
+                                          child: const Train(),
+                                        ),
+                                      );
                                     },
                                     child: ItemKategori(
                                       title: "ລົດໄຟ",
@@ -542,7 +530,7 @@ class ItemTerbaru extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(right: 10),
       width: Get.width * 0.7,
-      height: 130,
+      height: 150,
       decoration: BoxDecoration(
         color: Colors.amber,
         borderRadius: BorderRadius.circular(20),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_final/Trainbooking/app/modules/train.dart';
 import 'package:flutter_final/app/api/notification_api.dart';
 import 'package:flutter_final/app/modules/check_auth/views/check_auth_view.dart';
 import 'package:flutter_final/app/modules/login/controllers/login_controller.dart';
@@ -54,7 +55,8 @@ class _MyAppState extends State<MyApp> {
             //  ChangeNotifierProvider(create: (_) => AuthProvider()),
             title: "Application",
             // initialRoute: i == 0 ? Routes.HOME : Routes.LOGIN,
-            home: CheckAuthView(),
+            // home: CheckAuthView(),
+            home :Train(),
 
             getPages: AppPages.routes,
             localizationsDelegates: const [
