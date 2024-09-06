@@ -36,7 +36,8 @@ dependencies:
   firebase_messaging: ^14.7.10
   google_fonts: ^6.1.0
   rive: ^0.12.3
-  lottie: ^3.0.0
+#  lottie: ^3.0.0
+  lottie: ^2.7.0
   page_transition: ^2.1.0
   overlay_support: ^2.1.0
   flutter_local_notifications: ^16.3.2
@@ -57,8 +58,7 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/logo_ticket.png"
-  # adaptiv_icon_backgroung: "#ffffff"
-  # adaptive_icon_foregound: "assets/ticket.png"
+
 flutter: 
   uses-material-design: true
   assets:

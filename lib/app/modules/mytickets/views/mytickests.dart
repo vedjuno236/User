@@ -511,7 +511,9 @@ class _MytickestsState extends State<Mytickests> {
                                                                 ],
                                                               ),
                                                               Text(
-                                                                widget.bookingModel.bookingId,
+                                                                widget
+                                                                    .bookingModel
+                                                                    .bookingId,
                                                                 style:
                                                                     const TextStyle(
                                                                   fontSize: 17,
@@ -536,13 +538,14 @@ class _MytickestsState extends State<Mytickests> {
                                                                       .center,
                                                               children: [
                                                                 QrImageView(
-                                                                  data: widget.bookingModel.bookingId,
+                                                                  data: widget
+                                                                      .bookingModel
+                                                                      .bookingId,
                                                                   version:
                                                                       QrVersions
                                                                           .auto,
                                                                   size: 250,
                                                                 ),
-
                                                                 myController.isCheckQR
                                                                             .isTrue ||
                                                                         widget.bookingModel.status ==
@@ -762,7 +765,8 @@ class _MytickestsState extends State<Mytickests> {
                                                 );
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                  primary: Colors.redAccent),
+                                                  backgroundColor:
+                                                      Colors.redAccent),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment

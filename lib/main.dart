@@ -11,7 +11,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
 //
   await initialization();
@@ -28,22 +27,6 @@ void main() async {
   runApp(MyApp());
 }
 
-// class MyApp extends StatelessWidget {
-//   MyApp({Key? key}) : super(key: key);
-
-//   final LoginController loginController = LoginController();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetMaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: "Application",
-//       initialRoute: Routes.LOGIN,
-//       getPages: AppPages.routes,
-//     );
-//   }
-// }
-
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -55,9 +38,6 @@ class _MyAppState extends State<MyApp> {
   final loginController = Get.put(LoginController());
   @override
   void initState() {
-    // loginController.checkLoggedIn();
-    // loginController.getUserLogged();
-    // loginController.logout();
     super.initState();
   }
 
@@ -91,15 +71,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-// void initializeFirebaseAppCheck() {
-//   FirebaseAppCheck.instance
-//       .installAppCheckProviderFactory(
-//         providerFactory,
-//       )
-//       .catchError((error) {
-//         print("Error installing App Check provider: $error");
-//       });
-// }
-
-// AppCheckProviderFactory providerFactory = (AppCheckDebugProviderFactory());

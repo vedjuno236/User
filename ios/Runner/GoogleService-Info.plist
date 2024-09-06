@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyDa3GQ4CcNIel_V1E0NV7mNWhGV2cQqMLQ</string>
+	<string>AIzaSyDSy9hVwl1E2S-XMv_w_iTSiGVP6PcawpA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>176999940287</string>
+	<string>219421571653</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.flutterFinal</string>
 	<key>PROJECT_ID</key>
-	<string>flutterfinal-faffd</string>
+	<string>flutterfinal-b4857</string>
 	<key>STORAGE_BUCKET</key>
-	<string>flutterfinal-faffd.appspot.com</string>
+	<string>flutterfinal-b4857.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:176999940287:ios:46e8b786deb18bab84460a</string>
+	<string>1:219421571653:ios:818e9b7bd3ce867d68412c</string>
+	<key>DATABASE_URL</key>
+	<string>https://flutterfinal-b4857-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>
 </plist>
